@@ -1,0 +1,212 @@
+@charset "utf-8";
+
+// --==|| Bulma Color Overrides ||==-- \\
+
+// Global Overrides
+$text: #c5c8c6;
+
+// Body overrides
+$body-background-color: #1d1f21;
+$body-color: #c5c8c6;
+
+// Header overrides
+$navbar-background-color: #282a2e;
+
+// Footer overrides
+$footer-background-color: #282a2e;
+
+// Label overrides
+$label-color: $text;
+
+// Sizing Overrides
+$modal-content-width: 75%;
+
+// Custom colors
+$loadout-background: #282a2e;
+$invalid: hsl(348, 86%, 43%);
+
+// Generic colors (sometimes I change these to off colors for styling).
+$black: #000;
+$white: #fff;
+
+// Other options
+$floating-window-opacity: 50%;
+
+.options-container {
+	background-color: $body-background-color;
+	box-shadow: 0 0 10px $black;
+	border-radius: 5px;
+	padding: 1em;
+}
+
+.weapon-slot {
+	background-color: $loadout-background;
+	border-radius: 5px;
+	box-shadow: 0 0 5px $black;
+	color: $white;
+	margin: 1em auto;
+	max-width: 600px;
+	min-height: calc(2em + 125px);
+	padding: 1em;
+	position: relative;
+
+	.ammo-img {
+		height: 25px;
+		margin: 0 0.5em;
+	}
+
+	.weapon-ammo-types {
+		position: absolute;
+		right: 1em;
+		top: 1em;
+	}
+
+	.weapon-img {
+		display: block;
+		height: 125px;
+		width: 600px;
+		margin: 0 auto;
+
+		&.item-selected {
+			width: auto;
+		}
+	}
+
+	.weapon-name {
+		bottom: 1em;
+		left: 1em;
+		position: absolute;
+	}
+
+	h1 {
+		position: absolute;
+		top: 1em;
+		left: 200px;
+	}
+}
+
+.tool-slot,
+.consumable-slot {
+	background-color: $loadout-background;
+	border-radius: 5px;
+	box-shadow: 0 0 5px $black;
+	color: $white;
+	min-height: 190px;
+	padding: 1em;
+	position: relative;
+	width: 190px;
+
+	.tool-img,
+	.consumable-img {
+		border: 0;
+		display: block;
+		height: 75px;
+		width: 175px;
+		margin: 0 auto;
+
+		&.item-selected {
+			width: auto;
+		}
+	}
+
+	.tool-name,
+	.consumable-name {
+		display: block;
+		text-align: center;
+	}
+
+	.item-actions {
+		left: 0;
+		position: initial;
+		top: 0;
+	}
+}
+
+.loadout-container {
+	position: relative;
+
+	&.invalid {
+		.weapon-slot,
+		.tool-slot,
+		.consumable-slot {
+			box-shadow: 0 0 5px $invalid;
+		}
+	}
+
+	&.tool,
+	&.consumable {
+		margin: 1em auto;
+
+		.item-list-container {
+			top: -500px;
+		}
+	}
+}
+
+.item-list-container {
+	background-color: $body-background-color;
+	border-radius: 5px;
+	box-shadow: 0 0 5px $black;
+	height: 500px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 250px;
+	z-index: 999;
+}
+
+.item-list-inner {
+	height: 460px;
+	overflow-y: auto;
+
+	img {
+		display: block;
+		height: 75px;
+		margin: 0 auto;
+	}
+}
+
+.item-actions {
+	left: 1em;
+	position: absolute;
+	top: 1em;
+
+	img {
+		height: 25px;
+	}
+}
+
+.item-display {
+	background-color: $loadout-background;
+	border-radius: 5px;
+	box-shadow: 0 0 5px $black;
+	margin: 1em;
+	padding: 1em;
+}
+
+// Yew.rs NEXT build isn't applying img class correctly, temporary CSS.
+.item-actions {
+	img:not(:last-child) {
+		margin: 0 0.5rem 0 0;
+	}
+}
+
+// Same as above.
+.weapon-ammo-types {
+	img:not(:last-child) {
+		margin: 0 0.5rem 0 0;
+	}
+}
+
+@media only screen and (hover: none) and (pointer: coarse) {
+	.tool-slot,
+	.consumable-slot {
+		margin: 0 auto;
+	}
+
+	.columns {
+		margin: initial !important;
+	}
+}
+
+@import "../node_modules/bulma/bulma.sass";

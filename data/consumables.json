@@ -1,0 +1,862 @@
+[
+	{
+		"name": "Vitality Shot (Weak)",
+		"cost": 20,
+		"requirements": [
+			{"t": "rank", "c": 1}
+		],
+		"types": [
+			{
+				"t": "use",
+				"c": {
+					"types": ["heal"],
+					"heal_amount": 75
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			}
+		]
+	},
+	{
+		"name": "Stamina Shot (Weak)",
+		"cost": 60,
+		"requirements": [
+			{
+				"t": "use",
+				"c": {
+					"category": "heal",
+					"times": 5
+				}
+			},
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "consumable",
+					"consumable": "Vitality Shot (Weak)"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "use",
+				"c": {
+					"types": ["stamina"],
+					"effect_duration": 300
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			}
+		]
+	},
+	{
+		"name": "Regeneration Shot (Weak)",
+		"cost": 65,
+		"requirements": [
+			{
+				"t": "use",
+				"c": {
+					"category": "heal",
+					"times": 5
+				}
+			},
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "consumable",
+					"consumable": "Stamina Shot (Weak)"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "use",
+				"c": {
+					"types": ["heal"],
+					"effect_duration": 300
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			}
+		]
+	},
+	{
+		"name": "Vitality Shot",
+		"cost": 85,
+		"requirements": [
+			{
+				"t": "use",
+				"c": {
+					"category": "heal",
+					"times": 10
+				}
+			},
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "consumable",
+					"consumable": "Regeneration Shot (Weak)"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "use",
+				"c": {
+					"types": ["heal"],
+					"heal_amount": 150
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			}
+		]
+	},
+	{
+		"name": "Stamina Shot",
+		"cost": 100,
+		"requirements": [
+			{
+				"t": "use",
+				"c": {
+					"category": "heal",
+					"times": 15
+				}
+			},
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "consumable",
+					"consumable": "Stamina Shot"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "use",
+				"c": {
+					"types": ["stamina"],
+					"effect_duration": 600
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			}
+		]
+	},
+	{
+		"name": "Regeneration Shot",
+		"cost": 110,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "consumable",
+					"consumable": "Stamina Shot"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "use",
+				"c": {
+					"types": ["heal"],
+					"effect_duration": 600
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			}
+		]
+	},
+	{
+		"name": "Antidote Shot (Weak)",
+		"cost": 30,
+		"requirements": [
+			{"t": "rank", "c": 2}
+		],
+		"types": [
+			{
+				"t": "use",
+				"c": {
+					"types": ["antidote"],
+					"effect_duration": 600
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			}
+		]
+	},
+	{
+		"name": "Poison Bomb",
+		"cost": 25,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "consumable",
+					"consumable": "Antidote Shot (Weak)"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "throw",
+				"c": {
+					"types": ["poison"],
+					"intensity": 1,
+					"damage_per_tick": 13,
+					"effect_radius": 3,
+					"effective_range": 20,
+					"effect_duration": 300
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			}
+		]
+	},
+	{
+		"name": "Antidote Shot",
+		"cost": 55,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "consumable",
+					"consumable": "Poison Bomb"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "use",
+				"c": {
+					"types": ["antidote"],
+					"effect_duration": 1200
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			}
+		]
+	},
+	{
+		"name": "Hive Bomb",
+		"cost": 40,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "consumable",
+					"consumable": "Antidote Shot"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "throw",
+				"c": {
+					"types": ["poison"],
+					"intensity": 1,
+					"damage_per_tick": 4,
+					"effect_duration": 30,
+					"effective_range": 20
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			}
+		]
+	},
+	{
+		"name": "Fire Bomb",
+		"cost": 30,
+		"requirements": [
+			{"t": "rank", "c": 1}
+		],
+		"types": [
+			{
+				"t": "throw",
+				"c": {
+					"types": ["fire"],
+					"intensity": 1,
+					"effect_radius": 2,
+					"effective_range": 20,
+					"effect_duration": 120
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			}
+		]
+	},
+	{
+		"name": "Liquid Fire Bomb",
+		"cost": 35,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "consumable",
+					"consumable": "Fire Bomb"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "throw",
+				"c": {
+					"types": ["fire"],
+					"intensity": 1,
+					"effect_radius": 2,
+					"effective_range": 20,
+					"effect_duration": 120
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			}
+		]
+	},
+	{
+		"name": "Hellfire Bomb",
+		"cost": 70,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "consumable",
+					"consumable": "Liquid Fire Bomb"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "throw",
+				"c": {
+					"types": ["fire"],
+					"intensity": 2,
+					"effect_radius": 6,
+					"effective_range": 20
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			}
+		]
+	},
+	{
+		"name": "Dynamite Stick",
+		"cost": 18,
+		"requirements": [
+			{"t": "rank", "c": 6}
+		],
+		"types": [
+			{
+				"t": "throw",
+				"c": {
+					"types": ["explosion"],
+					"damage": 750,
+					"effect_radius": 8,
+					"effective_range": 20
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			}
+		]
+	},
+	{
+		"name": "Waxed Dynamite Stick",
+		"cost": 24,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "consumable",
+					"consumable": "Dynamite Stick"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "throw",
+				"c": {
+					"types": ["explosion"],
+					"damage": 750,
+					"effect_radius": 8,
+					"effective_range": 20
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			}
+		]
+	},
+	{
+		"name": "Sticky Bomb",
+		"cost": 64,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "consumable",
+					"consumable": "Waxed Dynamite Stick"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "throw",
+				"c": {
+					"types": ["rending", "explosion"],
+					"intensity": 2,
+					"damage": 1000,
+					"effect_radius": 8,
+					"effective_range": 15
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			}
+		]
+	},
+	{
+		"name": "Dynamite Bundle",
+		"cost": 75,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "consumable",
+					"consumable": "Sticky Bomb"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "throw",
+				"c": {
+					"types": ["explosion"],
+					"damage": 1500,
+					"effect_radius": 9,
+					"effective_range": 15
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			}
+		]
+	},
+	{
+		"name": "Frag Bomb",
+		"cost": 103,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "consumable",
+					"consumable": "Dynamite Bundle"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "throw",
+				"c": {
+					"types": ["rending", "explosion"],
+					"intensity": 2,
+					"damage": 150,
+					"effect_radius": 10,
+					"effective_range": 20
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			}
+		]
+	},
+	{
+		"name": "Big Dynamite Bundle",
+		"cost": 110,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "consumable",
+					"consumable": "Frag Bomb"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "throw",
+				"c": {
+					"types": ["explosion"],
+					"damage": 3000,
+					"effect_radius": 10,
+					"effective_range": 10
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			}
+		]
+	},
+	{
+		"name": "Chaos Bomb",
+		"cost": 15,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "tool",
+					"tool": "Alert Trip Mines"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "throw",
+				"c": {
+					"types": ["noisy"],
+					"effective_range": 15
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			}
+		]
+	},
+	{
+		"name": "Flash Bomb",
+		"cost": 47,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "tool",
+					"tool": "Concertina Trip Mines"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "throw",
+				"c": {
+					"types": ["light"],
+					"effect_radius": 8,
+					"effective_range": 20
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			}
+		]
+	},
+	{
+		"name": "Concertina Bomb",
+		"cost": 48,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "consumable",
+					"consumable": "Flash Bomb"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "throw",
+				"c": {
+					"types": ["rending"],
+					"intensity": 2,
+					"damage": 200,
+					"effect_radius": 2,
+					"effective_range": 10
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["rending"],
+					"intensity": 0,
+					"damage": 52
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["rending"],
+					"intensity": 0,
+					"damage": 112
+				}
+			}
+		]
+	},
+	{
+		"name": "Ammo Box",
+		"cost": 65,
+		"requirements": [
+			{"t": "rank", "c": 74}
+		],
+		"types": [
+			{
+				"t": "placeable",
+				"c": {
+					"types": []
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 67
+				}
+			}
+		]
+	}
+]

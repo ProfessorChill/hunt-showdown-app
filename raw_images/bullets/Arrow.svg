@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="2.2445257mm"
+   height="6.9545803mm"
+   viewBox="0 0 2.2445257 6.9545803"
+   version="1.1"
+   id="svg5"
+   xml:space="preserve"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14, custom)"
+   sodipodi:docname="Arrow.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="29.276992"
+     inkscape:cx="6.8654594"
+     inkscape:cy="17.590605"
+     inkscape:window-width="1247"
+     inkscape:window-height="1367"
+     inkscape:window-x="24"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" /><defs
+     id="defs2" /><g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"><path
+       id="rect1114"
+       style="fill:#ffffff;stroke-width:0.0499999;stop-color:#000000"
+       d="M 0.8542225,1.6270887 H 1.3964762 V 6.8739154 H 0.8542225 Z" /><path
+       id="rect1117"
+       style="fill:#ffffff;stroke-width:0.0499999;stop-color:#000000"
+       d="m 0.851785,0.7787042 c 0,0 0.2667067,-1.75208446 0.5552725,0 V 1.5278208 H 0.851785 Z"
+       sodipodi:nodetypes="ccccc" /><path
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 0.7579851,4.9319004 0,5.7254509 V 5.9869 L 0.4740825,5.6318527 0.0121094,6.1807181 V 6.5079767 L 0.5031375,6.1672283 0.0317291,6.666926 V 6.9545802 L 0.7624306,6.5516063 Z"
+       id="path1270" /><path
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 1.4865405,4.931541 2.2445256,5.7250915 V 5.9865406 L 1.7704431,5.6314933 2.2324162,6.1803587 V 6.5076173 L 1.7413881,6.1668689 2.2127965,6.6665666 V 6.9542208 L 1.482095,6.5512469 Z"
+       id="path1270-3" /></g></svg>

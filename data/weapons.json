@@ -1,0 +1,7335 @@
+[
+	{
+		"name": "Combat Axe",
+		"slot": 1,
+		"additional_ammo_slots": false,
+		"cost": 15,
+		"handling": 20,
+		"requirements": [
+			{"t": "rank", "c": 1}
+		],
+		"types": [
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["rending"],
+					"intensity": 2,
+					"damage": 165
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["rending"],
+					"intensity": 2,
+					"damage": 330
+				}
+			}
+		]
+	},
+	{
+		"name": "Machete",
+		"slot": 0,
+		"additional_ammo_slots": false,
+		"cost": 18,
+		"handling": 64,
+		"requirements": [
+			{"t": "rank", "c": 1}
+		],
+		"types": [
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["rending"],
+					"intensity": 1,
+					"damage": 90
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["rending"],
+					"intensity": 2,
+					"damage": 141
+				}
+			}
+		]
+	},
+	{
+		"name": "Nagant M1895",
+		"slot": 0,
+		"additional_ammo_slots": false,
+		"cost": 24,
+		"requirements": [
+			{"t": "rank", "c": 1}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [7, 21],
+							"damage": 91,
+							"effective_range": 73,
+							"handling": 63,
+							"muzzle_velocity": 330
+						},
+						{
+							"name": "poison",
+							"cost": 50,
+							"types": ["poison"],
+							"ammo": [7, 21],
+							"damage": 91,
+							"effective_range": 73,
+							"handling": 63,
+							"muzzle_velocity": 330,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Nagant M1895",
+										"variant": "deadeye"
+									}
+								}
+							]
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"ammo": [7, 21],
+							"damage": 91,
+							"effective_range": 73,
+							"handling": 57,
+							"muzzle_velocity": 490,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "ammo",
+										"weapon": "Nagant M1895",
+										"ammo": "poison"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "compact",
+					"rate_of_fire": 40,
+					"reload_speed": 12
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			}
+		],
+		"variants": [
+			"precision",
+			"silencer",
+			"deadeye"
+		]
+	},
+	{
+		"name": "Romero 77",
+		"slot": 2,
+		"additional_ammo_slots": true,
+		"cost": 66,
+		"requirements": [
+			{"t": "rank", "c": 1}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [1, 12],
+							"damage": 200,
+							"effective_range": 15,
+							"handling": 92,
+							"muzzle_velocity": 450
+						},
+						{
+							"name": "starshell",
+							"cost": 10,
+							"types": ["fire", "light"],
+							"ammo": [1, 4],
+							"damage": 1,
+							"effective_range": 0,
+							"handling": 92,
+							"muzzle_velocity": 75,
+							"requirements": [
+								{
+									"t": "experience",
+									"c": {
+										"amount": 250,
+										"variant": "Romero 77"
+									}
+								},
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Romero 77",
+										"variant": "handcannon"
+									}
+								}
+							]
+						},
+						{
+							"name": "dragon_breath",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [1, 6],
+							"damage": 115,
+							"effective_range": 7,
+							"handling": 92,
+							"muzzle_velocity": 100,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "ammo",
+										"weapon": "Romero 77",
+										"ammo": "starshell"
+									}
+								}
+							]
+						},
+						{
+							"name": "penny_shot",
+							"cost": 10,
+							"ammo": [1, 10],
+							"damage": 185,
+							"effective_range": 12,
+							"handling": 92,
+							"muzzle_velocity": 450,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Romero 77",
+										"variant": "talon"
+									}
+								}
+							]
+						},
+						{
+							"name": "slug",
+							"cost": 130,
+							"ammo": [1, 4],
+							"damage": 178,
+							"effective_range": 25,
+							"handling": 88,
+							"muzzle_velocity": 450,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Romero 77",
+										"variant": "hatchet"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "shell",
+					"rate_of_fire": 30,
+					"reload_speed": 3
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		],
+		"variants": [
+			"alamo",
+			"handcannon",
+			"talon",
+			"hatchet"
+		]
+	},
+	{
+		"name": "Scottfield Model 3",
+		"slot": 0,
+		"additional_ammo_slots": false,
+		"cost": 77,
+		"requirements": [
+			{"t": "rank", "c": 1}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [6, 12],
+							"damage": 107,
+							"effective_range": 85,
+							"handling": 68,
+							"muzzle_velocity": 280
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"types": ["fire"],
+							"ammo": [6, 12],
+							"damage": 107,
+							"effective_range": 85,
+							"handling": 68,
+							"muzzle_velocity": 280,
+							"requirements": [
+								{
+									"t": "experience",
+									"c": {
+										"amount": 250,
+										"variant": "Scottfield Model 3"
+									}
+								}
+							]
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"ammo": [6, 12],
+							"damage": 107,
+							"effective_range": 95,
+							"handling": 68,
+							"muzzle_velocity": 250,
+							"requirements": [
+								{
+									"t": "experience",
+									"c": {
+										"amount": 250,
+										"variant": "Scottfield Model 3"
+									}
+								},
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Scottfield Model 3",
+										"variant": "brawler"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "medium",
+					"rate_of_fire": 41,
+					"reload_speed": 9
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			}
+		],
+		"variants": [
+			"brawler",
+			"spitfire",
+			"precision",
+			"swift"
+		]
+	},
+	{
+		"name": "Scottfield Model 3",
+		"variant": "brawler",
+		"slot": 0,
+		"additional_ammo_slots": false,
+		"cost": 92,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Scottfield Model 3",
+					"ammo": "incendiary"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [6, 12],
+							"damage": 107,
+							"effective_range": 85,
+							"handling": 62,
+							"muzzle_velocity": 280
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"types": ["fire"],
+							"ammo": [6, 12],
+							"damage": 107,
+							"effective_range": 85,
+							"handling": 62,
+							"muzzle_velocity": 280
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"ammo": [6, 12],
+							"damage": 107,
+							"effective_range": 95,
+							"handling": 62,
+							"muzzle_velocity": 250
+						}
+					],
+					"bullet_size": "medium",
+					"rate_of_fire": 41,
+					"reload_speed": 9
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 72
+				}
+			}
+		]
+	},
+	{
+		"name": "Scottfield Model 3",
+		"variant": "spitfire",
+		"slot": 0,
+		"additional_ammo_slots": false,
+		"cost": 108,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Scottfield Model 3",
+					"ammo": "full_metal_jacket"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [6, 12],
+							"damage": 107,
+							"effective_range": 85,
+							"handling": 62,
+							"muzzle_velocity": 280
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"types": ["fire"],
+							"ammo": [6, 12],
+							"damage": 107,
+							"effective_range": 85,
+							"handling": 62,
+							"muzzle_velocity": 280
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"ammo": [6, 12],
+							"damage": 107,
+							"effective_range": 95,
+							"handling": 62,
+							"muzzle_velocity": 250
+						}
+					],
+					"bullet_size": "medium",
+					"rate_of_fire": 77,
+					"reload_speed": 9
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			}
+		]
+	},
+	{
+		"name": "Scottfield Model 3",
+		"variant": "precision",
+		"slot": 1,
+		"additional_ammo_slots": false,
+		"cost": 85,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Scottfield Model 3",
+					"variant": "spitfire"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [6, 12],
+							"damage": 107,
+							"effective_range": 85,
+							"handling": 80,
+							"muzzle_velocity": 280
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"types": ["fire"],
+							"ammo": [6, 12],
+							"damage": 107,
+							"effective_range": 85,
+							"handling": 80,
+							"muzzle_velocity": 280
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"ammo": [6, 12],
+							"damage": 107,
+							"effective_range": 95,
+							"handling": 80,
+							"muzzle_velocity": 250
+						}
+					],
+					"bullet_size": "medium",
+					"rate_of_fire": 52,
+					"reload_speed": 9
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Scottfield Model 3",
+		"variant": "swift",
+		"slot": 0,
+		"additional_ammo_slots": false,
+		"cost": 95,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Scottfield Model 3",
+					"variant": "precision"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [6, 12],
+							"damage": 107,
+							"effective_range": 85,
+							"handling": 68,
+							"muzzle_velocity": 280
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"types": ["fire"],
+							"ammo": [6, 12],
+							"damage": 107,
+							"effective_range": 85,
+							"handling": 68,
+							"muzzle_velocity": 280
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"ammo": [6, 12],
+							"damage": 107,
+							"effective_range": 95,
+							"handling": 68,
+							"muzzle_velocity": 250
+						}
+					],
+					"bullet_size": "medium",
+					"rate_of_fire": 41,
+					"reload_speed": 9
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			}
+		]
+	},
+	{
+		"name": "Springfield 1866",
+		"slot": 2,
+		"additional_ammo_slots": true,
+		"cost": 38,
+		"requirements": [
+			{"t": "rank", "c": 1}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [1, 24],
+							"damage": 130,
+							"effective_range": 203,
+							"handling": 73,
+							"muzzle_velocity": 440
+						},
+						{
+							"name": "dum_dum",
+							"cost": 50,
+							"types": ["rending"],
+							"ammo": [1, 12],
+							"damage": 132,
+							"effective_range": 212,
+							"handling": 80,
+							"muzzle_velocity": 440,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Springfield 1866",
+										"variant": "marksman"
+									}
+								}
+							]
+						},
+						{
+							"name": "explosive",
+							"cost": 90,
+							"types": ["explosion"],
+							"ammo": [1, 9],
+							"damage": 122,
+							"effective_range": 96,
+							"handling": 76,
+							"muzzle_velocity": 370,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Springfield 1866",
+										"variant": "compact_deadeye"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "medium",
+					"rate_of_fire": 42,
+					"reload_speed": 2
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		],
+		"variants": [
+			"marksman",
+			"compact",
+			"compact_striker",
+			"compact_deadeye"
+		]
+	},
+	{
+		"name": "Winfield M1873C",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 41,
+		"requirements": [
+			{"t": "rank", "c": 1}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [7, 1, 28],
+							"damage": 110,
+							"effective_range": 150,
+							"handling": 89,
+							"muzzle_velocity": 400
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"ammo": [7, 1, 28],
+							"damage": 110,
+							"effective_range": 150,
+							"handling": 83,
+							"muzzle_velocity": 600,
+							"requirements": [
+								{
+									"t": "experience",
+									"c": {
+										"amount": 500,
+										"variant": "Winfield M1873C"
+									}
+								},
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Winfield M1873C",
+										"variant": "vandal"
+									}
+								}
+							]
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"types": ["fire"],
+							"ammo": [7, 1, 28],
+							"damage": 110,
+							"effective_range": 150,
+							"handling": 89,
+							"muzzle_velocity": 400,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "ammo",
+										"weapon": "Winfield M873C",
+										"ammo": "high_velocity"
+									}
+								}
+							]
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"ammo": [7, 1, 28],
+							"damage": 110,
+							"effective_range": 193,
+							"handling": 89,
+							"muzzle_velocity": 330,
+							"requirements": [
+								{
+									"t": "experience",
+									"c": {
+										"amount": 500,
+										"variant": "Winfield M1873C"
+									}
+								},
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Winfield M1873C",
+										"variant": "vandal_striker"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "compact",
+					"rate_of_fire": 50,
+					"reload_speed": 10
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		],
+		"variants": [
+			"silencer",
+			"marksman",
+			"vandal",
+			"vandal_striker",
+			"vandal_deadeye"
+		]
+	},
+	{
+		"name": "Romero 77",
+		"variant": "alamo",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 98,
+		"requirements": [
+			{"t": "rank", "c": 1}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [4, 1, 5],
+							"damage": 200,
+							"effective_range": 15,
+							"handling": 92,
+							"muzzle_velocity": 450
+						},
+						{
+							"name": "starshell",
+							"cost": 10,
+							"types": ["fire", "light"],
+							"ammo": [4, 1, 5],
+							"damage": 1,
+							"effective_range": 0,
+							"handling": 92,
+							"muzzle_velocity": 75
+						},
+						{
+							"name": "dragon_breath",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [4, 1, 5],
+							"damage": 115,
+							"effective_range": 7,
+							"handling": 92,
+							"muzzle_velocity": 100
+						},
+						{
+							"name": "penny_shot",
+							"cost": 10,
+							"ammo": [4, 1, 8],
+							"damage": 185,
+							"effective_range": 12,
+							"handling": 92,
+							"muzzle_velocity": 450
+						},
+						{
+							"name": "slug",
+							"cost": 130,
+							"ammo": [4, 1, 3],
+							"damage": 178,
+							"effective_range": 25,
+							"handling": 88,
+							"muzzle_velocity": 450
+						}
+					],
+					"bullet_size": "shell",
+					"rate_of_fire": 22,
+					"reload_speed": 13
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Winfield M1873C",
+		"variant": "silencer",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 55,
+		"requirements": [
+			{
+				"t": "experience",
+				"c": {
+					"amount": 250,
+					"variant": "Winfield M1873C"
+				}
+			},
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Winfield M1873C"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"types": ["silent"],
+							"ammo": [7, 1, 28],
+							"damage": 110,
+							"effective_range": 135,
+							"handling": 84,
+							"muzzle_velocity": 250
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"types": ["silent"],
+							"ammo": [7, 1, 28],
+							"damage": 110,
+							"effective_range": 135,
+							"handling": 78,
+							"muzzle_velocity": 450
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"types": ["fire", "silent"],
+							"ammo": [7, 1, 28],
+							"damage": 110,
+							"effective_range": 135,
+							"handling": 84,
+							"muzzle_velocity": 250
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"types": ["silent"],
+							"ammo": [7, 1, 28],
+							"damage": 110,
+							"effective_range": 162,
+							"handling": 84,
+							"muzzle_velocity": 200
+						}
+					],
+					"bullet_size": "compact",
+					"rate_of_fire": 50,
+					"reload_speed": 10
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Springfield 1866",
+		"variant": "marksman",
+		"slot": 2,
+		"additional_ammo_slots": true,
+		"cost": 73,
+		"requirements": [
+			{
+				"t": "experience",
+				"c": {
+					"amount": 100,
+					"variant": "Springfield 1866"
+				}
+			},
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Springfield 1866"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [1, 24],
+							"damage": 132,
+							"effective_range": 212,
+							"handling": 75,
+							"muzzle_velocity": 490
+						},
+						{
+							"name": "dum_dum",
+							"cost": 50,
+							"types": ["rending"],
+							"ammo": [1, 12],
+							"damage": 132,
+							"effective_range": 212,
+							"handling": 75,
+							"muzzle_velocity": 440
+						},
+						{
+							"name": "explosive",
+							"cost": 90,
+							"types": ["explosion"],
+							"ammo": [1, 9],
+							"damage": 122,
+							"effective_range": 96,
+							"handling": 71,
+							"muzzle_velocity": 370
+						}
+					],
+					"bullet_size": "medium",
+					"rate_of_fire": 42,
+					"reload_speed": 2
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Nagant M1895",
+		"variant": "precision",
+		"slot": 1,
+		"additional_ammo_slots": false,
+		"cost": 29,
+		"requirements": [
+			{
+				"t": "experience",
+				"c": {
+					"amount": 100,
+					"variant": "Nagant M1895"
+				}
+			},
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Nagant M1895"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [7, 21],
+							"damage": 91,
+							"effective_range": 73,
+							"handling": 86,
+							"muzzle_velocity": 330
+						},
+						{
+							"name": "poison",
+							"cost": 50,
+							"types": ["poison"],
+							"ammo": [7, 21],
+							"damage": 91,
+							"effective_range": 73,
+							"handling": 86,
+							"muzzle_velocity": 330
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"ammo": [7, 21],
+							"damage": 91,
+							"effective_range": 73,
+							"handling": 80,
+							"muzzle_velocity": 490
+						}
+					],
+					"bullet_size": "compact",
+					"rate_of_fire": 63,
+					"reload_speed": 13
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Romero 77",
+		"variant": "handcannon",
+		"slot": 1,
+		"additional_ammo_slots": true,
+		"cost": 46,
+		"requirements": [
+			{
+				"t": "experience",
+				"c": {
+					"amount": 100,
+					"variant": "Romero 77"
+				}
+			},
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Romero 77"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [1, 10],
+							"damage": 140,
+							"effective_range": 10,
+							"handling": 86,
+							"muzzle_velocity": 375
+						},
+						{
+							"name": "starshell",
+							"cost": 10,
+							"types": ["fire", "light"],
+							"ammo": [1, 3],
+							"damage": 1,
+							"effective_range": 0,
+							"handling": 86,
+							"muzzle_velocity": 75
+						},
+						{
+							"name": "dragon_breath",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [1, 5],
+							"damage": 85,
+							"effective_range": 100,
+							"handling": 86,
+							"muzzle_velocity": 100
+						},
+						{
+							"name": "penny_shot",
+							"cost": 10,
+							"ammo": [1, 8],
+							"damage": 80,
+							"effective_range": 10,
+							"handling": 86,
+							"muzzle_velocity": 375
+						},
+						{
+							"name": "slug",
+							"cost": 130,
+							"ammo": [1, 3],
+							"damage": 154,
+							"effective_range": 16,
+							"handling": 82,
+							"muzzle_velocity": 375
+						}
+					],
+					"bullet_size": "shell",
+					"rate_of_fire": 30,
+					"reload_speed": 3
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			}
+		]
+	},
+	{
+		"name": "Winfield M1873C",
+		"variant": "marksman",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 56,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Winfield M1873C",
+					"variant": "silencer"
+				}
+			},
+			{
+				"t": "experience",
+				"c": {
+					"amount": 500,
+					"variant": "Winfield M1873C"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [7, 1, 28],
+							"damage": 110,
+							"effective_range": 150,
+							"handling": 83,
+							"muzzle_velocity": 400
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"ammo": [7, 1, 28],
+							"damage": 110,
+							"effective_range": 150,
+							"handling": 77,
+							"muzzle_velocity": 600
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"ammo": [7, 1, 28],
+							"damage": 110,
+							"effective_range": 150,
+							"handling": 83,
+							"muzzle_velocity": 400
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"ammo": [7, 1, 28],
+							"damage": 110,
+							"effective_range": 193,
+							"handling": 83,
+							"muzzle_velocity": 330
+						}
+					],
+					"bullet_size": "compact",
+					"rate_of_fire": 50,
+					"reload_speed": 10
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Winfield M1873C",
+		"variant": "vandal",
+		"slot": 1,
+		"additional_ammo_slots": false,
+		"cost": 35,
+		"requirements": [
+			{
+				"t": "experience",
+				"c": {
+					"amount": 500,
+					"variant": "Winfield M1873C"
+				}
+			},
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Winfield M1873C",
+					"variant": "marksman"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [6, 1, 28],
+							"damage": 107,
+							"effective_range": 140,
+							"handling": 71,
+							"muzzle_velocity": 370
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"ammo": [6, 1, 28],
+							"damage": 107,
+							"effective_range": 140,
+							"handling": 65,
+							"muzzle_velocity": 520
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"ammo": [6, 1, 28],
+							"damage": 107,
+							"effective_range": 140,
+							"handling": 71,
+							"muzzle_velocity": 370
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"ammo": [6, 1, 28],
+							"damage": 107,
+							"effective_range": 178,
+							"handling": 71,
+							"muzzle_velocity": 310
+						}
+					],
+					"bullet_size": "compact",
+					"rate_of_fire": 50,
+					"reload_speed": 8
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			}
+		]
+	},
+	{
+		"name": "Winfield M1873C",
+		"variant": "vandal_striker",
+		"slot": 1,
+		"additional_ammo_slots": false,
+		"cost": 39,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Winfield M1873C",
+					"ammo": "incendiary"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [6, 1, 28],
+							"damage": 107,
+							"effective_range": 140,
+							"handling": 71,
+							"muzzle_velocity": 370
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"ammo": [6, 1, 28],
+							"damage": 107,
+							"effective_range": 140,
+							"handling": 65,
+							"muzzle_velocity": 520
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"ammo": [6, 1, 28],
+							"damage": 107,
+							"effective_range": 140,
+							"handling": 71,
+							"muzzle_velocity": 370
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"ammo": [6, 1, 28],
+							"damage": 107,
+							"effective_range": 178,
+							"handling": 71,
+							"muzzle_velocity": 310
+						}
+					],
+					"bullet_size": "compact",
+					"rate_of_fire": 50,
+					"reload_speed": 8
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["rending"],
+					"intensity": 0,
+					"damage": 52
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["piercing"],
+					"damage": 105
+				}
+			}
+		]
+	},
+	{
+		"name": "Caldwell Conversion",
+		"postfix": "Pistol",
+		"slot": 0,
+		"additional_ammo_slots": false,
+		"cost": 55,
+		"requirements": [
+			{"t": "rank", "c": 18}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [6, 18],
+							"damage": 104,
+							"effective_range": 84,
+							"handling": 66,
+							"muzzle_velocity": 300
+						},
+						{
+							"name": "dum_dum",
+							"cost": 50,
+							"types": ["rending"],
+							"ammo": [6, 18],
+							"damage": 104,
+							"effective_range": 84,
+							"handling": 66,
+							"muzzle_velocity": 270,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Caldwell Conversion",
+										"variant": "chain"
+									}
+								}
+							]
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"ammo": [6, 18],
+							"damage": 104,
+							"effective_range": 103,
+							"handling": 66,
+							"muzzle_velocity": 270,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "ammo",
+										"weapon": "Caldwell Conversion",
+										"ammo": "dum_dum"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "compact",
+					"rate_of_fire": 44,
+					"reload_speed": 11
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			}
+		],
+		"variants": [
+			"chain"
+		]
+	},
+	{
+		"name": "Caldwell Conversion",
+		"postfix": "Pistol",
+		"variant": "chain",
+		"slot": 0,
+		"additional_ammo_slots": false,
+		"cost": 84,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Caldwell Conversion"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [17, 18],
+							"damage": 104,
+							"effective_range": 84,
+							"handling": 60,
+							"muzzle_velocity": 300
+						},
+						{
+							"name": "dum_dum",
+							"cost": 50,
+							"types": ["rending"],
+							"ammo": [17, 18],
+							"damage": 104,
+							"effective_range": 84,
+							"handling": 60,
+							"muzzle_velocity": 270
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"ammo": [17, 18],
+							"damage": 104,
+							"effective_range": 103,
+							"handling": 60,
+							"muzzle_velocity": 270
+						}
+					],
+					"bullet_size": "compact",
+					"rate_of_fire": 44,
+					"reload_speed": 28
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			}
+		]
+	},
+	{
+		"name": "Caldwell Conversion Uppercut",
+		"slot": 0,
+		"additional_ammo_slots": false,
+		"cost": 414,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Caldwell Conversion",
+					"ammo": "full_metal_jacket"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [6, 9],
+							"damage": 126,
+							"effective_range": 115,
+							"handling": 57,
+							"muzzle_velocity": 410
+						},
+						{
+							"name": "incendiary",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [6, 9],
+							"damage": 126,
+							"effective_range": 115,
+							"handling": 57,
+							"muzzle_velocity": 410,
+							"requirements": [
+								{
+									"t": "experience",
+									"c": {
+										"amount": 1500,
+										"variant": "Caldwell Conversion"
+									}
+								},
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Caldwell Conversion Uppercut"
+									}
+								}
+							]
+						},
+						{
+							"name": "explosive",
+							"cost": 100,
+							"types": ["explosion"],
+							"ammo": [6, 3],
+							"damage": 67,
+							"effective_range": 0,
+							"handling": 53,
+							"muzzle_velocity": 330,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "ammo",
+										"weapon": "Caldwell Conversion Uppercut",
+										"ammo": "incendiary"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "long",
+					"rate_of_fire": 40,
+					"reload_speed": 15
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			}
+		],
+		"variants": []
+	},
+	{
+		"name": "Nagant M1895",
+		"variant": "silencer",
+		"slot": 0,
+		"additional_ammo_slots": false,
+		"cost": 93,
+		"requirements": [
+			{
+				"t": "experience",
+				"c": {
+					"amount": 250,
+					"variant": "Nagant M1895"
+				}
+			},
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Nagant M1895",
+					"variant": "precision"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [7, 21],
+							"damage": 91,
+							"effective_range": 56,
+							"handling": 61,
+							"muzzle_velocity": 250
+						},
+						{
+							"name": "poison",
+							"cost": 50,
+							"types": ["poison"],
+							"ammo": [7, 21],
+							"damage": 91,
+							"effective_range": 56,
+							"handling": 61,
+							"muzzle_velocity": 250
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"ammo": [7, 21],
+							"damage": 91,
+							"effective_range": 56,
+							"handling": 55,
+							"muzzle_velocity": 410
+						}
+					],
+					"bullet_size": "compact",
+					"rate_of_fire": 40,
+					"reload_speed": 12
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			}
+		]
+	},
+	{
+		"name": "Nagant M1895",
+		"variant": "deadeye",
+		"slot": 1,
+		"additional_ammo_slots": false,
+		"cost": 42,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Nagant M1895",
+					"variant": "deadeye"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [7, 21],
+							"damage": 91,
+							"effective_range": 73,
+							"handling": 85,
+							"muzzle_velocity": 330
+						},
+						{
+							"name": "poison",
+							"cost": 50,
+							"types": ["poison"],
+							"ammo": [7, 21],
+							"damage": 91,
+							"effective_range": 73,
+							"handling": 85,
+							"muzzle_velocity": 330
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"ammo": [7, 21],
+							"damage": 91,
+							"effective_range": 73,
+							"handling": 79,
+							"muzzle_velocity": 490
+						}
+					],
+					"bullet_size": "compact",
+					"rate_of_fire": 40,
+					"reload_speed": 12
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Nagant M1895 Officer",
+		"slot": 0,
+		"additional_ammo_slots": false,
+		"cost": 96,
+		"requirements": [
+			{"t": "rank", "c": 56}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [7, 14],
+							"damage": 91,
+							"effective_range": 73,
+							"handling": 58,
+							"muzzle_velocity": 330
+						},
+						{
+							"name": "poison",
+							"cost": 50,
+							"types": ["poison"],
+							"ammo": [7, 14],
+							"damage": 91,
+							"effective_range": 73,
+							"handling": 58,
+							"muzzle_velocity": 330,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Nagant M1895 Officer",
+										"variant": "brawler"
+									}
+								}
+							]
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"ammo": [7, 14],
+							"damage": 91,
+							"effective_range": 73,
+							"handling": 50,
+							"muzzle_velocity": 490,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Nagant M1895 Officer",
+										"variant": "carbine"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "compact",
+					"rate_of_fire": 120,
+					"reload_speed": 12
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			}
+		],
+		"variants": [
+			"brawler",
+			"carbine",
+			"carbine_deadeye"
+		]
+	},
+	{
+		"name": "Nagant M1895 Officer",
+		"variant": "brawler",
+		"slot": 0,
+		"additional_ammo_slots": false,
+		"cost": 110,
+		"requirements": [
+			{
+				"t": "experience",
+				"c": {
+					"amount": 750,
+					"variant": "Nagant M1895 Officer"
+				}
+			},
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Nagant M1895 Officer"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [7, 14],
+							"damage": 91,
+							"effective_range": 73,
+							"handling": 54,
+							"muzzle_velocity": 330
+						},
+						{
+							"name": "poison",
+							"cost": 50,
+							"types": ["poison"],
+							"ammo": [7, 14],
+							"damage": 91,
+							"effective_range": 73,
+							"handling": 54,
+							"muzzle_velocity": 330
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"ammo": [7, 14],
+							"damage": 91,
+							"effective_range": 73,
+							"handling": 46,
+							"muzzle_velocity": 490
+						}
+					],
+					"bullet_size": "compact",
+					"rate_of_fire": 120,
+					"reload_speed": 12
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 72
+				}
+			}
+		]
+	},
+	{
+		"name": "Nagant M1895 Officer",
+		"variant": "carbine",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 155,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Nagant M1895 Officer",
+					"ammo": "poison"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [7, 14],
+							"damage": 104,
+							"effective_range": 92,
+							"handling": 89,
+							"muzzle_velocity": 360
+						},
+						{
+							"name": "poison",
+							"cost": 50,
+							"types": ["poison"],
+							"ammo": [7, 14],
+							"damage": 104,
+							"effective_range": 92,
+							"handling": 89,
+							"muzzle_velocity": 360
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"ammo": [7, 14],
+							"damage": 104,
+							"effective_range": 92,
+							"handling": 81,
+							"muzzle_velocity": 520
+						}
+					],
+					"bullet_size": "compact",
+					"rate_of_fire": 120,
+					"reload_speed": 12
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Nagant M1895 Officer",
+		"variant": "carbine_deadeye",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 211,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Nagant M1895 Officer",
+					"ammo": "high_velocity"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [7, 14],
+							"damage": 104,
+							"effective_range": 92,
+							"handling": 84,
+							"muzzle_velocity": 360
+						},
+						{
+							"name": "poison",
+							"cost": 50,
+							"types": ["poison"],
+							"ammo": [7, 14],
+							"damage": 104,
+							"effective_range": 92,
+							"handling": 84,
+							"muzzle_velocity": 360
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"ammo": [7, 14],
+							"damage": 104,
+							"effective_range": 92,
+							"handling": 76,
+							"muzzle_velocity": 520
+						}
+					],
+					"bullet_size": "compact",
+					"rate_of_fire": 120,
+					"reload_speed": 12
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 72
+				}
+			}
+		]
+	},
+	{
+		"name": "Hand Crossbow",
+		"slot": 0,
+		"additional_ammo_slots": true,
+		"cost": 30,
+		"requirements": [
+			{"t": "rank", "c": 21}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"types": ["silent", "rending"],
+							"ammo": [1, 16],
+							"damage": 195,
+							"effective_range": 45,
+							"handling": 53,
+							"muzzle_velocity": 100
+						},
+						{
+							"name": "poison_bolt",
+							"cost": 25,
+							"types": ["silent", "poison"],
+							"ammo": [1, 8],
+							"damage": 107,
+							"effective_range": 45,
+							"handling": 53,
+							"muzzle_velocity": 100,
+							"requirements": [
+								{
+									"t": "experience",
+									"c": {
+										"amount": 500,
+										"variant": "Crossbow"
+									}
+								},
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Hand Crossbow"
+									}
+								}
+							]
+						},
+						{
+							"name": "chaos_bolt",
+							"cost": 20,
+							"types": ["noisy"],
+							"ammo": [1, 5],
+							"damage": 65,
+							"effective_range": 45,
+							"handling": 53,
+							"muzzle_velocity": 50,
+							"requirements": [
+								{
+									"t": "experience",
+									"c": {
+										"amount": 750,
+										"variant": "Crossbow"
+									}
+								},
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Crossbow"
+									}
+								}
+							]
+						},
+						{
+							"name": "choke_bolt",
+							"cost": 20,
+							"types": ["silent", "choke"],
+							"ammo": [1, 5],
+							"damage": 16,
+							"effective_range": 0,
+							"handling": 53,
+							"muzzle_velocity": 100,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "ammo",
+										"weapon": "Crossbow",
+										"ammo": "chaos_bolt"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "special",
+					"rate_of_fire": 12,
+					"reload_speed": 5
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			}
+		]
+	},
+	{
+		"name": "Crossbow",
+		"slot": 2,
+		"additional_ammo_slots": true,
+		"cost": 50,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Hand Crossbow",
+					"ammo": "poison_bolt"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"types": ["silent"],
+							"ammo": [1, 18],
+							"damage": 260,
+							"effective_range": 47,
+							"handling": 54,
+							"muzzle_velocity": 150
+						},
+						{
+							"name": "explosive_bolt",
+							"cost": 70,
+							"types": ["explosion"],
+							"ammo": [1, 4],
+							"damage": 213,
+							"effective_range": 33,
+							"handling": 51,
+							"muzzle_velocity": 60,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "ammo",
+										"weapon": "Hand Crossbow",
+										"ammo": "choke_bolt"
+									}
+								}
+							]
+						},
+						{
+							"name": "shot_bolt",
+							"cost": 80,
+							"types": ["silent"],
+							"ammo": [1, 6],
+							"damage": 250,
+							"effective_range": 45,
+							"handling": 51,
+							"muzzle_velocity": 100,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "ammo",
+										"weapon": "Crossbow",
+										"ammo": "explosive_bolt"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "special",
+					"rate_of_fire": 10,
+					"reload_speed": 6
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Springfield 1866",
+		"variant": "compact",
+		"slot": 2,
+		"additional_ammo_slots": true,
+		"cost": 33,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Springfield 1866",
+					"ammo": "dum_dum"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [1, 24],
+							"damage": 130,
+							"effective_range": 203,
+							"handling": 67,
+							"muzzle_velocity": 440
+						},
+						{
+							"name": "dum_dum",
+							"cost": 50,
+							"types": ["rending"],
+							"ammo": [1, 12],
+							"damage": 130,
+							"effective_range": 203,
+							"handling": 67,
+							"muzzle_velocity": 390
+						},
+						{
+							"name": "explosive",
+							"cost": 90,
+							"types": ["explosion"],
+							"ammo": [1, 9],
+							"damage": 120,
+							"effective_range": 87,
+							"handling": 65,
+							"muzzle_velocity": 330
+						}
+					],
+					"bullet_size": "medium",
+					"rate_of_fire": 42,
+					"reload_speed": 2
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			}
+		]
+	},
+	{
+		"name": "Springfield 1866",
+		"variant": "compact_striker",
+		"slot": 1,
+		"additional_ammo_slots": true,
+		"cost": 56,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Springfield 1866",
+					"variant": "compact"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [1, 24],
+							"damage": 130,
+							"effective_range": 203,
+							"handling": 66,
+							"muzzle_velocity": 440
+						},
+						{
+							"name": "dum_dum",
+							"cost": 50,
+							"types": ["rending"],
+							"ammo": [1, 12],
+							"damage": 130,
+							"effective_range": 203,
+							"handling": 66,
+							"muzzle_velocity": 390
+						},
+						{
+							"name": "explosive",
+							"cost": 90,
+							"types": ["explosion"],
+							"ammo": [1, 9],
+							"damage": 120,
+							"effective_range": 87,
+							"handling": 64,
+							"muzzle_velocity": 330
+						}
+					],
+					"bullet_size": "medium",
+					"rate_of_fire": 42,
+					"reload_speed": 2
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["rending"],
+					"intensity": 0,
+					"damage": 52
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["piercing"],
+					"damage": 105
+				}
+			}
+		]
+	},
+	{
+		"name": "Springfield 1866",
+		"variant": "compact_deadeye",
+		"slot": 1,
+		"additional_ammo_slots": true,
+		"cost": 46,
+		"requirements": [
+			{
+				"t": "experience",
+				"c": {
+					"amount": 500,
+					"variant": "Springfield 1866"
+				}
+			},
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Springfield 1866",
+					"variant": "compact_striker"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [1, 24],
+							"damage": 130,
+							"effective_range": 203,
+							"handling": 73,
+							"muzzle_velocity": 440
+						},
+						{
+							"name": "dum_dum",
+							"cost": 50,
+							"types": ["rending"],
+							"ammo": [1, 12],
+							"damage": 130,
+							"effective_range": 203,
+							"handling": 73,
+							"muzzle_velocity": 390
+						},
+						{
+							"name": "explosive",
+							"cost": 90,
+							"types": ["explosion"],
+							"ammo": [1, 9],
+							"damage": 120,
+							"effective_range": 87,
+							"handling": 71,
+							"muzzle_velocity": 330
+						}
+					],
+					"bullet_size": "medium",
+					"rate_of_fire": 42,
+					"reload_speed": 2
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			}
+		]
+	},
+	{
+		"name": "Romero 77",
+		"variant": "talon",
+		"slot": 2,
+		"additional_ammo_slots": true,
+		"cost": 84,
+		"requirements": [
+			{
+				"t": "experience",
+				"c": {
+					"amount": 500,
+					"variant": "Romero 77"
+				}
+			},
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Romero 77",
+					"ammo": "dragon_breath"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [1, 12],
+							"damage": 200,
+							"effective_range": 15,
+							"handling": 88,
+							"muzzle_velocity": 450
+						},
+						{
+							"name": "starshell",
+							"cost": 10,
+							"types": ["fire", "light"],
+							"ammo": [1, 4],
+							"damage": 1,
+							"effective_range": 0,
+							"handling": 88,
+							"muzzle_velocity": 75
+						},
+						{
+							"name": "dragon_breath",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [1, 6],
+							"damage": 115,
+							"effective_range": 7,
+							"handling": 88,
+							"muzzle_velocity": 100
+						},
+						{
+							"name": "penny_shot",
+							"cost": 10,
+							"ammo": [1, 10],
+							"damage": 185,
+							"effective_range": 12,
+							"handling": 88,
+							"muzzle_velocity": 450
+						},
+						{
+							"name": "slug",
+							"cost": 130,
+							"ammo": [1, 4],
+							"damage": 178,
+							"effective_range": 25,
+							"handling": 84,
+							"muzzle_velocity": 450
+						}
+					],
+					"bullet_size": "shell",
+					"rate_of_fire": 30,
+					"reload_speed": 3
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["rending"],
+					"intensity": 2,
+					"damage": 330
+				}
+			}
+		]
+	},
+	{
+		"name": "Romero 77",
+		"variant": "hatchet",
+		"slot": 2,
+		"additional_ammo_slots": true,
+		"cost": 82,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Romero 77",
+					"ammo": "penny_shot"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [1, 10],
+							"damage": 140,
+							"effective_range": 10,
+							"handling": 80,
+							"muzzle_velocity": 375
+						},
+						{
+							"name": "starshell",
+							"cost": 10,
+							"types": ["fire", "light"],
+							"ammo": [1, 3],
+							"damage": 1,
+							"effective_range": 0,
+							"handling": 80,
+							"muzzle_velocity": 75
+						},
+						{
+							"name": "dragon_breath",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [1, 5],
+							"damage": 85,
+							"effective_range": 4,
+							"handling": 80,
+							"muzzle_velocity": 100
+						},
+						{
+							"name": "penny_shot",
+							"cost": 10,
+							"ammo": [1, 8],
+							"damage": 80,
+							"effective_range": 10,
+							"handling": 80,
+							"muzzle_velocity": 375
+						},
+						{
+							"name": "slug",
+							"cost": 130,
+							"ammo": [1, 3],
+							"damage": 154,
+							"effective_range": 16,
+							"handling": 76,
+							"muzzle_velocity": 375
+						}
+					],
+					"bullet_size": "shell",
+					"rate_of_fire": 30,
+					"reload_speed": 3
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["rending"],
+					"intensity": 1,
+					"damage": 90
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["rending"],
+					"intensity": 1,
+					"damage": 150
+				}
+			}
+		]
+	},
+	{
+		"name": "Vetterli 71 Karabiner",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 105,
+		"requirements": [
+			{"t": "rank", "c": 14}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [6, 1, 20],
+							"damage": 130,
+							"effective_range": 203,
+							"handling": 87,
+							"muzzle_velocity": 410
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"types": ["fire"],
+							"ammo": [6, 1, 20],
+							"damage": 130,
+							"effective_range": 203,
+							"handling": 87,
+							"muzzle_velocity": 410,
+							"requirements": [
+								{
+									"t": "experience",
+									"c": {
+										"amount": 500,
+										"variant": "Vetterli 71 Karabiner"
+									}
+								},
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Vetterli 71 Karabiner",
+										"variant": "deadeye"
+									}
+								}
+							]
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"ammo": [6, 1, 20],
+							"damage": 130,
+							"effective_range": 236,
+							"handling": 87,
+							"muzzle_velocity": 350,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Vetterli 71 Karabiner",
+										"variant": "marksman"
+									}
+								}
+							]
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"ammo": [6, 1, 20],
+							"damage": 130,
+							"effective_range": 203,
+							"handling": 81,
+							"muzzle_velocity": 610,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Vetterli 71 Karabiner",
+										"variant": "silencer"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "medium",
+					"rate_of_fire": 42,
+					"reload_speed": 12
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		],
+		"variants": [
+			"deadeye",
+			"marksman",
+			"bayonet",
+			"silencer"
+		]
+	},
+	{
+		"name": "Vetterli 71 Karabiner",
+		"variant": "deadeye",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 130,
+		"requirements": [
+			{
+				"t": "experience",
+				"c": {
+					"amount": 500,
+					"variant": "Vetterli 71 Karabiner"
+				}
+			},
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Vetterli 71 Karabiner"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [6, 1, 20],
+							"damage": 130,
+							"effective_range": 203,
+							"handling": 83,
+							"muzzle_velocity": 410
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"types": ["fire"],
+							"ammo": [6, 1, 20],
+							"damage": 130,
+							"effective_range": 203,
+							"handling": 83,
+							"muzzle_velocity": 410
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"ammo": [6, 1, 20],
+							"damage": 130,
+							"effective_range": 236,
+							"handling": 83,
+							"muzzle_velocity": 350
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"ammo": [6, 1, 20],
+							"damage": 130,
+							"effective_range": 203,
+							"handling": 77,
+							"muzzle_velocity": 610
+						}
+					],
+					"bullet_size": "medium",
+					"rate_of_fire": 42,
+					"reload_speed": 12
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Vetterli 71 Karabiner",
+		"variant": "marksman",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 190,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Vetterli 71 Karabiner",
+					"ammo": "incendiary"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [6, 1, 20],
+							"damage": 130,
+							"effective_range": 203,
+							"handling": 80,
+							"muzzle_velocity": 410
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"types": ["fire"],
+							"ammo": [6, 1, 20],
+							"damage": 130,
+							"effective_range": 203,
+							"handling": 80,
+							"muzzle_velocity": 410
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"ammo": [6, 1, 20],
+							"damage": 130,
+							"effective_range": 236,
+							"handling": 80,
+							"muzzle_velocity": 350
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"ammo": [6, 1, 20],
+							"damage": 130,
+							"effective_range": 203,
+							"handling": 74,
+							"muzzle_velocity": 610
+						}
+					],
+					"bullet_size": "medium",
+					"rate_of_fire": 42,
+					"reload_speed": 12
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Vetterli 71 Karabiner",
+		"variant": "bayonet",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 155,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Vetterli 71 Karabiner",
+					"ammo": "full_metal_jacket"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [6, 1, 20],
+							"damage": 130,
+							"effective_range": 203,
+							"handling": 85,
+							"muzzle_velocity": 410
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"types": ["fire"],
+							"ammo": [6, 1, 20],
+							"damage": 130,
+							"effective_range": 203,
+							"handling": 85,
+							"muzzle_velocity": 410
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"ammo": [6, 1, 20],
+							"damage": 130,
+							"effective_range": 236,
+							"handling": 85,
+							"muzzle_velocity": 350
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"ammo": [6, 1, 20],
+							"damage": 130,
+							"effective_range": 203,
+							"handling": 79,
+							"muzzle_velocity": 610
+						}
+					],
+					"bullet_size": "medium",
+					"rate_of_fire": 42,
+					"reload_speed": 12
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Vetterli 71 Karabiner",
+		"variant": "silencer",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 150,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Vetterli 71 Karabiner",
+					"ammo": "bayonet"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [6, 1, 20],
+							"types": ["silent"],
+							"damage": 130,
+							"effective_range": 133,
+							"handling": 82,
+							"muzzle_velocity": 280
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"types": ["silent", "fire"],
+							"ammo": [6, 1, 20],
+							"damage": 130,
+							"effective_range": 133,
+							"handling": 82,
+							"muzzle_velocity": 280
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"types": ["silent"],
+							"ammo": [6, 1, 20],
+							"damage": 130,
+							"effective_range": 147,
+							"handling": 82,
+							"muzzle_velocity": 240
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"types": ["silent"],
+							"ammo": [6, 1, 20],
+							"damage": 130,
+							"effective_range": 133,
+							"handling": 76,
+							"muzzle_velocity": 350
+						}
+					],
+					"bullet_size": "medium",
+					"rate_of_fire": 42,
+					"reload_speed": 12
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Caldwell Rival 78",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 150,
+		"requirements": [
+			{"t": "rank", "c": 16}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [2, 8],
+							"damage": 175,
+							"effective_range": 12,
+							"handling": 87,
+							"muzzle_velocity": 400
+						},
+						{
+							"name": "flechette",
+							"cost": 40,
+							"types": ["rending"],
+							"ammo": [2, 8],
+							"damage": 125,
+							"effective_range": 9,
+							"handling": 87,
+							"muzzle_velocity": 400,
+							"requiements": [
+								{
+									"t": "experience",
+									"c": {
+										"amount": 500,
+										"variant": "Caldwell Rival 78"
+									}
+								},
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Caldwell Rival 78"
+									}
+								}
+							]
+						},
+						{
+							"name": "penny_shot",
+							"cost": 10,
+							"ammo": [2, 12],
+							"damage": 130,
+							"effective_range": 14,
+							"handling": 87,
+							"muzzle_velocity": 400,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Caldwell Rival 78",
+										"variant": "handcannon"
+									}
+								}
+							]
+						},
+						{
+							"name": "slug",
+							"cost": 130,
+							"ammo": [2, 5],
+							"damage": 165,
+							"effective_range": 20,
+							"handling": 83,
+							"muzzle_velocity": 400,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "ammo",
+										"weapon": "Caldwell Rival 78",
+										"ammo": "penny_shot"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "shell",
+					"rate_of_fire": 90,
+					"reload_speed": 4
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		],
+		"variants": [
+			"handcannon"
+		]
+	},
+	{
+		"name": "Caldwell Rival 78",
+		"variant": "handcannon",
+		"slot": 1,
+		"additional_ammo_slots": false,
+		"cost": 125,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Caldwell Rival 78",
+					"ammo": "flechette"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [2, 6],
+							"damage": 85,
+							"effective_range": 8,
+							"handling": 84,
+							"muzzle_velocity": 350
+						},
+						{
+							"name": "flechette",
+							"cost": 40,
+							"types": ["rending"],
+							"ammo": [2, 6],
+							"damage": 95,
+							"effective_range": 8,
+							"handling": 84,
+							"muzzle_velocity": 350
+						},
+						{
+							"name": "penny_shot",
+							"cost": 10,
+							"ammo": [2, 9],
+							"damage": 75,
+							"effective_range": 8,
+							"handling": 84,
+							"muzzle_velocity": 350
+						},
+						{
+							"name": "slug",
+							"cost": 130,
+							"ammo": [2, 4],
+							"damage": 154,
+							"effective_range": 16,
+							"handling": 80,
+							"muzzle_velocity": 350
+						}
+					],
+					"bullet_size": "shell",
+					"rate_of_fire": 90,
+					"reload_speed": 4
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			}
+		]
+	},
+	{
+		"name": "Caldwell 92 New Army",
+		"slot": 0,
+		"additional_ammo_slots": false,
+		"cost": 90,
+		"requirements": [
+			{"t": "rank", "c": 12}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [6, 12],
+							"damage": 97,
+							"effective_range": 79,
+							"handling": 59,
+							"muzzle_velocity": 230
+						},
+						{
+							"name": "dum_dum",
+							"cost": 50,
+							"types": ["rending"],
+							"ammo": [6, 12],
+							"damage": 97,
+							"effective_range": 79,
+							"handling": 59,
+							"muzzle_velocity": 200,
+							"requirements": [
+								{
+									"t": "experience",
+									"c": {
+										"amount": 750,
+										"variant": "Caldwell 92 New Army"
+									}
+								},
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Caldwell 92 New Army"
+									}
+								}
+							]
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"ammo": [6, 12],
+							"damage": 97,
+							"effective_range": 99,
+							"handling": 59,
+							"muzzle_velocity": 200,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "ammo",
+										"weapon": "Caldwell 92 New Army",
+										"ammo": "dum_dum"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "compact",
+					"rate_of_fire": 107,
+					"reload_speed": 10
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			}
+		]
+	},
+	{
+		"name": "Martini-Henry IC1",
+		"slot": 2,
+		"additional_ammo_slots": true,
+		"cost": 122,
+		"requirements": [
+			{"t": "rank", "c": 9}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [1, 20],
+							"damage": 143,
+							"effective_range": 334,
+							"handling": 70,
+							"muzzle_velocity": 400
+						},
+						{
+							"name": "incendiary",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [1, 10],
+							"damage": 143,
+							"effective_range": 334,
+							"handling": 70,
+							"muzzle_velocity": 400,
+							"requirements": [
+								{
+									"t": "experience",
+									"c": {
+										"amount": 250,
+										"variant": "Martini-Henry IC1"
+									}
+								},
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Martini-Henry IC1"
+									}
+								}
+							]
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 60,
+							"ammo": [1, 10],
+							"damage": 143,
+							"effective_range": 342,
+							"handling": 70,
+							"muzzle_velocity": 320,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Martini-Henry IC1",
+										"variant": "deadeye"
+									}
+								}
+							]
+						},
+						{
+							"name": "explosive",
+							"cost": 100,
+							"types": ["explosion"],
+							"ammo": [1, 7],
+							"damage": 138,
+							"effective_range": 287,
+							"handling": 67,
+							"muzzle_velocity": 300,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Martini-Henry IC1",
+										"variant": "marksman"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "long",
+					"rate_of_fire": 45,
+					"reload_speed": 3
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		],
+		"variants": [
+			"deadeye",
+			"riposte",
+			"marksman"
+		]
+	},
+	{
+		"name": "Martini-Henry IC1",
+		"variant": "deadeye",
+		"slot": 2,
+		"additional_ammo_slots": true,
+		"cost": 145,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Martini-Henry IC1",
+					"ammo": "incendiary"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [1, 20],
+							"damage": 143,
+							"effective_range": 334,
+							"handling": 67,
+							"muzzle_velocity": 400
+						},
+						{
+							"name": "incendiary",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [1, 10],
+							"damage": 143,
+							"effective_range": 334,
+							"handling": 67,
+							"muzzle_velocity": 400
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 60,
+							"ammo": [1, 10],
+							"damage": 143,
+							"effective_range": 342,
+							"handling": 67,
+							"muzzle_velocity": 320
+						},
+						{
+							"name": "explosive",
+							"cost": 100,
+							"types": ["explosion"],
+							"ammo": [1, 7],
+							"damage": 138,
+							"effective_range": 287,
+							"handling": 64,
+							"muzzle_velocity": 300
+						}
+					],
+					"bullet_size": "long",
+					"rate_of_fire": 45,
+					"reload_speed": 3
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Martini-Henry IC1",
+		"variant": "riposte",
+		"slot": 2,
+		"additional_ammo_slots": true,
+		"cost": 164,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Martini-Henry IC1",
+					"ammo": "full_metal_jacket"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [1, 20],
+							"damage": 143,
+							"effective_range": 334,
+							"handling": 66,
+							"muzzle_velocity": 400
+						},
+						{
+							"name": "incendiary",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [1, 10],
+							"damage": 143,
+							"effective_range": 334,
+							"handling": 66,
+							"muzzle_velocity": 400
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 60,
+							"ammo": [1, 10],
+							"damage": 143,
+							"effective_range": 342,
+							"handling": 66,
+							"muzzle_velocity": 320
+						},
+						{
+							"name": "explosive",
+							"cost": 100,
+							"types": ["explosion"],
+							"ammo": [1, 7],
+							"damage": 138,
+							"effective_range": 287,
+							"handling": 63,
+							"muzzle_velocity": 300
+						}
+					],
+					"bullet_size": "long",
+					"rate_of_fire": 45,
+					"reload_speed": 3
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["rending"],
+					"damage": 82
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["piercing"],
+					"damage": 168
+				}
+			}
+		]
+	},
+	{
+		"name": "Martini-Henry IC1",
+		"variant": "marksman",
+		"slot": 2,
+		"additional_ammo_slots": true,
+		"cost": 173,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Martini-Henry IC1",
+					"variant": "riposte"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [1, 20],
+							"damage": 143,
+							"effective_range": 334,
+							"handling": 68,
+							"muzzle_velocity": 400
+						},
+						{
+							"name": "incendiary",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [1, 10],
+							"damage": 143,
+							"effective_range": 334,
+							"handling": 68,
+							"muzzle_velocity": 400
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 60,
+							"ammo": [1, 10],
+							"damage": 143,
+							"effective_range": 342,
+							"handling": 68,
+							"muzzle_velocity": 320
+						},
+						{
+							"name": "explosive",
+							"cost": 100,
+							"types": ["explosion"],
+							"ammo": [1, 7],
+							"damage": 138,
+							"effective_range": 287,
+							"handling": 65,
+							"muzzle_velocity": 300
+						}
+					],
+					"bullet_size": "long",
+					"rate_of_fire": 45,
+					"reload_speed": 3
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Caldwell Pax",
+		"slot": 0,
+		"additional_ammo_slots": false,
+		"cost": 80,
+		"requirements": [
+			{"t": "rank", "c": 30}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [6, 12],
+							"damage": 110,
+							"effective_range": 86,
+							"handling": 60,
+							"muzzle_velocity": 330
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"types": ["fire"],
+							"ammo": [6, 12],
+							"damage": 110,
+							"effective_range": 86,
+							"handling": 60,
+							"muzzle_velocity": 330,
+							"requirements": [
+								{
+									"t": "experience",
+									"c": {
+										"amount": 500,
+										"variant": "Caldwell Pax"
+									}
+								},
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Caldwell Pax"
+									}
+								}
+							]
+						},
+						{
+							"name": "dum_dum",
+							"cost": 50,
+							"types": ["rending"],
+							"ammo": [6, 12],
+							"damage": 110,
+							"effective_range": 86,
+							"handling": 60,
+							"muzzle_velocity": 300,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Caldwell Pax",
+										"variant": "claw"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "medium",
+					"rate_of_fire": 46,
+					"reload_speed": 11
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			}
+		],
+		"variants": [
+			"claw"
+		]
+	},
+	{
+		"name": "Caldwell Pax",
+		"variant": "claw",
+		"slot": 0,
+		"additional_ammo_slots": false,
+		"cost": 105,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Caldwell Pax",
+					"ammo": "incendiary"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [6, 12],
+							"damage": 110,
+							"effective_range": 86,
+							"handling": 60,
+							"muzzle_velocity": 330
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"types": ["fire"],
+							"ammo": [6, 12],
+							"damage": 110,
+							"effective_range": 86,
+							"handling": 60,
+							"muzzle_velocity": 330
+						},
+						{
+							"name": "dum_dum",
+							"cost": 50,
+							"types": ["rending"],
+							"ammo": [6, 12],
+							"damage": 110,
+							"effective_range": 86,
+							"handling": 60,
+							"muzzle_velocity": 300
+						}
+					],
+					"bullet_size": "medium",
+					"rate_of_fire": 46,
+					"reload_speed": 11
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["rending"],
+					"intensity": 0,
+					"damage": 52
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["rending"],
+					"intensity": 0,
+					"damage": 105
+				}
+			}
+		]
+	},
+	{
+		"name": "Winfield M1873",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 75,
+		"requirements": [
+			{"t": "rank", "c": 27}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [15, 1, 20],
+							"damage": 110,
+							"effective_range": 150,
+							"handling": 87,
+							"muzzle_velocity": 400
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"types": ["fire"],
+							"ammo": [15, 1, 20],
+							"damage": 110,
+							"effective_range": 150,
+							"handling": 87,
+							"muzzle_velocity": 400,
+							"requirements": [
+								{
+									"t": "experience",
+									"c": {
+										"amount": 500,
+										"variant": "Winfield M1873"
+									}
+								},
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Winfield M1873",
+										"variant": "aperture"
+									}
+								}
+							]
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"ammo": [15, 1, 20],
+							"damage": 110,
+							"effective_range": 150,
+							"handling": 81,
+							"muzzle_velocity": 600,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Winfield M1873",
+										"variant": "talon"
+									}
+								}
+							]
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"ammo": [15, 1, 20],
+							"damage": 110,
+							"effective_range": 193,
+							"handling": 87,
+							"muzzle_velocity": 330,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Winfield M1873",
+										"variant": "swift"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "compact",
+					"rate_of_fire": 50,
+					"reload_speed": 16
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		],
+		"variants": [
+			"aperture",
+			"talon",
+			"swift",
+			"musket_bayonet"
+		]
+	},
+	{
+		"name": "Winfield M1873",
+		"variant": "aperture",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 80,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Winfield M1873"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [15, 1, 20],
+							"damage": 110,
+							"effective_range": 150,
+							"handling": 79,
+							"muzzle_velocity": 400
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"types": ["fire"],
+							"ammo": [15, 1, 20],
+							"damage": 110,
+							"effective_range": 150,
+							"handling": 79,
+							"muzzle_velocity": 400
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"ammo": [15, 1, 20],
+							"damage": 110,
+							"effective_range": 150,
+							"handling": 73,
+							"muzzle_velocity": 600
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"ammo": [15, 1, 20],
+							"damage": 110,
+							"effective_range": 193,
+							"handling": 79,
+							"muzzle_velocity": 330
+						}
+					],
+					"bullet_size": "compact",
+					"rate_of_fire": 50,
+					"reload_speed": 16
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Winfield M1873",
+		"variant": "talon",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 100,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Winfield M1873",
+					"ammo": "incendiary"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [15, 1, 20],
+							"damage": 110,
+							"effective_range": 150,
+							"handling": 85,
+							"muzzle_velocity": 400
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"types": ["fire"],
+							"ammo": [15, 1, 20],
+							"damage": 110,
+							"effective_range": 150,
+							"handling": 85,
+							"muzzle_velocity": 400
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"ammo": [15, 1, 20],
+							"damage": 110,
+							"effective_range": 150,
+							"handling": 79,
+							"muzzle_velocity": 600
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"ammo": [15, 1, 20],
+							"damage": 110,
+							"effective_range": 193,
+							"handling": 85,
+							"muzzle_velocity": 330
+						}
+					],
+					"bullet_size": "compact",
+					"rate_of_fire": 50,
+					"reload_speed": 16
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["rending"],
+					"intensity": 2,
+					"damage": 330
+				}
+			}
+		]
+	},
+	{
+		"name": "Winfield M1873",
+		"variant": "swift",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 128,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Winfield M1873",
+					"ammo": "high_velocity"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [15, 1, 20],
+							"damage": 110,
+							"effective_range": 150,
+							"handling": 87,
+							"muzzle_velocity": 400
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"types": ["fire"],
+							"ammo": [15, 1, 20],
+							"damage": 110,
+							"effective_range": 150,
+							"handling": 87,
+							"muzzle_velocity": 400
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"ammo": [15, 1, 20],
+							"damage": 110,
+							"effective_range": 150,
+							"handling": 81,
+							"muzzle_velocity": 600
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"ammo": [15, 1, 20],
+							"damage": 110,
+							"effective_range": 193,
+							"handling": 87,
+							"muzzle_velocity": 330
+						}
+					],
+					"bullet_size": "compact",
+					"rate_of_fire": 50,
+					"reload_speed": 8
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Winfield M1873",
+		"variant": "musket_bayonet",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 137,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Winfield M1873",
+					"ammo": "full_metal_jacket"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [15, 1, 20],
+							"damage": 110,
+							"effective_range": 150,
+							"handling": 82,
+							"muzzle_velocity": 400
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"types": ["fire"],
+							"ammo": [15, 1, 20],
+							"damage": 110,
+							"effective_range": 150,
+							"handling": 82,
+							"muzzle_velocity": 400
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"ammo": [15, 1, 20],
+							"damage": 110,
+							"effective_range": 150,
+							"handling": 76,
+							"muzzle_velocity": 600
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"ammo": [15, 1, 20],
+							"damage": 110,
+							"effective_range": 193,
+							"handling": 82,
+							"muzzle_velocity": 330
+						}
+					],
+					"bullet_size": "compact",
+					"rate_of_fire": 50,
+					"reload_speed": 18
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["piercing"],
+					"damage": 168
+				}
+			}
+		]
+	},
+	{
+		"name": "Specter 1882",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 188,
+		"requirements": [
+			{"t": "rank", "c": 38}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [4, 1, 10],
+							"damage": 185,
+							"effective_range": 12,
+							"handling": 85,
+							"muzzle_velocity": 425
+						},
+						{
+							"name": "flechette",
+							"cost": 40,
+							"types": ["rending"],
+							"ammo": [4, 1, 10],
+							"damage": 135,
+							"effective_range": 9,
+							"handling": 85,
+							"muzzle_velocity": 425,
+							"requirements": [
+								{
+									"t": "experience",
+									"c": {
+										"amount": 750,
+										"variant": "Specter 1882"
+									}
+								},
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Specter 1882"
+									}
+								}
+							]
+						},
+						{
+							"name": "dragon_breath",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [4, 1, 10],
+							"damage": 110,
+							"effective_range": 7,
+							"handling": 85,
+							"muzzle_velocity": 100,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Specter 1882",
+										"variant": "compact"
+									}
+								}
+							]
+						},
+						{
+							"name": "penny_shot",
+							"cost": 10,
+							"ammo": [4, 1, 15],
+							"damage": 160,
+							"effective_range": 10,
+							"handling": 85,
+							"muzzle_velocity": 425,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Specter 1882",
+										"variant": "bayonet"
+									}
+								}
+							]
+						},
+						{
+							"name": "slug",
+							"cost": 130,
+							"ammo": [4, 1, 6],
+							"damage": 178,
+							"effective_range": 25,
+							"handling": 81,
+							"muzzle_velocity": 425,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "ammo",
+										"weapon": "Specter 1882",
+										"ammo": "penny_shot"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "shell",
+					"rate_of_fire": 40,
+					"reload_speed": 14
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		],
+		"variants": [
+			"compact",
+			"bayonet"
+		]
+	},
+	{
+		"name": "Specter 1882",
+		"variant": "compact",
+		"slot": 1,
+		"additional_ammo_slots": false,
+		"cost": 164,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Specter 1882",
+					"ammo": "flechette"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [3, 1, 8],
+							"damage": 85,
+							"effective_range": 8,
+							"handling": 80,
+							"muzzle_velocity": 350
+						},
+						{
+							"name": "flechette",
+							"cost": 40,
+							"types": ["rending"],
+							"ammo": [3, 1, 8],
+							"damage": 85,
+							"effective_range": 8,
+							"handling": 80,
+							"muzzle_velocity": 350
+						},
+						{
+							"name": "dragon_breath",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [3, 1, 8],
+							"damage": 75,
+							"effective_range": 3,
+							"handling": 80,
+							"muzzle_velocity": 100
+						},
+						{
+							"name": "penny_shot",
+							"cost": 10,
+							"ammo": [3, 1, 12],
+							"damage": 75,
+							"effective_range": 7,
+							"handling": 80,
+							"muzzle_velocity": 350
+						},
+						{
+							"name": "slug",
+							"cost": 130,
+							"ammo": [3, 1, 5],
+							"damage": 154,
+							"effective_range": 16,
+							"handling": 76,
+							"muzzle_velocity": 350
+						}
+					],
+					"bullet_size": "shell",
+					"rate_of_fire": 40,
+					"reload_speed": 11
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			}
+		]
+	},
+	{
+		"name": "Specter 1882",
+		"variant": "bayonet",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 223,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Specter 1882",
+					"ammo": "dragon_breath"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [4, 1, 10],
+							"damage": 175,
+							"effective_range": 12,
+							"handling": 81,
+							"muzzle_velocity": 400
+						},
+						{
+							"name": "flechette",
+							"cost": 40,
+							"types": ["rending"],
+							"ammo": [4, 1, 10],
+							"damage": 135,
+							"effective_range": 9,
+							"handling": 81,
+							"muzzle_velocity": 400
+						},
+						{
+							"name": "dragon_breath",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [4, 1, 10],
+							"damage": 90,
+							"effective_range": 6,
+							"handling": 81,
+							"muzzle_velocity": 100
+						},
+						{
+							"name": "penny_shot",
+							"cost": 10,
+							"ammo": [4, 1, 15],
+							"damage": 130,
+							"effective_range": 8,
+							"handling": 81,
+							"muzzle_velocity": 400
+						},
+						{
+							"name": "slug",
+							"cost": 130,
+							"ammo": [4, 1, 6],
+							"damage": 165,
+							"effective_range": 20,
+							"handling": 77,
+							"muzzle_velocity": 400
+						}
+					],
+					"bullet_size": "shell",
+					"rate_of_fire": 40,
+					"reload_speed": 14
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["piercing"],
+					"damage": 168
+				}
+			}
+		]
+	},
+	{
+		"name": "Sparks LRR",
+		"slot": 2,
+		"additional_ammo_slots": true,
+		"cost": 130,
+		"requirements": [
+			{"t": "rank", "c": 32}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [1, 16],
+							"damage": 149,
+							"effective_range": 347,
+							"handling": 73,
+							"muzzle_velocity": 533
+						},
+						{
+							"name": "incendiary",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [1, 8],
+							"damage": 149,
+							"effective_range": 347,
+							"handling": 73,
+							"muzzle_velocity": 533,
+							"requirements": [
+								{
+									"t": "experience",
+									"c": {
+										"amount": 750,
+										"variant": "Sparks LRR"
+									}
+								},
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Sparks LRR"
+									}
+								}
+							]
+						},
+						{
+							"name": "poison",
+							"cost": 60,
+							"types": ["poison"],
+							"ammo": [1, 8],
+							"damage": 149,
+							"effective_range": 347,
+							"handling": 73,
+							"muzzle_velocity": 533,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Sparks LRR",
+										"variant": "silencer"
+									}
+								}
+							]
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 60,
+							"ammo": [1, 8],
+							"damage": 149,
+							"effective_range": 355,
+							"handling": 73,
+							"muzzle_velocity": 370,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Sparks LRR",
+										"variant": "sniper"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "long",
+					"rate_of_fire": 38,
+					"reload_speed": 4
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		],
+		"variants": [
+			"silencer",
+			"sniper"
+		]
+	},
+	{
+		"name": "Sparks LRR",
+		"variant": "silencer",
+		"slot": 2,
+		"additional_ammo_slots": true,
+		"cost": 150,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Sparks LRR",
+					"ammo": "incendiary"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"types": ["silent"],
+							"ammo": [1, 16],
+							"damage": 149,
+							"effective_range": 144,
+							"handling": 71,
+							"muzzle_velocity": 300
+						},
+						{
+							"name": "incendiary",
+							"cost": 20,
+							"types": ["silent", "fire"],
+							"ammo": [1, 8],
+							"damage": 149,
+							"effective_range": 144,
+							"handling": 71,
+							"muzzle_velocity": 300
+						},
+						{
+							"name": "poison",
+							"cost": 60,
+							"types": ["silent", "poison"],
+							"ammo": [1, 8],
+							"damage": 149,
+							"effective_range": 144,
+							"handling": 71,
+							"muzzle_velocity": 300
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 60,
+							"types": ["silent"],
+							"ammo": [1, 8],
+							"damage": 149,
+							"effective_range": 152,
+							"handling": 71,
+							"muzzle_velocity": 250
+						}
+					],
+					"bullet_size": "long",
+					"rate_of_fire": 38,
+					"reload_speed": 4
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Sparks LRR",
+		"variant": "sniper",
+		"slot": 2,
+		"additional_ammo_slots": true,
+		"cost": 199,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Sparks LRR",
+					"ammo": "poison"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [1, 16],
+							"damage": 149,
+							"effective_range": 347,
+							"handling": 70,
+							"muzzle_velocity": 533
+						},
+						{
+							"name": "incendiary",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [1, 8],
+							"damage": 149,
+							"effective_range": 347,
+							"handling": 70,
+							"muzzle_velocity": 533
+						},
+						{
+							"name": "poison",
+							"cost": 60,
+							"types": ["poison"],
+							"ammo": [1, 8],
+							"damage": 149,
+							"effective_range": 347,
+							"handling": 70,
+							"muzzle_velocity": 533
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 60,
+							"ammo": [1, 8],
+							"damage": 149,
+							"effective_range": 355,
+							"handling": 70,
+							"muzzle_velocity": 370
+						}
+					],
+					"bullet_size": "long",
+					"rate_of_fire": 38,
+					"reload_speed": 4
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Bornheim No. 3",
+		"slot": 0,
+		"additional_ammo_slots": false,
+		"cost": 146,
+		"requirements": [
+			{"t": "rank", "c": 35}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [5, 1, 10],
+							"damage": 74,
+							"effective_range": 64,
+							"handling": 64,
+							"muzzle_velocity": 380
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"types": ["fire"],
+							"ammo": [5, 1, 10],
+							"damage": 74,
+							"effective_range": 64,
+							"handling": 64,
+							"muzzle_velocity": 380,
+							"requirements": [
+								{
+									"t": "experience",
+									"c": {
+										"amount": 750,
+										"variant": "Bornheim No. 3"
+									}
+								},
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Bornheim No. 3"
+									}
+								}
+							]
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"ammo": [5, 1, 10],
+							"damage": 74,
+							"effective_range": 64,
+							"handling": 58,
+							"muzzle_velocity": 560,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Bornheim No. 3",
+										"variant": "match"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "compact",
+					"rate_of_fire": 210,
+					"reload_speed": 3
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 74
+				}
+			}
+		],
+		"variants": [
+			"match",
+			"extended"
+		]
+	},
+	{
+		"name": "Bornheim No. 3",
+		"variant": "match",
+		"slot": 1,
+		"additional_ammo_slots": false,
+		"cost": 180,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Bornheim No. 3",
+					"ammo": "incendiary"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [5, 1, 10],
+							"damage": 80,
+							"effective_range": 68,
+							"handling": 85,
+							"muzzle_velocity": 400
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"types": ["fire"],
+							"ammo": [5, 1, 10],
+							"damage": 80,
+							"effective_range": 68,
+							"handling": 85,
+							"muzzle_velocity": 400
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"ammo": [5, 1, 10],
+							"damage": 80,
+							"effective_range": 68,
+							"handling": 79,
+							"muzzle_velocity": 600
+						}
+					],
+					"bullet_size": "compact",
+					"rate_of_fire": 210,
+					"reload_speed": 3
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Bornheim No. 3",
+		"variant": "extended",
+		"slot": 0,
+		"additional_ammo_slots": false,
+		"cost": 203,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Bornheim No. 3",
+					"ammo": "high_velocity"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [8, 1, 10],
+							"damage": 74,
+							"effective_range": 64,
+							"handling": 64,
+							"muzzle_velocity": 380
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"types": ["fire"],
+							"ammo": [8, 1, 10],
+							"damage": 74,
+							"effective_range": 64,
+							"handling": 64,
+							"muzzle_velocity": 380
+						},
+						{
+							"name": "high_velocity",
+							"cost": 50,
+							"ammo": [8, 1, 10],
+							"damage": 74,
+							"effective_range": 64,
+							"handling": 58,
+							"muzzle_velocity": 560
+						}
+					],
+					"bullet_size": "compact",
+					"rate_of_fire": 210,
+					"reload_speed": 8
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			}
+		]
+	},
+	{
+		"name": "Cavalry Saber",
+		"slot": 0,
+		"handling": 47,
+		"cost": 60,
+		"requirements": [
+			{"t": "rank", "c": 42}
+		],
+		"types": [
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["rending"],
+					"intensity": 0,
+					"damage": 82
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["piercing"],
+					"damage": 168
+				}
+			}
+		]
+	},
+	{
+		"name": "LeMat Mark II",
+		"slot": 0,
+		"cost": 95,
+		"requirements": [
+			{"t": "rank", "c": 46}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [9, 18],
+							"damage": 97,
+							"effective_range": 79,
+							"handling": 66,
+							"muzzle_velocity": 300
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"types": ["fire"],
+							"ammo": [9, 18],
+							"damage": 97,
+							"effective_range": 79,
+							"handling": 66,
+							"muzzle_velocity": 300,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "ammo",
+										"weapon": "LeMat Mark II",
+										"ammo": "starshell"
+									}
+								}
+							]
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"ammo": [9, 18],
+							"damage": 97,
+							"effective_range": 99,
+							"handling": 66,
+							"muzzle_velocity": 270,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "ammo",
+										"weapon": "LeMat Mark II",
+										"ammo": "dragon_breath"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "compact",
+					"rate_of_fire": 42,
+					"reload_speed": 15
+				}
+			},
+			{
+				"t": "shoot_secondary",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [1, 3],
+							"damage": 97,
+							"effective_range": 79,
+							"handling": 66,
+							"muzzle_velocity": 300
+						},
+						{
+							"name": "starshell",
+							"cost": 10,
+							"types": ["light", "fire"],
+							"ammo": [1, 3],
+							"damage": 1,
+							"effective_range": 0,
+							"handling": 66,
+							"muzzle_velocity": 75,
+							"requirements": [
+								{
+									"t": "experience",
+									"c": {
+										"amount": 500,
+										"variant": "LeMat Mark II"
+									}
+								},
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "LeMat Mark II"
+									}
+								}
+							]
+						},
+						{
+							"name": "dragon_breath",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [1, 3],
+							"damage": 40,
+							"effective_range": 2,
+							"handling": 66,
+							"muzzle_velocity": 100,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "ammo",
+										"weapon": "LeMat Mark II",
+										"ammo": "incendiary"
+									}
+								}
+							]
+						},
+						{
+							"name": "slug",
+							"cost": 130,
+							"ammo": [1, 2],
+							"damage": 155,
+							"effective_range": 16,
+							"handling": 61,
+							"muzzle_velocity": 300,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "ammo",
+										"weapon": "LeMat Mark II",
+										"ammo": "full_metal_jacket"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "shell",
+					"rate_of_fire": 42,
+					"reload_speed": 15
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			}
+		]
+	},
+	{
+		"name": "Winfield 1893 Slate",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 333,
+		"requirements": [
+			{"t": "rank", "c": 65}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [5, 1, 6],
+							"damage": 180,
+							"effective_range": 12,
+							"handling": 75,
+							"muzzle_velocity": 425
+						},
+						{
+							"name": "penny_shot",
+							"cost": 10,
+							"ammo": [5, 1, 9],
+							"damage": 155,
+							"effective_range": 10,
+							"handling": 75,
+							"muzzle_velocity": 425,
+							"requirements": [
+								{
+									"t": "experience",
+									"c": {
+										"amount": 1500,
+										"variant": "Winfield 1893 Slate"
+									}
+								},
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Winfield 1893 Slate"
+									}
+								}
+							]
+						},
+						{
+							"name": "slug",
+							"cost": 130,
+							"ammo": [5, 1, 4],
+							"damage": 165,
+							"effective_range": 20,
+							"handling": 71,
+							"muzzle_velocity": 425,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "ammo",
+										"weapon": "Winfield 1893 Slate",
+										"ammo": "slug"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "shell",
+					"rate_of_fire": 58,
+					"reload_speed": 9
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Lebel 1886",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 397,
+		"requirements": [
+			{"t": "rank", "c": 52}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [10, 5],
+							"damage": 132,
+							"effective_range": 310,
+							"handling": 83,
+							"muzzle_velocity": 630
+						},
+						{
+							"name": "incendiary",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [10, 5],
+							"damage": 132,
+							"effective_range": 310,
+							"handling": 83,
+							"muzzle_velocity": 630,
+							"requirements": [
+								{
+									"t": "experience",
+									"c": {
+										"amount": 500,
+										"variant": "Lebel 1886"
+									}
+								},
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Lebel 1886"
+									}
+								}
+							]
+						},
+						{
+							"name": "spitzer",
+							"cost": 150,
+							"ammo": [10, 5],
+							"damage": 113,
+							"effective_range": 324,
+							"handling": 75,
+							"muzzle_velocity": 850,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Lebel 1886",
+										"variant": "marksman"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "long",
+					"rate_of_fire": 34,
+					"reload_speed": 18
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		],
+		"variants": [
+			"aperture",
+			"talon",
+			"marksman"
+		]
+	},
+	{
+		"name": "Lebel 1886",
+		"variant": "aperture",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 425,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Lebel 1886",
+					"ammo": "incendiary"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [10, 5],
+							"damage": 132,
+							"effective_range": 310,
+							"handling": 80,
+							"muzzle_velocity": 630
+						},
+						{
+							"name": "incendiary",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [10, 5],
+							"damage": 132,
+							"effective_range": 310,
+							"handling": 80,
+							"muzzle_velocity": 630
+						},
+						{
+							"name": "spitzer",
+							"cost": 150,
+							"ammo": [10, 5],
+							"damage": 113,
+							"effective_range": 324,
+							"handling": 72,
+							"muzzle_velocity": 850
+						}
+					],
+					"bullet_size": "long",
+					"rate_of_fire": 34,
+					"reload_speed": 18
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Lebel 1886",
+		"variant": "talon",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 422,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Lebel 1886",
+					"variant": "aperture"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [10, 5],
+							"damage": 132,
+							"effective_range": 310,
+							"handling": 81,
+							"muzzle_velocity": 630
+						},
+						{
+							"name": "incendiary",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [10, 5],
+							"damage": 132,
+							"effective_range": 310,
+							"handling": 81,
+							"muzzle_velocity": 630
+						},
+						{
+							"name": "spitzer",
+							"cost": 150,
+							"ammo": [10, 5],
+							"damage": 113,
+							"effective_range": 324,
+							"handling": 73,
+							"muzzle_velocity": 850
+						}
+					],
+					"bullet_size": "long",
+					"rate_of_fire": 34,
+					"reload_speed": 18
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["rending"],
+					"intensity": 2,
+					"damage": 330
+				}
+			}
+		]
+	},
+	{
+		"name": "Lebel 1886",
+		"variant": "marksman",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 607,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Lebel 1886",
+					"variant": "marksman"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [10, 5],
+							"damage": 132,
+							"effective_range": 310,
+							"handling": 80,
+							"muzzle_velocity": 630
+						},
+						{
+							"name": "incendiary",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [10, 5],
+							"damage": 132,
+							"effective_range": 310,
+							"handling": 80,
+							"muzzle_velocity": 630
+						},
+						{
+							"name": "spitzer",
+							"cost": 150,
+							"ammo": [10, 5],
+							"damage": 113,
+							"effective_range": 324,
+							"handling": 72,
+							"muzzle_velocity": 850
+						}
+					],
+					"bullet_size": "long",
+					"rate_of_fire": 34,
+					"reload_speed": 18
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Hunting Bow",
+		"slot": 1,
+		"additional_ammo_slots": true,
+		"cost": 57,
+		"requirements": [
+			{"t": "rank", "c": 54}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"types": ["rending"],
+							"ammo": [1, 16],
+							"damage": 227,
+							"effective_range": 23,
+							"handling": 66,
+							"muzzle_velocity": 150
+						},
+						{
+							"name": "poison_arrow",
+							"cost": 50,
+							"types": ["rending", "poison"],
+							"ammo": [1, 3],
+							"damage": 227,
+							"effective_range": 23,
+							"handling": 63,
+							"muzzle_velocity": 150,
+							"requirements": [
+								{
+									"t": "experience",
+									"c": {
+										"amount": 750,
+										"variant": "Hunting Bow"
+									}
+								},
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Hunting Bow"
+									}
+								}
+							]
+						},
+						{
+							"name": "concertina_arrow",
+							"cost": 60,
+							"types": ["rending"],
+							"ammo": [1, 3],
+							"damage": 133,
+							"effective_range": 12,
+							"handling": 60,
+							"muzzle_velocity": 80,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "ammo",
+										"weapon": "Hunting Bow",
+										"ammo": "poison_arrow"
+									}
+								}
+							]
+						},
+						{
+							"name": "frag_arrow",
+							"cost": 140,
+							"types": ["rending"],
+							"ammo": [1, 3],
+							"damage": 111,
+							"effective_range": 12,
+							"handling": 60,
+							"muzzle_velocity": 80,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "ammo",
+										"weapon": "Hunting Bow",
+										"ammo": "concertina_arrow"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "special",
+					"rate_of_fire": 45,
+					"reload_speed": 1
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			}
+		]
+	},
+	{
+		"name": "Winfield M1876 Centennial",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 157,
+		"requirements": [
+			{"t": "rank", "c": 24}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [9, 1, 12],
+							"damage": 123,
+							"effective_range": 180,
+							"handling": 76,
+							"muzzle_velocity": 600
+						},
+						{
+							"name": "poison",
+							"cost": 50,
+							"types": ["poison"],
+							"ammo": [9, 1, 12],
+							"damage": 123,
+							"effective_range": 180,
+							"handling": 76,
+							"muzzle_velocity": 600,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Winfield M1876 Centennial"
+									}
+								}
+							]
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"ammo": [9, 1, 12],
+							"damage": 123,
+							"effective_range": 218,
+							"handling": 76,
+							"muzzle_velocity": 480,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "ammo",
+										"weapon": "Winfield M1876 Centennial",
+										"ammo": "poison"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "medium",
+					"rate_of_fire": 39,
+					"reload_speed": 11
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		],
+		"variants": [
+			"sniper"
+		]
+	},
+	{
+		"name": "Winfield M1876 Centennial",
+		"variant": "sniper",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 229,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Winfield M1876 Centennial",
+					"ammo": "full_metal_jacket"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [9, 1, 12],
+							"damage": 123,
+							"effective_range": 180,
+							"handling": 72,
+							"muzzle_velocity": 600
+						},
+						{
+							"name": "poison",
+							"cost": 50,
+							"types": ["poison"],
+							"ammo": [9, 1, 12],
+							"damage": 123,
+							"effective_range": 180,
+							"handling": 72,
+							"muzzle_velocity": 600
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 50,
+							"ammo": [9, 1, 12],
+							"damage": 123,
+							"effective_range": 218,
+							"handling": 72,
+							"muzzle_velocity": 480
+						}
+					],
+					"bullet_size": "medium",
+					"rate_of_fire": 39,
+					"reload_speed": 11
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Berthier Mle 1892",
+		"slot": 2,
+		"additional_ammo_slots": true,
+		"cost": 356,
+		"requirements": [
+			{"t": "rank", "c": 48}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [3, 12],
+							"damage": 130,
+							"effective_range": 305,
+							"handling": 79,
+							"muzzle_velocity": 590
+						},
+						{
+							"name": "incendiary",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [3, 6],
+							"damage": 130,
+							"effective_range": 305,
+							"handling": 79,
+							"muzzle_velocity": 590,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Berthier Mle 1892"
+									}
+								}
+							]
+						},
+						{
+							"name": "spitzer",
+							"cost": 150,
+							"ammo": [3, 6],
+							"damage": 111,
+							"effective_range": 318,
+							"handling": 71,
+							"muzzle_velocity": 780,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Berthier Mle 1892",
+										"variant": "deadeye"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "long",
+					"rate_of_fire": 36,
+					"reload_speed": 3
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		],
+		"variants": [
+			"riposte",
+			"deadeye"
+		]
+	},
+	{
+		"name": "Berthier Mle 1892",
+		"variant": "riposte",
+		"slot": 2,
+		"additional_ammo_slots": true,
+		"cost": 370,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Berthier Mle 1892",
+					"ammo": "incendiary"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [3, 12],
+							"damage": 130,
+							"effective_range": 305,
+							"handling": 71,
+							"muzzle_velocity": 590
+						},
+						{
+							"name": "incendiary",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [3, 6],
+							"damage": 130,
+							"effective_range": 305,
+							"handling": 71,
+							"muzzle_velocity": 590
+						},
+						{
+							"name": "spitzer",
+							"cost": 150,
+							"ammo": [3, 6],
+							"damage": 111,
+							"effective_range": 318,
+							"handling": 63,
+							"muzzle_velocity": 780
+						}
+					],
+					"bullet_size": "long",
+					"rate_of_fire": 36,
+					"reload_speed": 3
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["rending"],
+					"intensity": 0,
+					"damage": 82
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["piercing"],
+					"damage": 168
+				}
+			}
+		]
+	},
+	{
+		"name": "Berthier Mle 1892",
+		"variant": "deadeye",
+		"slot": 2,
+		"additional_ammo_slots": true,
+		"cost": 388,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Berthier Mle 1892",
+					"variant": "riposte"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [3, 12],
+							"damage": 130,
+							"effective_range": 305,
+							"handling": 75,
+							"muzzle_velocity": 590
+						},
+						{
+							"name": "incendiary",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [3, 6],
+							"damage": 130,
+							"effective_range": 305,
+							"handling": 75,
+							"muzzle_velocity": 590
+						},
+						{
+							"name": "spitzer",
+							"cost": 150,
+							"ammo": [3, 6],
+							"damage": 111,
+							"effective_range": 318,
+							"handling": 67,
+							"muzzle_velocity": 780
+						}
+					],
+					"bullet_size": "long",
+					"rate_of_fire": 36,
+					"reload_speed": 3
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Winfield 1887 Terminus",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 238,
+		"requirements": [
+			{"t": "rank", "c": 4}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [6, 1, 8],
+							"damage": 185,
+							"effective_range": 12,
+							"handling": 82,
+							"muzzle_velocity": 425
+						},
+						{
+							"name": "flechette",
+							"cost": 40,
+							"types": ["rending"],
+							"ammo": [6, 1, 8],
+							"damage": 120,
+							"effective_range": 9,
+							"handling": 82,
+							"muzzle_velocity": 425,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Winfield 1887 Terminus"
+									}
+								}
+							]
+						},
+						{
+							"name": "penny_shot",
+							"cost": 10,
+							"ammo": [6, 1, 12],
+							"damage": 186,
+							"effective_range": 11,
+							"handling": 82,
+							"muzzle_velocity": 425,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Winfield 1887 Terminus",
+										"variant": "handcannon"
+									}
+								}
+							]
+						},
+						{
+							"name": "dragon_breath",
+							"cost": 20,
+							"ammo": [6, 1, 8],
+							"damage": 90,
+							"effective_range": 6,
+							"handling": 82,
+							"muzzle_velocity": 100,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "ammo",
+										"weapon": "Winfield 1887 Terminus",
+										"ammo": "penny_shot"
+									}
+								}
+							]
+						},
+						{
+							"name": "slug",
+							"cost": 130,
+							"ammo": [6, 1, 5],
+							"damage": 165,
+							"effective_range": 20,
+							"handling": 79,
+							"muzzle_velocity": 425,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "ammo",
+										"weapon": "Winfield 1887 Terminus",
+										"ammo": "dragon_breath"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "shell",
+					"rate_of_fire": 38,
+					"reload_speed": 12
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		],
+		"variants": [
+			"handcannon"
+		]
+	},
+	{
+		"name": "Winfield 1887 Terminus",
+		"variant": "handcannon",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 218,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Winfield 1887 Terminus",
+					"ammo": "flechette"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [5, 1, 6],
+							"damage": 75,
+							"effective_range": 8,
+							"handling": 79,
+							"muzzle_velocity": 350
+						},
+						{
+							"name": "flechette",
+							"cost": 40,
+							"types": ["rending"],
+							"ammo": [5, 1, 6],
+							"damage": 80,
+							"effective_range": 8,
+							"handling": 79,
+							"muzzle_velocity": 350
+						},
+						{
+							"name": "penny_shot",
+							"cost": 10,
+							"ammo": [5, 1, 9],
+							"damage": 90,
+							"effective_range": 9,
+							"handling": 79,
+							"muzzle_velocity": 350
+						},
+						{
+							"name": "dragon_breath",
+							"cost": 20,
+							"ammo": [5, 1, 6],
+							"damage": 65,
+							"effective_range": 3,
+							"handling": 79,
+							"muzzle_velocity": 100
+						},
+						{
+							"name": "slug",
+							"cost": 130,
+							"ammo": [5, 1, 4],
+							"damage": 154,
+							"effective_range": 16,
+							"handling": 76,
+							"muzzle_velocity": 350
+						}
+					],
+					"bullet_size": "shell",
+					"rate_of_fire": 38,
+					"reload_speed": 10
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			}
+		]
+	},
+	{
+		"name": "Dolch 96",
+		"slot": 0,
+		"additional_ammo_slots": false,
+		"cost": 750,
+		"requirements": [
+			{"t": "rank", "c": 71}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [10, 10],
+							"damage": 97,
+							"effective_range": 78,
+							"handling": 61,
+							"muzzle_velocity": 440
+						}
+					],
+					"bullet_size": "special",
+					"rate_of_fire": 164,
+					"reload_speed": 6
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			}
+		],
+		"variants": [
+			"precision"
+		]
+	},
+	{
+		"name": "Dolch 96",
+		"variant": "precision",
+		"slot": 1,
+		"additional_ammo_slots": false,
+		"cost": 790,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Dolch 96"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [10, 10],
+							"damage": 97,
+							"effective_range": 78,
+							"handling": 69,
+							"muzzle_velocity": 440
+						}
+					],
+					"bullet_size": "special",
+					"rate_of_fire": 164,
+					"reload_speed": 6
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Mosin-Nagant M1891",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 490,
+		"requirements": [
+			{"t": "rank", "c": 75}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [5, 10],
+							"damage": 136,
+							"effective_range": 319,
+							"handling": 75,
+							"muzzle_velocity": 615
+						},
+						{
+							"name": "incendiary",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [5, 10],
+							"damage": 136,
+							"effective_range": 319,
+							"handling": 75,
+							"muzzle_velocity": 615,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Mosin-Nagant M1891",
+										"variant": "obrez"
+									}
+								}
+							]
+						},
+						{
+							"name": "spitzer",
+							"cost": 150,
+							"ammo": [5, 10],
+							"damage": 116,
+							"effective_range": 335,
+							"handling": 67,
+							"muzzle_velocity": 820,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Mosin-Nagant M1891",
+										"variant": "sniper"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "long",
+					"rate_of_fire": 34,
+					"reload_speed": 4
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		],
+		"variants": [
+			"obrez",
+			"bayonet",
+			"obrez_mace",
+			"sniper",
+			"obrez_drum",
+			"avtomat"
+		]
+	},
+	{
+		"name": "Mosin-Nagant M1891",
+		"variant": "obrez",
+		"slot": 1,
+		"additional_ammo_slots": false,
+		"cost": 290,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Mosin-Nagant M1891"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [5, 10],
+							"damage": 133,
+							"effective_range": 314,
+							"handling": 68,
+							"muzzle_velocity": 550
+						},
+						{
+							"name": "incendiary",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [5, 10],
+							"damage": 133,
+							"effective_range": 314,
+							"handling": 68,
+							"muzzle_velocity": 550
+						},
+						{
+							"name": "spitzer",
+							"cost": 150,
+							"ammo": [5, 10],
+							"damage": 113,
+							"effective_range": 325,
+							"handling": 60,
+							"muzzle_velocity": 740
+						}
+					],
+					"bullet_size": "long",
+					"rate_of_fire": 34,
+					"reload_speed": 4
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			}
+		]
+	},
+	{
+		"name": "Mosin-Nagant M1891",
+		"variant": "bayonet",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 540,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Mosin-Nagant M1891",
+					"ammo": "incendiary"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [5, 10],
+							"damage": 136,
+							"effective_range": 319,
+							"handling": 70,
+							"muzzle_velocity": 615
+						},
+						{
+							"name": "incendiary",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [5, 10],
+							"damage": 136,
+							"effective_range": 319,
+							"handling": 70,
+							"muzzle_velocity": 615
+						},
+						{
+							"name": "spitzer",
+							"cost": 150,
+							"ammo": [5, 10],
+							"damage": 116,
+							"effective_range": 335,
+							"handling": 62,
+							"muzzle_velocity": 820
+						}
+					],
+					"bullet_size": "long",
+					"rate_of_fire": 34,
+					"reload_speed": 4
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["piercing"],
+					"damage": 168
+				}
+			}
+		]
+	},
+	{
+		"name": "Mosin-Nagant M1891",
+		"variant": "obrez_mace",
+		"slot": 1,
+		"additional_ammo_slots": false,
+		"cost": 310,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Mosin-Nagant M1891",
+					"variant": "bayonet"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [5, 10],
+							"damage": 133,
+							"effective_range": 314,
+							"handling": 65,
+							"muzzle_velocity": 550
+						},
+						{
+							"name": "incendiary",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [5, 10],
+							"damage": 133,
+							"effective_range": 314,
+							"handling": 65,
+							"muzzle_velocity": 550
+						},
+						{
+							"name": "spitzer",
+							"cost": 150,
+							"ammo": [5, 10],
+							"damage": 113,
+							"effective_range": 325,
+							"handling": 57,
+							"muzzle_velocity": 740
+						}
+					],
+					"bullet_size": "long",
+					"rate_of_fire": 34,
+					"reload_speed": 4
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 90
+				}
+			}
+		]
+	},
+	{
+		"name": "Mosin-Nagant M1891",
+		"variant": "sniper",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 730,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Mosin-Nagant M1891",
+					"variant": "obrez_mace"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [5, 10],
+							"damage": 136,
+							"effective_range": 319,
+							"handling": 75,
+							"muzzle_velocity": 615
+						},
+						{
+							"name": "incendiary",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [5, 10],
+							"damage": 136,
+							"effective_range": 319,
+							"handling": 75,
+							"muzzle_velocity": 615
+						},
+						{
+							"name": "spitzer",
+							"cost": 150,
+							"ammo": [5, 10],
+							"damage": 116,
+							"effective_range": 335,
+							"handling": 67,
+							"muzzle_velocity": 820
+						}
+					],
+					"bullet_size": "long",
+					"rate_of_fire": 34,
+					"reload_speed": 5
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Mosin-Nagant M1891",
+		"variant": "obrez_drum",
+		"slot": 1,
+		"additional_ammo_slots": false,
+		"cost": 350,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "ammo",
+					"weapon": "Mosin-Nagant M1891",
+					"ammo": "spitzer"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [15, 0],
+							"damage": 133,
+							"effective_range": 314,
+							"handling": 65,
+							"muzzle_velocity": 550
+						},
+						{
+							"name": "incendiary",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [15, 0],
+							"damage": 133,
+							"effective_range": 314,
+							"handling": 65,
+							"muzzle_velocity": 550
+						},
+						{
+							"name": "spitzer",
+							"cost": 150,
+							"ammo": [15, 0],
+							"damage": 113,
+							"effective_range": 325,
+							"handling": 57,
+							"muzzle_velocity": 740
+						}
+					],
+					"bullet_size": "long",
+					"rate_of_fire": 34,
+					"reload_speed": 11
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			}
+		]
+	},
+	{
+		"name": "Mosin-Nagant M1891",
+		"variant": "avtomat",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 1250,
+		"requirements": [
+			{
+				"t": "previous_requirements",
+				"c": {
+					"req_type": "weapon",
+					"weapon": "Mosin-Nagant M1891",
+					"variant": "obrez_drum"
+				}
+			}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [15, 0],
+							"damage": 136,
+							"effective_range": 319,
+							"handling": 35,
+							"muzzle_velocity": 615
+						},
+						{
+							"name": "incendiary",
+							"cost": 20,
+							"types": ["fire"],
+							"ammo": [15, 0],
+							"damage": 136,
+							"effective_range": 319,
+							"handling": 35,
+							"muzzle_velocity": 615
+						},
+						{
+							"name": "spitzer",
+							"cost": 150,
+							"ammo": [15, 0],
+							"damage": 116,
+							"effective_range": 335,
+							"handling": 27,
+							"muzzle_velocity": 820
+						}
+					],
+					"bullet_size": "long",
+					"rate_of_fire": 400,
+					"reload_speed": 11
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Bomb Lance",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 199,
+		"requirements": [
+			{"t": "rank", "c": 78}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [1, 5],
+							"damage": 150,
+							"effective_range": 25,
+							"handling": 87,
+							"muzzle_velocity": 60
+						}
+					],
+					"bullet_size": "special",
+					"rate_of_fire": 15,
+					"reload_speed": 4
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["rending"],
+					"intensity": 1,
+					"damage": 180
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["rending"],
+					"intensity": 2,
+					"damage": 360
+				}
+			}
+		]
+	},
+	{
+		"name": "Crown & King Auto-5",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 600,
+		"requirements": [
+			{"t": "rank", "c": 82}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [4, 1, 6],
+							"damage": 185,
+							"effective_range": 12,
+							"handling": 78,
+							"muzzle_velocity": 425
+						},
+						{
+							"name": "penny_shot",
+							"cost": 10,
+							"ammo": [4, 1, 9],
+							"damage": 150,
+							"effective_range": 14,
+							"handling": 78,
+							"muzzle_velocity": 425,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Crown & King Auto-5"
+									}
+								}
+							]
+						},
+						{
+							"name": "slug",
+							"cost": 130,
+							"ammo": [4, 1, 4],
+							"damage": 178,
+							"effective_range": 25,
+							"handling": 71,
+							"muzzle_velocity": 425,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "ammo",
+										"weapon": "Crown & King Auto-5",
+										"ammo": "penny_shot"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "shell",
+					"rate_of_fire": 100,
+					"reload_speed": 10
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	},
+	{
+		"name": "Nitro Express Rifle",
+		"slot": 2,
+		"additional_ammo_slots": false,
+		"cost": 1015,
+		"requirements": [
+			{"t": "rank", "c": 90}
+		],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"types": ["piercing"],
+							"ammo": [2, 4],
+							"damage": 364,
+							"effective_range": 250,
+							"handling": 41,
+							"muzzle_velocity": 550
+						},
+						{
+							"name": "shredder",
+							"cost": 225,
+							"types": ["rending"],
+							"ammo": [2, 4],
+							"damage": 364,
+							"effective_range": 250,
+							"handling": 41,
+							"muzzle_velocity": 495,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "weapon",
+										"weapon": "Nitro Express Rifle"
+									}
+								}
+							]
+						},
+						{
+							"name": "explosive",
+							"cost": 200,
+							"types": ["explosion"],
+							"ammo": [2, 2],
+							"damage": 189,
+							"effective_range": 76,
+							"handling": 39,
+							"muzzle_velocity": 410,
+							"requirements": [
+								{
+									"t": "previous_requirements",
+									"c": {
+										"req_type": "ammo",
+										"weapon": "Nitro Express Rifle",
+										"ammo": "shredder"
+									}
+								}
+							]
+						}
+					],
+					"bullet_size": "special",
+					"rate_of_fire": 60,
+					"reload_speed": 4
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 54
+				}
+			}
+		]
+	}
+]

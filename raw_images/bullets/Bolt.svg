@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="1.9005181mm"
+   height="3.6951489mm"
+   viewBox="0 0 1.9005181 3.6951489"
+   version="1.1"
+   id="svg5"
+   xml:space="preserve"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14, custom)"
+   sodipodi:docname="Bolt.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="29.276992"
+     inkscape:cx="7.9413896"
+     inkscape:cy="14.687301"
+     inkscape:window-width="2510"
+     inkscape:window-height="1367"
+     inkscape:window-x="24"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" /><defs
+     id="defs2" /><g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"><path
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 0.62833391,2.0471119 0.00415512,2.6379299 V 2.9323172 L 0.40663901,2.6353507 0.00175019,2.9984776 V 3.3517768 L 0.42029641,3.0745231 0,3.418316 V 3.6950998 L 0.62420031,3.335634 Z"
+       id="path279" /><path
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 1.2721842,2.047161 1.896363,2.637979 V 2.9323663 L 1.4938791,2.6353998 1.8987679,2.9985267 V 3.3518259 L 1.4802217,3.0745722 1.9005181,3.4183651 V 3.6951489 L 1.2763178,3.3356831 Z"
+       id="path279-3" /><path
+       id="rect1034"
+       style="fill:#ffffff;stroke-width:0.264583"
+       d="M 0.68598721,0.84490046 H 1.2168525 V 3.6758683 H 0.68598721 Z" /><path
+       id="rect1200"
+       style="fill:#ffffff;stroke-width:0.264583"
+       d="m 0.69193721,0.38554656 c 0,0 0.25233403,-0.86747976 0.53183659,0 v 0.3644038 H 0.69193721 Z"
+       sodipodi:nodetypes="ccccc" /></g></svg>

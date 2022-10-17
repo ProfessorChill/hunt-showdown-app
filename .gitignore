@@ -1,0 +1,17 @@
+#--==|| NODE ||==--
+# Logs
+logs
+npm-debug.log*
+
+# Node Deps
+node_modules/
+
+# NPM Cache
+.npm
+
+#--==|| RUST ||==--
+dist/
+debug/
+target/
+Cargo.lock
+**/*.rs.bk
