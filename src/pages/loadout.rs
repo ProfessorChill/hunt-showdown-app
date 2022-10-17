@@ -1,7 +1,8 @@
 use yew::prelude::*;
 
 use crate::components::{
-    AdvancedOptions, BulletSelectList, ConsumableSlot, ItemSelectList, ToolSlot, WeaponSlot,
+    AdvancedOptions, BudgetDisplay, BulletSelectList, ConsumableSlot, ItemSelectList, ToolSlot,
+    WeaponSlot,
 };
 use crate::content::{BulletSize, BulletVariant, GenericItem, ItemVariant, CORE_SEARCH_UTIL};
 use crate::randomizer::budget::Transaction;
@@ -354,13 +355,17 @@ pub fn RandomLoadout() -> Html {
                     move |(bullet, pos): ((BulletSize, Option<BulletVariant>, u16), usize)| {
                         let mut loadout = loadout.clone();
                         let mut budget = budget.clone();
+                        let current_bullet = current_bullet.clone();
 
                         if current_bullet.2 > 0 {
-                            let _ = budget::process_transaction(&mut budget, Transaction::Bullet(true, current_bullet.2)).ok();
+                            let _ = budget::process_transaction(&mut budget, Transaction::Bullet(true, current_bullet.2, match current_bullet.1 {
+                                Some(variant) => variant.to_string(),
+                                None => current_bullet.0.to_string(),
+                            })).ok();
                         }
 
-                        if bullet.1.is_some() {
-                            let tx_res = budget::process_transaction(&mut budget, Transaction::Bullet(false, bullet.2));
+                        if let Some(variant) = &bullet.1 {
+                            let tx_res = budget::process_transaction(&mut budget, Transaction::Bullet(false, bullet.2, variant.to_string()));
                             loadout.weapon_one.locked = true;
 
                             if let Some(weapon_one) = &mut loadout.weapon_one.item {
@@ -421,19 +426,23 @@ pub fn RandomLoadout() -> Html {
                     move |(bullet, pos): ((BulletSize, Option<BulletVariant>, u16), usize)| {
                         let mut loadout = loadout.clone();
                         let mut budget = budget.clone();
+                        let current_bullet = current_bullet.clone();
 
                         if current_bullet.2 > 0 {
                             let _ = budget::process_transaction(&mut budget, Transaction::Bullet(true, if additional_ammo {
                                 // As of 1.10 ammo cost is calculated this way.
                                 current_bullet.2 / 2
-                            } else { current_bullet.2 })).ok();
+                            } else { current_bullet.2 }, match current_bullet.1 {
+                                Some(variant) => variant.to_string(),
+                                None => current_bullet.0.to_string(),
+                            })).ok();
                         }
 
-                        if bullet.1.is_some() {
+                        if let Some(variant) = &bullet.1 {
                             let tx_res = budget::process_transaction(&mut budget, Transaction::Bullet(false, if additional_ammo {
                                 // As of 1.10 ammo cost is calculated this way.
                                 bullet.2 / 2
-                            } else { bullet.2 }));
+                            } else { bullet.2 }, variant.to_string()));
                             loadout.weapon_two.locked = true;
 
                             if let Some(weapon_two) = &mut loadout.weapon_two.item {
@@ -715,6 +724,13 @@ pub fn RandomLoadout() -> Html {
         }
     };
 
+    let budget_hover_handle = use_state(|| false);
+    let budget_hover = *budget_hover_handle;
+
+    let on_budget_hover = move |_: MouseEvent| {
+        budget_hover_handle.set(!budget_hover);
+    };
+
     let loadout_validity = {
         let mut loadout = loadout.clone();
 
@@ -913,7 +929,17 @@ pub fn RandomLoadout() -> Html {
                     }).collect::<Html>()}
                 </div>
 
-                <h2 class={classes!("is-size-2", "has-text-centered")}>{&*format!("Hunt Dollars: {}", budget.total_cost)}</h2>
+                <div
+                    class={classes!("transactions-container")}
+                    onmouseenter={on_budget_hover.clone()}
+                    onmouseleave={on_budget_hover}
+                >
+                    <h2 class={classes!("is-size-2", "has-text-centered")}>{&*format!("Hunt Dollars: {}", budget.total_cost)}</h2>
+
+                    if budget_hover {
+                        <BudgetDisplay budget={budget} />
+                    }
+                </div>
             </div>
         </div>
 

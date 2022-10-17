@@ -1,4 +1,5 @@
 pub mod advanced_options;
+pub mod budget_display;
 pub mod bullet_select_list;
 pub mod consumable_slot;
 pub mod item_select_list;
@@ -7,6 +8,7 @@ pub mod tool_slot;
 pub mod weapon_slot;
 
 pub use advanced_options::AdvancedOptions;
+pub use budget_display::BudgetDisplay;
 pub use bullet_select_list::BulletSelectList;
 pub use consumable_slot::ConsumableSlot;
 pub use item_select_list::ItemSelectList;

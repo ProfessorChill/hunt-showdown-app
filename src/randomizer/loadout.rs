@@ -110,14 +110,26 @@ pub fn refund_item(budget: &mut Budget, item: &GenericItemLockable) {
     if let Some(item) = &item.item {
         for ammo_type in item.ammo_equipped.iter() {
             if ammo_type.2 > 0 {
-                let _tx =
-                    budget::process_transaction(budget, Transaction::Bullet(true, ammo_type.2))
-                        .ok();
+                let _tx = budget::process_transaction(
+                    budget,
+                    Transaction::Bullet(
+                        true,
+                        ammo_type.2,
+                        match &ammo_type.1 {
+                            Some(variant) => variant.to_string(),
+                            None => ammo_type.0.to_string(),
+                        },
+                    ),
+                )
+                .ok();
             }
         }
 
-        let _tx =
-            budget::process_transaction(budget, Transaction::Weapon(true, item.get_cost())).ok();
+        let _tx = budget::process_transaction(
+            budget,
+            Transaction::Weapon(true, item.get_cost(), item.to_full_name()),
+        )
+        .ok();
     }
 }
 
@@ -125,8 +137,17 @@ pub fn purchase_item(budget: &mut Budget, item: &GenericItemLockable) {
     if let Some(item) = &item.item {
         for ammo_type in item.ammo_equipped.iter() {
             if ammo_type.2 > 0 {
-                let tx_res =
-                    budget::process_transaction(budget, Transaction::Bullet(false, ammo_type.2));
+                let tx_res = budget::process_transaction(
+                    budget,
+                    Transaction::Bullet(
+                        false,
+                        ammo_type.2,
+                        match &ammo_type.1 {
+                            Some(variant) => variant.to_string(),
+                            None => ammo_type.0.to_string(),
+                        },
+                    ),
+                );
 
                 if let Err(_e) = tx_res {
                     // Come up with way to handle error.
@@ -134,8 +155,10 @@ pub fn purchase_item(budget: &mut Budget, item: &GenericItemLockable) {
             }
         }
 
-        let tx_res =
-            budget::process_transaction(budget, Transaction::Weapon(false, item.get_cost()));
+        let tx_res = budget::process_transaction(
+            budget,
+            Transaction::Weapon(false, item.get_cost(), item.to_full_name()),
+        );
 
         if let Err(_e) = tx_res {
             // Come up with way to handle error.
@@ -173,8 +196,10 @@ pub fn initial_weapon(
     let new_weapon = match (&mut weapon.item, weapon.locked) {
         // If weapon one is locked and exists, process the weapon transaction.
         (Some(weapon), true) => {
-            let tx_res =
-                budget::process_transaction(budget, Transaction::Weapon(false, weapon.get_cost()));
+            let tx_res = budget::process_transaction(
+                budget,
+                Transaction::Weapon(false, weapon.get_cost(), weapon.to_full_name()),
+            );
 
             if let Err(_e) = tx_res {
                 loadout.errors.push(LoadoutError::Weapon {
@@ -201,7 +226,11 @@ pub fn initial_weapon(
                     if let Some(new_check_weapon) = &new_weapon {
                         let tx_res = budget::process_transaction(
                             budget,
-                            Transaction::Weapon(false, new_check_weapon.get_cost()),
+                            Transaction::Weapon(
+                                false,
+                                new_check_weapon.get_cost(),
+                                new_check_weapon.to_full_name(),
+                            ),
                         );
 
                         if let Err(_e) = tx_res {
@@ -223,7 +252,11 @@ pub fn initial_weapon(
                     if let Some(new_check_weapon) = &new_weapon {
                         let tx_res = budget::process_transaction(
                             budget,
-                            Transaction::Weapon(false, new_check_weapon.get_cost()),
+                            Transaction::Weapon(
+                                false,
+                                new_check_weapon.get_cost(),
+                                new_check_weapon.to_full_name(),
+                            ),
                         );
 
                         if let Err(_e) = tx_res {
@@ -249,8 +282,10 @@ pub fn reset_tools(loadout: &mut Loadout, budget: &mut Budget) {
         if !tool.locked {
             tool.item = None;
         } else if let Some(tool) = &tool.item {
-            let tx_res =
-                budget::process_transaction(budget, Transaction::Tool(false, tool.get_cost()));
+            let tx_res = budget::process_transaction(
+                budget,
+                Transaction::Tool(false, tool.get_cost(), tool.to_full_name()),
+            );
 
             // If we can afford the transaction, purchase it, otherwise don't and report we
             // can't afford the item.
@@ -271,7 +306,7 @@ pub fn reset_consumables(loadout: &mut Loadout, budget: &mut Budget) {
         } else if let Some(consumable) = &consumable.item {
             let tx_res = budget::process_transaction(
                 budget,
-                Transaction::Consumable(false, consumable.get_cost()),
+                Transaction::Consumable(false, consumable.get_cost(), consumable.to_full_name()),
             );
 
             if let Err(_e) = tx_res {
@@ -308,7 +343,7 @@ pub fn always_quartermaster(loadout: &mut Loadout, budget: &mut Budget, rng: &mu
                 (Slot::Small, Slot::Large) => {
                     let _tx = budget::process_transaction(
                         budget,
-                        Transaction::Weapon(true, weapon_one.get_cost()),
+                        Transaction::Weapon(true, weapon_one.get_cost(), weapon_one.to_full_name()),
                     )
                     .ok();
 
@@ -318,7 +353,11 @@ pub fn always_quartermaster(loadout: &mut Loadout, budget: &mut Budget, rng: &mu
                     if let Some(new_check_weapon) = &new_weapon {
                         let tx_res = budget::process_transaction(
                             budget,
-                            Transaction::Weapon(false, new_check_weapon.get_cost()),
+                            Transaction::Weapon(
+                                false,
+                                new_check_weapon.get_cost(),
+                                new_check_weapon.to_full_name(),
+                            ),
                         );
 
                         if let Err(_e) = tx_res {
@@ -333,7 +372,7 @@ pub fn always_quartermaster(loadout: &mut Loadout, budget: &mut Budget, rng: &mu
                 (Slot::Large, Slot::Small) => {
                     let _tx = budget::process_transaction(
                         budget,
-                        Transaction::Weapon(true, weapon_two.get_cost()),
+                        Transaction::Weapon(true, weapon_two.get_cost(), weapon_two.to_full_name()),
                     )
                     .ok();
 
@@ -343,7 +382,11 @@ pub fn always_quartermaster(loadout: &mut Loadout, budget: &mut Budget, rng: &mu
                     if let Some(new_check_weapon) = &new_weapon {
                         let tx_res = budget::process_transaction(
                             budget,
-                            Transaction::Weapon(false, new_check_weapon.get_cost()),
+                            Transaction::Weapon(
+                                false,
+                                new_check_weapon.get_cost(),
+                                new_check_weapon.to_full_name(),
+                            ),
                         );
 
                         if let Err(_e) = tx_res {
@@ -358,7 +401,7 @@ pub fn always_quartermaster(loadout: &mut Loadout, budget: &mut Budget, rng: &mu
                 (Slot::Medium, Slot::Medium) => {
                     let _tx = budget::process_transaction(
                         budget,
-                        Transaction::Weapon(true, weapon_one.get_cost()),
+                        Transaction::Weapon(true, weapon_one.get_cost(), weapon_one.to_full_name()),
                     )
                     .ok();
 
@@ -368,7 +411,11 @@ pub fn always_quartermaster(loadout: &mut Loadout, budget: &mut Budget, rng: &mu
                     if let Some(new_check_weapon) = &new_weapon {
                         let tx_res = budget::process_transaction(
                             budget,
-                            Transaction::Weapon(false, new_check_weapon.get_cost()),
+                            Transaction::Weapon(
+                                false,
+                                new_check_weapon.get_cost(),
+                                new_check_weapon.to_full_name(),
+                            ),
                         );
 
                         if let Err(_e) = tx_res {
@@ -381,7 +428,7 @@ pub fn always_quartermaster(loadout: &mut Loadout, budget: &mut Budget, rng: &mu
                 (Slot::Medium, Slot::Small) => {
                     let _tx = budget::process_transaction(
                         budget,
-                        Transaction::Weapon(true, weapon_two.get_cost()),
+                        Transaction::Weapon(true, weapon_two.get_cost(), weapon_two.to_full_name()),
                     )
                     .ok();
 
@@ -391,7 +438,11 @@ pub fn always_quartermaster(loadout: &mut Loadout, budget: &mut Budget, rng: &mu
                     if let Some(new_check_weapon) = &new_weapon {
                         let tx_res = budget::process_transaction(
                             budget,
-                            Transaction::Weapon(false, new_check_weapon.get_cost()),
+                            Transaction::Weapon(
+                                false,
+                                new_check_weapon.get_cost(),
+                                new_check_weapon.to_full_name(),
+                            ),
                         );
 
                         if let Err(_e) = tx_res {
@@ -404,7 +455,7 @@ pub fn always_quartermaster(loadout: &mut Loadout, budget: &mut Budget, rng: &mu
                 (Slot::Small, Slot::Medium) => {
                     let _tx = budget::process_transaction(
                         budget,
-                        Transaction::Weapon(true, weapon_one.get_cost()),
+                        Transaction::Weapon(true, weapon_one.get_cost(), weapon_one.to_full_name()),
                     )
                     .ok();
 
@@ -414,7 +465,11 @@ pub fn always_quartermaster(loadout: &mut Loadout, budget: &mut Budget, rng: &mu
                     if let Some(new_check_weapon) = &new_weapon {
                         let tx_res = budget::process_transaction(
                             budget,
-                            Transaction::Weapon(false, new_check_weapon.get_cost()),
+                            Transaction::Weapon(
+                                false,
+                                new_check_weapon.get_cost(),
+                                new_check_weapon.to_full_name(),
+                            ),
                         );
 
                         if let Err(_e) = tx_res {
@@ -453,7 +508,11 @@ pub fn always_quartermaster(loadout: &mut Loadout, budget: &mut Budget, rng: &mu
                 if let Some(new_check_weapon) = &new_weapon {
                     let tx_res = budget::process_transaction(
                         budget,
-                        Transaction::Weapon(false, new_check_weapon.get_cost()),
+                        Transaction::Weapon(
+                            false,
+                            new_check_weapon.get_cost(),
+                            new_check_weapon.to_full_name(),
+                        ),
                     );
 
                     if let Err(_e) = tx_res {
@@ -489,7 +548,11 @@ pub fn always_quartermaster(loadout: &mut Loadout, budget: &mut Budget, rng: &mu
                 if let Some(new_check_weapon) = &new_weapon {
                     let tx_res = budget::process_transaction(
                         budget,
-                        Transaction::Weapon(false, new_check_weapon.get_cost()),
+                        Transaction::Weapon(
+                            false,
+                            new_check_weapon.get_cost(),
+                            new_check_weapon.to_full_name(),
+                        ),
                     );
 
                     if let Err(_e) = tx_res {
@@ -530,7 +593,11 @@ pub fn always_quartermaster(loadout: &mut Loadout, budget: &mut Budget, rng: &mu
                 if let Some(new_check_weapon) = &new_weapon {
                     let tx_res = budget::process_transaction(
                         budget,
-                        Transaction::Weapon(false, new_check_weapon.get_cost()),
+                        Transaction::Weapon(
+                            false,
+                            new_check_weapon.get_cost(),
+                            new_check_weapon.to_full_name(),
+                        ),
                     );
 
                     if let Err(_e) = tx_res {
@@ -571,7 +638,11 @@ pub fn always_quartermaster(loadout: &mut Loadout, budget: &mut Budget, rng: &mu
                 if let Some(new_check_weapon) = &new_weapon {
                     let tx_res = budget::process_transaction(
                         budget,
-                        Transaction::Weapon(false, new_check_weapon.get_cost()),
+                        Transaction::Weapon(
+                            false,
+                            new_check_weapon.get_cost(),
+                            new_check_weapon.to_full_name(),
+                        ),
                     );
 
                     if let Err(_e) = tx_res {
@@ -611,16 +682,22 @@ pub fn always_dual_wield(
             return;
         }
 
-        let _tx =
-            budget::process_transaction(budget, Transaction::Weapon(true, weapon_check.get_cost()))
-                .ok();
+        let _tx = budget::process_transaction(
+            budget,
+            Transaction::Weapon(true, weapon_check.get_cost(), weapon_check.to_full_name()),
+        )
+        .ok();
 
         let mut new_weapon = item_lte_cost(&search_weapons, budget.weapons_budget, rng);
 
         if let Some(new_check_weapon) = &new_weapon {
             let tx_res = budget::process_transaction(
                 budget,
-                Transaction::Weapon(false, new_check_weapon.get_cost()),
+                Transaction::Weapon(
+                    false,
+                    new_check_weapon.get_cost(),
+                    new_check_weapon.to_full_name(),
+                ),
             );
 
             if let Err(_e) = tx_res {
@@ -666,7 +743,7 @@ pub fn dedupe_weapons(
             let mut attempts = 0;
             let _tx = budget::process_transaction(
                 budget,
-                Transaction::Weapon(true, weapon_two.get_cost()),
+                Transaction::Weapon(true, weapon_two.get_cost(), weapon_two.to_full_name()),
             )
             .ok();
             let mut new_weapon = weapon_two.clone();
@@ -688,7 +765,11 @@ pub fn dedupe_weapons(
             if let Some(new_check_weapon) = &new_weapon {
                 let tx_res = budget::process_transaction(
                     budget,
-                    Transaction::Weapon(false, new_check_weapon.get_cost()),
+                    Transaction::Weapon(
+                        false,
+                        new_check_weapon.get_cost(),
+                        new_check_weapon.to_full_name(),
+                    ),
                 );
 
                 if let Err(_e) = tx_res {
@@ -715,7 +796,7 @@ pub fn dedupe_weapons(
             let mut attempts = 0;
             let _tx = budget::process_transaction(
                 budget,
-                Transaction::Weapon(true, weapon_one.get_cost()),
+                Transaction::Weapon(true, weapon_one.get_cost(), weapon_one.to_full_name()),
             )
             .ok();
             let mut new_weapon = weapon_one.clone();
@@ -737,7 +818,11 @@ pub fn dedupe_weapons(
             if let Some(new_check_weapon) = &new_weapon {
                 let tx_res = budget::process_transaction(
                     budget,
-                    Transaction::Weapon(false, new_check_weapon.get_cost()),
+                    Transaction::Weapon(
+                        false,
+                        new_check_weapon.get_cost(),
+                        new_check_weapon.to_full_name(),
+                    ),
                 );
 
                 if let Err(_e) = tx_res {
@@ -770,14 +855,14 @@ pub fn always_duplicate_weapons(loadout: &mut Loadout, budget: &mut Budget) {
                 if let Some(weapon_two) = weapon_two {
                     let _tx = budget::process_transaction(
                         budget,
-                        Transaction::Weapon(true, weapon_two.get_cost()),
+                        Transaction::Weapon(true, weapon_two.get_cost(), weapon_two.to_full_name()),
                     )
                     .ok();
                 }
 
                 let tx_res = budget::process_transaction(
                     budget,
-                    Transaction::Weapon(false, weapon_one.get_cost()),
+                    Transaction::Weapon(false, weapon_one.get_cost(), weapon_one.to_full_name()),
                 );
 
                 if tx_res.is_ok() {
@@ -786,7 +871,11 @@ pub fn always_duplicate_weapons(loadout: &mut Loadout, budget: &mut Budget) {
                     // Reversing transaction, this should not fail.
                     let _tx = budget::process_transaction(
                         budget,
-                        Transaction::Weapon(false, weapon_two.get_cost()),
+                        Transaction::Weapon(
+                            false,
+                            weapon_two.get_cost(),
+                            weapon_two.to_full_name(),
+                        ),
                     )
                     .ok();
                 }
@@ -813,14 +902,14 @@ pub fn always_duplicate_weapons(loadout: &mut Loadout, budget: &mut Budget) {
                 if let Some(weapon_one) = weapon_one {
                     let _tx = budget::process_transaction(
                         budget,
-                        Transaction::Weapon(true, weapon_one.get_cost()),
+                        Transaction::Weapon(true, weapon_one.get_cost(), weapon_one.to_full_name()),
                     )
                     .ok();
                 }
 
                 let tx_res = budget::process_transaction(
                     budget,
-                    Transaction::Weapon(false, weapon_two.get_cost()),
+                    Transaction::Weapon(false, weapon_two.get_cost(), weapon_two.to_full_name()),
                 );
 
                 if tx_res.is_ok() {
@@ -829,7 +918,11 @@ pub fn always_duplicate_weapons(loadout: &mut Loadout, budget: &mut Budget) {
                     // Reversing transaction, this should not fail.
                     let _tx = budget::process_transaction(
                         budget,
-                        Transaction::Weapon(false, weapon_one.get_cost()),
+                        Transaction::Weapon(
+                            false,
+                            weapon_one.get_cost(),
+                            weapon_one.to_full_name(),
+                        ),
                     )
                     .ok();
                 }
@@ -857,7 +950,14 @@ pub fn custom_ammo(
                 if ammo_type.1.is_some() {
                     let tx_res = budget::process_transaction(
                         budget,
-                        Transaction::Bullet(false, ammo_type.2),
+                        Transaction::Bullet(
+                            false,
+                            ammo_type.2,
+                            match &ammo_type.1 {
+                                Some(variant) => variant.to_string(),
+                                None => ammo_type.0.to_string(),
+                            },
+                        ),
                     );
 
                     if tx_res.is_err() {
@@ -924,16 +1024,34 @@ pub fn custom_ammo(
 
         if always {
             let ammo_type = bullet_types[rng.gen_range(0..bullet_types.len())].clone();
-            let tx_res =
-                budget::process_transaction(budget, Transaction::Bullet(false, ammo_type.2));
+            let tx_res = budget::process_transaction(
+                budget,
+                Transaction::Bullet(
+                    false,
+                    ammo_type.2,
+                    match &ammo_type.1 {
+                        Some(variant) => variant.to_string(),
+                        None => ammo_type.0.to_string(),
+                    },
+                ),
+            );
             if tx_res.is_ok() {
                 weapon.ammo_equipped.push(ammo_type);
             }
 
             if weapon.additional_ammo_slots.unwrap_or(false) {
                 let ammo_type = bullet_types[rng.gen_range(0..bullet_types.len())].clone();
-                let tx_res =
-                    budget::process_transaction(budget, Transaction::Bullet(false, ammo_type.2));
+                let tx_res = budget::process_transaction(
+                    budget,
+                    Transaction::Bullet(
+                        false,
+                        ammo_type.2,
+                        match &ammo_type.1 {
+                            Some(variant) => variant.to_string(),
+                            None => ammo_type.0.to_string(),
+                        },
+                    ),
+                );
                 if tx_res.is_ok() {
                     weapon.ammo_equipped.push(ammo_type);
                 }
@@ -941,8 +1059,17 @@ pub fn custom_ammo(
         } else {
             if rng.gen_bool(0.25) {
                 let ammo_type = bullet_types[rng.gen_range(0..bullet_types.len())].clone();
-                let tx_res =
-                    budget::process_transaction(budget, Transaction::Bullet(false, ammo_type.2));
+                let tx_res = budget::process_transaction(
+                    budget,
+                    Transaction::Bullet(
+                        false,
+                        ammo_type.2,
+                        match &ammo_type.1 {
+                            Some(variant) => variant.to_string(),
+                            None => ammo_type.0.to_string(),
+                        },
+                    ),
+                );
                 if tx_res.is_ok() {
                     weapon.ammo_equipped.push(ammo_type);
                 }
@@ -952,8 +1079,17 @@ pub fn custom_ammo(
 
             if rng.gen_bool(0.25) && weapon.additional_ammo_slots.unwrap_or(false) {
                 let ammo_type = bullet_types[rng.gen_range(0..bullet_types.len())].clone();
-                let tx_res =
-                    budget::process_transaction(budget, Transaction::Bullet(false, ammo_type.2));
+                let tx_res = budget::process_transaction(
+                    budget,
+                    Transaction::Bullet(
+                        false,
+                        ammo_type.2,
+                        match &ammo_type.1 {
+                            Some(variant) => variant.to_string(),
+                            None => ammo_type.0.to_string(),
+                        },
+                    ),
+                );
                 if tx_res.is_ok() {
                     weapon.ammo_equipped.push(ammo_type);
                 }
@@ -1014,8 +1150,10 @@ pub fn random_tools(
 
         if loadout.tools.iter().all(|t| t.item != random_tool) {
             loadout.tools[slot].item = if let Some(check_tool) = &random_tool {
-                let tx_res =
-                    budget::process_transaction(budget, Transaction::Tool(false, check_tool.cost));
+                let tx_res = budget::process_transaction(
+                    budget,
+                    Transaction::Tool(false, check_tool.cost, check_tool.to_full_name()),
+                );
 
                 if tx_res.is_ok() {
                     Some(check_tool.clone())
@@ -1132,7 +1270,11 @@ fn random_consumables(loadout: &mut Loadout, budget: &mut Budget, rng: &mut Thre
         consumable.item = if let Some(check_consumable) = &random_consumable {
             let tx_res = budget::process_transaction(
                 budget,
-                Transaction::Consumable(false, check_consumable.cost),
+                Transaction::Consumable(
+                    false,
+                    check_consumable.cost,
+                    check_consumable.to_full_name(),
+                ),
             );
 
             if tx_res.is_ok() {

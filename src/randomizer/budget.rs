@@ -1,11 +1,11 @@
 // checked_add_signed is experimental, so until it's pushed to the stable branch we can just use
 // bool as refund (true) or purchase (false) and u16 as the amount.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum Transaction {
-    Bullet(bool, u16),
-    Tool(bool, u16),
-    Consumable(bool, u16),
-    Weapon(bool, u16),
+    Bullet(bool, u16, String),
+    Tool(bool, u16, String),
+    Consumable(bool, u16, String),
+    Weapon(bool, u16, String),
 }
 
 pub enum TransactionResult {
@@ -13,9 +13,9 @@ pub enum TransactionResult {
     ErrorBudgeting,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Budget {
-    debug_transactions: Vec<Transaction>,
+    pub debug_transactions: Vec<Transaction>,
     pub total_cost: u16,
     pub initial_budget: u16,
     pub tools_budget: u16,
@@ -78,7 +78,7 @@ pub fn process_transaction(
     budget.debug_transactions.push(transaction_type.clone());
 
     match transaction_type {
-        Transaction::Bullet(refund, amount) | Transaction::Weapon(refund, amount) => {
+        Transaction::Bullet(refund, amount, _) | Transaction::Weapon(refund, amount, _) => {
             if refund {
                 // Since it's not an error to have too much money we just set it to max if we
                 // overflow.
@@ -99,7 +99,7 @@ pub fn process_transaction(
                 }
             }
         }
-        Transaction::Consumable(refund, amount) => {
+        Transaction::Consumable(refund, amount, _) => {
             if refund {
                 budget.consumables_budget = budget.consumables_budget.saturating_add(amount);
                 budget.total_cost = budget.total_cost.saturating_sub(amount);
@@ -117,7 +117,7 @@ pub fn process_transaction(
                 }
             }
         }
-        Transaction::Tool(refund, amount) => {
+        Transaction::Tool(refund, amount, _) => {
             if refund {
                 budget.tools_budget = budget.tools_budget.saturating_sub(amount);
                 budget.total_cost = budget.total_cost.saturating_sub(amount);
