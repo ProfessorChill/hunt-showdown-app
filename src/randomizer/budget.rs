@@ -75,8 +75,6 @@ pub fn process_transaction(
     budget: &mut Budget,
     transaction_type: Transaction,
 ) -> Result<(), TransactionResult> {
-    budget.debug_transactions.push(transaction_type.clone());
-
     match transaction_type {
         Transaction::Bullet(refund, amount, _) | Transaction::Weapon(refund, amount, _) => {
             if refund {
@@ -91,6 +89,7 @@ pub fn process_transaction(
                     Some(val) => {
                         budget.weapons_budget = val;
                         budget.total_cost = budget.total_cost.saturating_add(amount);
+                        budget.debug_transactions.push(transaction_type.clone());
 
                         Ok(())
                     }
@@ -110,6 +109,7 @@ pub fn process_transaction(
                     Some(val) => {
                         budget.consumables_budget = val;
                         budget.total_cost = budget.total_cost.saturating_add(amount);
+                        budget.debug_transactions.push(transaction_type.clone());
 
                         Ok(())
                     }
@@ -128,6 +128,7 @@ pub fn process_transaction(
                     Some(val) => {
                         budget.tools_budget = val;
                         budget.total_cost = budget.total_cost.saturating_add(amount);
+                        budget.debug_transactions.push(transaction_type.clone());
 
                         Ok(())
                     }
