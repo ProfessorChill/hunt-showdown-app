@@ -208,7 +208,7 @@ pub fn initial_weapon(
 ) {
     // Rusts powerful matching option makes advanced generation nice and easy!
     match (&mut weapon.item, weapon.locked) {
-        // If weapon one is locked and exists, process the weapon transaction.
+        // If weapon is locked and exists, process the weapon transaction.
         (Some(weapon), true) => {
             let tx_res = budget::process_transaction(
                 budget,
@@ -279,9 +279,8 @@ pub fn initial_weapon(
                 };
             }
         }
-        // The weapon doesn't exist and is locked, we don't want to generate an item in that
-        // slot, we can safely set the new_weapon to None.
-        (None, true) => weapon.item = None,
+        // The weapon doesn't exist and is locked, we don't want to generate an item.
+        (None, true) => {}
     }
 }
 
@@ -329,6 +328,10 @@ pub fn reset_consumables(loadout: &mut Loadout, budget: &mut Budget) {
 
 pub fn always_quartermaster(loadout: &mut Loadout, budget: &mut Budget, rng: &mut ThreadRng) {
     // Always replace the loadout with a valid quartermaster loadout.
+
+    if loadout.weapon_one.locked || loadout.weapon_two.locked {
+        return;
+    }
 
     if let Some(weapon_one) = &loadout.weapon_one.item {
         let _tx = budget::process_transaction(
