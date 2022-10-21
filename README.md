@@ -5,23 +5,24 @@ Currently this is a website built from the inspiration of the [Chaos Loadout](ht
 While I do plan on adding a few other things to this website, for now I feel I will be releasing this project as is for other people to learn from as well.
 
 
-This would not have been possible without [yew.rs](https://yew.rs/) an amazing framework for building front-end web apps using WebAssembly. I highly recommend looking at that project and contributing to it as well! And [rembg](https://github.com/danielgatis/rembg) for the amazing utility for removing backgrounds from images with AI without paying an arm and a leg to use it (it's free :) ).
+This would not have been possible without [yew.rs](https://yew.rs/) an amazing framework for building front-end web apps using WebAssembly. I highly recommend looking at that project and contributing to it as well! And [rembg](https://github.com/danielgatis/rembg) for the amazing utility for removing backgrounds from images with AI without paying an arm and a leg to use it (it's free ☺).
 
 ## Requirements
-- Python3 (for building images `remove_backgrounds.py`)
+- [Rust](https://www.rust-lang.org/)
+- [trunk](https://trunkrs.dev/) for testing, building, and releasing the website.
+- Python3 (for building images `process_images.py`)
 	- [rembg](https://github.com/danielgatis/rembg) (installed as an executable)
 	- [wand](https://github.com/emcconville/wand)
 - Node (npm) for [bluma](https://bulma.io/) and nothing else.
-- [trunk](https://trunkrs.dev/) for testing, building, and releasing the website.
 
 ## Building the images
 The SVG files have to be manually made using inkscape (or whatever you want) currently. I don't have it being automatically done in Python yet.
 
 
-The `remove_backgrounds.py` script relies on [rembg](https://github.com/danielgatis/rembg) and [wand](https://github.com/emcconville/wand) the paths are not checked and this script sould be considered **UNSAFE** since it accesses the `os.mkdir` and `shutil.rmtree` functions. While I've tried to ensure it does not remove anything else by accident please use this script **AT YOUR OWN RISK** it was made quickly with no intent to be published, I'm only pushing it to the git for my own future use. This script is very unoptimized and is horribly made, this should not be used as an example of my "professional" work and is simply there because I didn't want to convert hundreds of images by hand.
+The `process_images.py` script relies on [rembg](https://github.com/danielgatis/rembg) and [wand](https://github.com/emcconville/wand) the paths are not checked and this script sould be considered **UNSAFE** since it accesses the `os.mkdir` and `shutil.rmtree` functions. While I've tried to ensure it does not remove anything else by accident please use this script **AT YOUR OWN RISK** it was made quickly with no intent to be published, I'm only pushing it to the git for my own future use. This script is very unoptimized and is horribly made, this should not be used as an example of my "professional" work and is simply there because I didn't want to convert hundreds of images by hand.
 
 ## Building
-Local Testing
+Local testing.
 ```
 $ npm i
 $ trunk serve
@@ -31,8 +32,14 @@ Building for dist.
 $ npm i
 $ trunk build --release
 ```
+Then copy ./dist to the server.
 
-#### How are the images referenced without paths?
+# Q&A
+
+## Why WebAssembly?
+I just think it's a really neat technology and I want to learn how to build utilizing it better. To top it off it allows me to use Rust which is my favorite programming language.
+
+## How are the images referenced without paths?
 In `src/content/generic_item.rs` for weapons/tools/consumables there is `GenericItem::to_weapon_path`/`GenericItem::to_tool_path`/`GenericItem::to_consumable_path` which takes the name, removes spaces, dots and brackets, if a variant is provided it takes the `fmt::Display` and removes the spaces, if there is no variant it's not provided. Lastly it checks for postfixes (only for Caldwell Conversion **Pistol** right now) and appends to the end.
 
 
@@ -44,10 +51,10 @@ In `content.rs` for bullets there is `BulletVariant::to_svg_path` which similar 
 
 This would make `Long Full Metal Jacket` into `/images/bullets/LongFullMetalJacket.svg`.
 
-### Why JSON instead of RSON when you're using Rust?
+## Why JSON instead of RSON when you're using Rust?
 This was actually an oversight, when I was initially building the datasets I didn't have a programming language in mind, I was simply making the datasets for future use and figured "if I'm using JS then JSON works, if I'm using Rust then JSON works, if I'm using GO then JSON works, and if I'm using Python (server-side rendered) then JSON still works". I might change from JSON to RSON in the future, but for now it is what it is.
 
-### This json data is incorrect
+## This json data is incorrect
 It is currently updated to 1.10 including the ammo purchase changes (half price on weapons with two ammo slots) with the exception of the issues listed in [TODO](#todo)
 
 
@@ -59,13 +66,13 @@ If you would like to make a commit to correct the data, I request three things
 2. If possible please commit with a message containing a link to proof of the change (i.e. A picture uploaded to [imgur](https://imgur.com/) of how much experience is needed to unlock the desired object). This is simply to ensure the data was found in-game or though patch notes.
 3. Typos will need the images/raw_images changed to be accepted, this is simply because the image files are a generated name. `images/type/name + variant + postfix.webp` so if a name is changed then the image name needs to be changed as well.
 
-### Why are there two raw_images for status_icons/icons/bullets (.xcf and .svg)
+## Why are there two raw_images for status_icons/icons/bullets (.xcf and .svg)
 XCF is the picture I took in-game. I then open it in Inkscape and trace the icon to make it an SVG. The icon is then saved as an **INKSCAPE SVG** which I later save as a normal SVG for use on the website.
 
-### Why don't the raw_images have transparent backgrounds?
-The `process_images.py` function gets to `.xcf` files in `./raw_images` and converts them to `.png` files in `./images` using [wand](https://github.com/emcconville/wand), it then uses a subprocess (because the rembg python function has a memory leak) to [rembg](https://github.com/danielgatis/rembg) that removed the backgrounds of all images in that folder to remove their backgrounds, I'm aware that `rembg p <input_folder> <output_folder>`  exists however since I have a few images that I manually removed the backgrounds of I'm making it ignore those certain images, hence using `rembg i <input_file> <output_file>`. It then does a lossy conversion from `.png` to `.webp` to save on data.
+## Why don't the raw_images have transparent backgrounds?
+The `process_images.py` script gets all `.xcf` files in `./raw_images` and converts them to `.png` files then moves them to `./images` using [wand](https://github.com/emcconville/wand), it then uses a subprocess (because the rembg python function has a memory leak) to [rembg](https://github.com/danielgatis/rembg) the backgrounds of all images in that folder, I'm aware that `rembg p <input_folder> <output_folder>` exists however since I have a few images that I manually removed the backgrounds of and I'm making it ignore those certain images, hence using `rembg i <input_file> <output_file>`. It then does a lossy conversion from `.png` to `.webp` to save on data transfer.
 
-### Why does the data look so weird?
+## Why does the data look so weird?
 Serde Json (as far as I know) currently does not support `Vec<T>` where T is an Enum struct. However it does support it if you provide the following.
 ```rust
 #[derive(Deserialize)]
@@ -93,20 +100,17 @@ As a result my data that utilizes enum structs results in looking like:
 
 The `variants` field is only for the base weapon since a variant cannot have variants.
 
-### The SVGs are horrid
+## The SVGs are horrid
 Thanks! Please submit a commit with better looking ones, I'm a coder not an artist :)
 
-### TODO
+## TODO
 - Limits on how much item type can show up in advanced options.
-- Add the Sparks Pistol to `data/weapons.json`
-- Add the new Beetle to `data/consumables.json`
 - Make a new `data/bullets.json` since they're a static calcuation and don't need to be re-defined multiple times in `data/weapons.json`
 
-### TODO Later
+## TODO Later
 - Pick random legendary skin.
 
-### Known things that aren't bugs
-
+## Known things that aren't bugs
 These are logic programming that seems odd but makes sense when looking at it, I'll try to make errors more clear in the future.
 
 

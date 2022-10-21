@@ -175,6 +175,7 @@ pub enum UsageType {
         effective_radius: Option<u8>,
         effect_duration: Option<u16>,
         effect_radius: Option<u8>,
+        control_range: Option<u8>,
     },
     ThrowLight {
         types: Vec<UtilityType>,

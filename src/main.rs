@@ -1,3 +1,12 @@
+#![warn(
+    clippy::all,
+    clippy::pedantic,
+    clippy::nursery,
+    clippy::cargo,
+    clippy::style
+)]
+#![allow(clippy::module_name_repetitions)]
+
 #[macro_use]
 extern crate lazy_static;
 
@@ -11,7 +20,7 @@ mod randomizer;
 
 pub const TRANSPARENT_B64: &str = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
 
-#[derive(Routable, PartialEq, Eq, Clone, Debug)]
+#[derive(Routable, Clone, PartialEq, Eq, Copy)]
 pub enum Route {
     #[at("/")]
     Home,
@@ -30,8 +39,8 @@ pub fn App() -> Html {
                 <Switch<Route> render={switch} />
             </main>
 
-            <footer class="footer">
-                <div class="content has-text-centered">
+            <footer class={classes!("footer")}>
+                <div class={classes!("content", "has-text-centered")}>
                     { "Powered by " }
                     <a href="https://yew.rs">{ "Yew ♥" }</a>
                 </div>

@@ -3,7 +3,7 @@ use yew::prelude::*;
 use crate::randomizer::budget::Transaction;
 use crate::randomizer::Budget;
 
-#[derive(PartialEq, Properties)]
+#[derive(PartialEq, Eq, Properties)]
 pub struct BudgetDisplayProps {
     pub budget: Budget,
 }
@@ -20,10 +20,10 @@ pub fn BudgetDisplay(props: &BudgetDisplayProps) -> Html {
                 | Transaction::Weapon(refund, amount, name) => html! {
                 <p>
                     if *refund {
-                        <span class={classes!("has-text-danger")}>{&format!("Refund {}", name)}</span>
-                        <span>{&format!("-{}", amount)}</span>
+                        <span class={classes!("has-text-danger")}>{&format!("Refund {name}")}</span>
+                        <span>{&format!("-{amount}")}</span>
                     } else {
-                        <span class={classes!("has-text-success")}>{&format!("Purchase {}", name)}</span>
+                        <span class={classes!("has-text-success")}>{&format!("Purchase {name}")}</span>
                         <span>{amount}</span>
                     }
                 </p>
@@ -31,10 +31,10 @@ pub fn BudgetDisplay(props: &BudgetDisplayProps) -> Html {
             Transaction::Bullet(refund, amount, name) => html! {
                 <p>
                     if *refund {
-                        <span class={classes!("has-text-danger")}>{&format!("Refund {} Ammo", name)}</span>
-                        <span>{&format!("-{}", amount)}</span>
+                        <span class={classes!("has-text-danger")}>{&format!("Refund {name} Ammo")}</span>
+                        <span>{&format!("-{amount}")}</span>
                     } else {
-                        <span class={classes!("has-text-success")}>{&format!("Purchase {} Ammo", name)}</span>
+                        <span class={classes!("has-text-success")}>{&format!("Purchase {name} Ammo")}</span>
                         <span>{amount}</span>
                     }
                 </p>

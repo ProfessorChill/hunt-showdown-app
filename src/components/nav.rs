@@ -15,7 +15,7 @@ pub fn Nav() -> Html {
         })
     };
 
-    let active_class = if !*navbar_active { "is-active" } else { "" };
+    let active_class = if *navbar_active { "" } else { "is-active" };
 
     html! {
         <nav class="navbar" role="navigation" aria-label="main navigation">

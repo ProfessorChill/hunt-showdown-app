@@ -858,5 +858,36 @@
 				}
 			}
 		]
+	},
+	{
+		"name": "Stalker Beetle",
+		"cost": 45,
+		"requirements": [],
+		"types": [
+			{
+				"t": "throw",
+				"c": {
+					"types": ["noisy"],
+					"damage": 5,
+					"effect_radius": 5,
+					"effective_range": 15,
+					"control_range": 150
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 27
+				}
+			}
+		]
 	}
 ]

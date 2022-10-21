@@ -7331,5 +7331,74 @@
 				}
 			}
 		]
+	},
+	{
+		"name": "Sparks Pistol",
+		"slot": 0,
+		"additional_ammo_slots": true,
+		"cost": 155,
+		"requirements": [],
+		"types": [
+			{
+				"t": "shoot",
+				"c": {
+					"bullet_types": [
+						{
+							"ammo": [1, 16],
+							"damage": 149,
+							"effective_range": 150,
+							"handling": 60,
+							"muzzle_velocity": 453
+						},
+						{
+							"name": "incendiary",
+							"cost": 10,
+							"types": ["fire"],
+							"ammo": [1, 16],
+							"damage": 149,
+							"effective_range": 150,
+							"handling": 60,
+							"muzzle_velocity": 453
+						},
+						{
+							"name": "poison",
+							"cost": 30,
+							"types": ["poison"],
+							"ammo": [1, 16],
+							"damage": 149,
+							"effective_range": 150,
+							"handling": 60,
+							"muzzle_velocity": 453
+						},
+						{
+							"name": "full_metal_jacket",
+							"cost": 30,
+							"ammo": [1, 16],
+							"damage": 149,
+							"effective_range": 160,
+							"handling": 60,
+							"muzzle_velocity": 362
+						}
+					],
+					"bullet_size": "long",
+					"rate_of_fire": 38,
+					"reload_speed": 4
+				}
+			},
+			{
+				"t": "basic_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 13
+				}
+			},
+			{
+				"t": "heavy_melee",
+				"c": {
+					"types": ["blunt"],
+					"damage": 31
+				}
+			}
+		]
 	}
 ]

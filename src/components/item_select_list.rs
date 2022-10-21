@@ -109,7 +109,7 @@ pub fn ItemSelectList(props: &ItemSelectListProps) -> Html {
                 }
             };
 
-            item_set.sort_by_key(|a| a.to_full_name());
+            item_set.sort_by_key(GenericItem::to_full_name);
 
             search_items_handle.set(item_set);
             dual_wield_handle.set(dual_wield);
@@ -183,7 +183,7 @@ pub fn ItemSelectList(props: &ItemSelectListProps) -> Html {
                     }
                 };
 
-                item_set.sort_by_key(|a| a.to_full_name());
+                item_set.sort_by_key(GenericItem::to_full_name);
 
                 search_terms_handle.set(input.value());
                 search_items_handle.set(item_set);

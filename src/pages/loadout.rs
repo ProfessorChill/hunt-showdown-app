@@ -4,9 +4,11 @@ use crate::components::{
     AdvancedOptions, BudgetDisplay, BulletSelectList, ConsumableSlot, ItemSelectList, ToolSlot,
     WeaponSlot,
 };
-use crate::content::{BulletSize, BulletVariant, GenericItem, ItemVariant, CORE_SEARCH_UTIL};
+use crate::content::{generic_item::CustomAmmo, GenericItem, ItemVariant, CORE_SEARCH_UTIL};
 use crate::randomizer::budget::Transaction;
-use crate::randomizer::{budget, loadout, Budget, Config, Loadout, LoadoutInvalid};
+use crate::randomizer::{
+    budget, config::ToggleOption, loadout, Budget, Config, Loadout, LoadoutInvalid,
+};
 
 #[function_component]
 pub fn RandomLoadout() -> Html {
@@ -22,10 +24,13 @@ pub fn RandomLoadout() -> Html {
 
         move |_| {
             let mut config = config.clone();
-            config.dual_wield = !config.dual_wield;
-            if !config.dual_wield {
-                config.always_dual_wield = false;
+
+            config.toggle_option(ToggleOption::DualWield);
+
+            if !config.option_exists(ToggleOption::DualWield) {
+                config.remove_option(ToggleOption::AlwaysDualWield);
             }
+
             config_handle.set(config);
         }
     };
@@ -36,10 +41,13 @@ pub fn RandomLoadout() -> Html {
 
         move |_| {
             let mut config = config.clone();
-            config.duplicate_weapons = !config.duplicate_weapons;
-            if !config.duplicate_weapons {
-                config.always_duplicate_weapons = false;
+
+            config.toggle_option(ToggleOption::DuplicateWeapons);
+
+            if !config.option_exists(ToggleOption::DuplicateWeapons) {
+                config.remove_option(ToggleOption::AlwaysDuplicateWeapons);
             }
+
             config_handle.set(config);
         }
     };
@@ -50,10 +58,13 @@ pub fn RandomLoadout() -> Html {
 
         move |_| {
             let mut config = config.clone();
-            config.custom_ammo = !config.custom_ammo;
-            if !config.custom_ammo {
-                config.always_custom_ammo = false;
+
+            config.toggle_option(ToggleOption::CustomAmmo);
+
+            if !config.option_exists(ToggleOption::CustomAmmo) {
+                config.remove_option(ToggleOption::AlwaysCustomAmmo);
             }
+
             config_handle.set(config);
         }
     };
@@ -64,10 +75,13 @@ pub fn RandomLoadout() -> Html {
 
         move |_| {
             let mut config = config.clone();
-            config.quartermaster = !config.quartermaster;
-            if !config.quartermaster {
-                config.always_quartermaster = false;
+
+            config.toggle_option(ToggleOption::Quartermaster);
+
+            if !config.option_exists(ToggleOption::Quartermaster) {
+                config.remove_option(ToggleOption::AlwaysQuartermaster);
             }
+
             config_handle.set(config);
         }
     };
@@ -331,10 +345,10 @@ pub fn RandomLoadout() -> Html {
         let weapon_one_ammo_slot_handle = weapon_one_ammo_slot_handle.clone();
         let weapon_two_ammo_slot_handle = weapon_two_ammo_slot_handle.clone();
 
-        if let Some(weapon) = &loadout.weapon_one.item {
+        loadout.weapon_one.item.as_ref().map_or_else(|| html! {}, |weapon| {
             let weapon = weapon.clone();
 
-            weapon.ammo_equipped.iter().enumerate().map(|(slot, current_bullet): (usize, &(BulletSize, Option<BulletVariant>, u16))| {
+            weapon.ammo_equipped.iter().enumerate().map(|(slot, current_bullet): (usize, &CustomAmmo)| {
                 if let Some(weapon_one_ammo_slot) = &weapon_one_ammo_slot {
                     if *weapon_one_ammo_slot != slot {
                         return html!{};
@@ -352,7 +366,7 @@ pub fn RandomLoadout() -> Html {
                     let weapon_one_ammo_slot_handle = weapon_one_ammo_slot_handle.clone();
                     let weapon_two_ammo_slot_handle = weapon_two_ammo_slot_handle.clone();
 
-                    move |(bullet, pos): ((BulletSize, Option<BulletVariant>, u16), usize)| {
+                    move |(bullet, pos): (CustomAmmo, usize)| {
                         let mut loadout = loadout.clone();
                         let mut budget = budget.clone();
                         let current_bullet = current_bullet.clone();
@@ -390,9 +404,7 @@ pub fn RandomLoadout() -> Html {
                     <BulletSelectList weapon={weapon.clone()} bullet_slot={slot} on_bullet_selected={on_bullet_select} />
                 }
             }).collect::<Html>()
-        } else {
-            html! {}
-        }
+        })
     };
 
     let weapon_two_bullet_select_html = {
@@ -401,10 +413,10 @@ pub fn RandomLoadout() -> Html {
         let weapon_one_ammo_slot_handle = weapon_one_ammo_slot_handle.clone();
         let weapon_two_ammo_slot_handle = weapon_two_ammo_slot_handle.clone();
 
-        if let Some(weapon) = &loadout.weapon_two.item {
+        loadout.weapon_two.item.as_ref().map_or_else(|| html! {}, |weapon| {
             let weapon = weapon.clone();
 
-            weapon.ammo_equipped.iter().enumerate().map(|(slot, current_bullet): (usize, &(BulletSize, Option<BulletVariant>, u16))| {
+            weapon.ammo_equipped.iter().enumerate().map(|(slot, current_bullet): (usize, &CustomAmmo)| {
                 if let Some(weapon_two_ammo_slot) = &weapon_two_ammo_slot {
                     if *weapon_two_ammo_slot != slot {
                         return html!{};
@@ -423,7 +435,7 @@ pub fn RandomLoadout() -> Html {
                     let weapon_one_ammo_slot_handle = weapon_one_ammo_slot_handle.clone();
                     let weapon_two_ammo_slot_handle = weapon_two_ammo_slot_handle.clone();
 
-                    move |(bullet, pos): ((BulletSize, Option<BulletVariant>, u16), usize)| {
+                    move |(bullet, pos): (CustomAmmo, usize)| {
                         let mut loadout = loadout.clone();
                         let mut budget = budget.clone();
                         let current_bullet = current_bullet.clone();
@@ -467,9 +479,7 @@ pub fn RandomLoadout() -> Html {
                     <BulletSelectList weapon={weapon.clone()} bullet_slot={slot} on_bullet_selected={on_bullet_select} />
                 }
             }).collect::<Html>()
-        } else {
-            html! {}
-        }
+        })
     };
 
     let advanced_options_toggled_handle = use_state(|| false);
@@ -734,13 +744,16 @@ pub fn RandomLoadout() -> Html {
     let loadout_validity = {
         let mut loadout = loadout.clone();
 
-        loadout::check_loadout_validity(&mut loadout, config.quartermaster)
+        loadout::check_loadout_validity(
+            &mut loadout,
+            config.option_exists(ToggleOption::Quartermaster),
+        )
     };
 
     let mut weapon_valid = [None, None];
     let mut tools_valid = [None, None, None, None];
 
-    for validity in loadout_validity.iter() {
+    for validity in &loadout_validity {
         match validity {
             LoadoutInvalid::WeaponSlot(slot) => weapon_valid[*slot as usize] = Some("invalid"),
             LoadoutInvalid::ToolSlot(slot) => tools_valid[*slot as usize] = Some("invalid"),
@@ -755,7 +768,7 @@ pub fn RandomLoadout() -> Html {
                     <label class="checkbox">
                         <input
                             type="checkbox"
-                            checked={config.dual_wield}
+                            checked={config.option_exists(ToggleOption::DualWield)}
                             onchange={on_dual_wield_change}
                         />
                         {"Dual Wield"}
@@ -766,7 +779,7 @@ pub fn RandomLoadout() -> Html {
                     <label class="checkbox">
                         <input
                             type="checkbox"
-                            checked={config.duplicate_weapons}
+                            checked={config.option_exists(ToggleOption::DuplicateWeapons)}
                             onchange={on_duplicate_weapons_change}
                         />
                         {"Duplicate Weapons"}
@@ -777,7 +790,7 @@ pub fn RandomLoadout() -> Html {
                     <label class="checkbox">
                         <input
                             type="checkbox"
-                            checked={config.custom_ammo}
+                            checked={config.option_exists(ToggleOption::CustomAmmo)}
                             onchange={on_custom_ammo_change}
                         />
                         {"Custom Ammo"}
@@ -788,7 +801,7 @@ pub fn RandomLoadout() -> Html {
                     <label class="checkbox">
                         <input
                             type="checkbox"
-                            checked={config.quartermaster}
+                            checked={config.option_exists(ToggleOption::Quartermaster)}
                             onchange={on_quartermaster_change}
                         />
                         {"Quartermaster"}
@@ -821,12 +834,8 @@ pub fn RandomLoadout() -> Html {
                     <WeaponSlot
                         weapon={loadout.weapon_one.item.clone()}
                         locked={loadout.weapon_one.locked}
-                        dual_wield={if let Some(weapon_one) = &loadout.weapon_one.item {
-                            weapon_one.dual_wield
-                        } else { false }}
-                        ammo_types={if let Some(weapon_one) = &loadout.weapon_one.item {
-                            weapon_one.ammo_equipped.clone()
-                        } else { vec![] }}
+                        dual_wield={loadout.weapon_one.item.as_ref().map_or(false, |weapon_one| weapon_one.dual_wield)}
+                        ammo_types={loadout.weapon_one.item.as_ref().map_or_else(Vec::new, |weapon_one| weapon_one.ammo_equipped.clone())}
                         on_weapon_slot_clicked={on_weapon_one_clicked}
                         on_weapon_toggle_lock={on_weapon_one_toggle_lock}
                         on_weapon_delete={on_weapon_one_delete}
@@ -850,12 +859,8 @@ pub fn RandomLoadout() -> Html {
                     <WeaponSlot
                         weapon={loadout.weapon_two.item.clone()}
                         locked={loadout.weapon_two.locked}
-                        dual_wield={if let Some(weapon_two) = &loadout.weapon_two.item {
-                            weapon_two.dual_wield
-                        } else { false }}
-                        ammo_types={if let Some(weapon_two) = &loadout.weapon_two.item {
-                            weapon_two.ammo_equipped.clone()
-                        } else { vec![] }}
+                        dual_wield={loadout.weapon_two.item.as_ref().map_or(false, |weapon_two| weapon_two.dual_wield)}
+                        ammo_types={loadout.weapon_two.item.as_ref().map_or_else(Vec::new, |weapon_two| weapon_two.ammo_equipped.clone())}
                         on_weapon_slot_clicked={on_weapon_two_clicked}
                         on_weapon_toggle_lock={on_weapon_two_toggle_lock}
                         on_weapon_delete={on_weapon_two_delete}

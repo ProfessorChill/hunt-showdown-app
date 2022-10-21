@@ -2,18 +2,20 @@ use rand::{rngs::ThreadRng, thread_rng, Rng};
 use std::cmp::Ordering;
 
 use crate::content::{
-    generic_item::GenericItemLockable, BulletSize, BulletVariant, GenericItem, Slot,
-    ToolSlotPreference, UsageType, CORE_SEARCH_UTIL,
+    generic_item::{CustomAmmo, GenericItemLockable},
+    BulletSize, GenericItem, Slot, ToolSlotPreference, CORE_SEARCH_UTIL,
 };
-use crate::randomizer::budget::Transaction;
-use crate::randomizer::{budget, Budget, Config, LoadoutInvalid};
+use crate::randomizer::budget::{Transaction, TransactionResult};
+use crate::randomizer::{budget, config::ToggleOption, Budget, Config, LoadoutInvalid};
 
 const ERR_INSF_FND_LOCK: &str =
     "Insufficient Funds, try unlocking this item or increase your budget.";
+const ERR_SLOT_GT_UNSIGNED: &str = "Somehow got slot greater than u8.";
 const MAX_DUPE_CHECK_AMOUNT: usize = 10;
 pub const INVALID_DUALWIELD_NAMES: &[&str] =
     &["Cavalry Saber", "Hand Crossbow", "Combat Axe", "Machete"];
 
+#[allow(clippy::module_name_repetitions)]
 #[derive(Debug, Clone)]
 pub enum LoadoutError {
     Weapon { error: String, slot: u8 },
@@ -58,6 +60,33 @@ impl Default for Loadout {
     }
 }
 
+fn transaction_from_custom_ammo(
+    budget: &mut Budget,
+    ammo: &CustomAmmo,
+) -> Result<(), TransactionResult> {
+    budget::process_transaction(
+        budget,
+        Transaction::Bullet(
+            false,
+            ammo.2,
+            ammo.1
+                .as_ref()
+                .map_or_else(|| ammo.0.to_string(), ToString::to_string),
+        ),
+    )
+}
+
+fn transaction_from_weapon(
+    budget: &mut Budget,
+    weapon: &GenericItem,
+    refund: bool,
+) -> Result<(), TransactionResult> {
+    budget::process_transaction(
+        budget,
+        Transaction::Weapon(refund, weapon.get_cost(), weapon.to_full_name()),
+    )
+}
+
 pub fn get_valid_slots(quartermaster: bool, slot: &Slot) -> Vec<Slot> {
     if quartermaster {
         match slot {
@@ -91,34 +120,19 @@ pub fn item_lte_cost<'a>(
     }
 }
 
-pub fn is_dual_wield(weapon_one: &GenericItem, weapon_two: &GenericItem) -> bool {
-    matches!(
-        (
-            &weapon_one.slot,
-            weapon_one.dual_wield,
-            &weapon_two.slot,
-            weapon_two.dual_wield,
-        ),
-        (Some(Slot::Small), true, Some(Slot::Large), false)
-            | (Some(Slot::Large), false, Some(Slot::Small), true)
-            | (Some(Slot::Medium), false, Some(Slot::Large), false)
-            | (Some(Slot::Large), false, Some(Slot::Medium), false)
-    )
-}
-
 pub fn refund_item(budget: &mut Budget, item: &GenericItemLockable) {
     if let Some(item) = &item.item {
-        for ammo_type in item.ammo_equipped.iter() {
+        for ammo_type in &item.ammo_equipped {
             if ammo_type.2 > 0 {
                 let _tx = budget::process_transaction(
                     budget,
                     Transaction::Bullet(
                         true,
                         ammo_type.2,
-                        match &ammo_type.1 {
-                            Some(variant) => variant.to_string(),
-                            None => ammo_type.0.to_string(),
-                        },
+                        ammo_type
+                            .1
+                            .as_ref()
+                            .map_or_else(|| ammo_type.0.to_string(), ToString::to_string),
                     ),
                 )
                 .ok();
@@ -135,17 +149,17 @@ pub fn refund_item(budget: &mut Budget, item: &GenericItemLockable) {
 
 pub fn purchase_item(budget: &mut Budget, item: &GenericItemLockable) {
     if let Some(item) = &item.item {
-        for ammo_type in item.ammo_equipped.iter() {
+        for ammo_type in &item.ammo_equipped {
             if ammo_type.2 > 0 {
                 let tx_res = budget::process_transaction(
                     budget,
                     Transaction::Bullet(
                         false,
                         ammo_type.2,
-                        match &ammo_type.1 {
-                            Some(variant) => variant.to_string(),
-                            None => ammo_type.0.to_string(),
-                        },
+                        ammo_type
+                            .1
+                            .as_ref()
+                            .map_or_else(|| ammo_type.0.to_string(), ToString::to_string),
                     ),
                 );
 
@@ -192,8 +206,8 @@ pub fn initial_weapon(
     weapon: &mut GenericItemLockable,
     check: &GenericItemLockable,
 ) {
-    // Rusts powerfun matching option makes advanced generation nice and easy!
-    let new_weapon = match (&mut weapon.item, weapon.locked) {
+    // Rusts powerful matching option makes advanced generation nice and easy!
+    match (&mut weapon.item, weapon.locked) {
         // If weapon one is locked and exists, process the weapon transaction.
         (Some(weapon), true) => {
             let tx_res = budget::process_transaction(
@@ -207,74 +221,68 @@ pub fn initial_weapon(
                     slot: 0,
                 });
             }
-
-            // Copy itself, we're setting itself to itself.
-            Some(weapon.clone())
         }
         // The weapon one exists but isn't locked, or weapon one doesn't exist and isn't
         // locked.
-        (Some(_), false) | (None, false) => {
+        (Some(_) | None, false) => {
             // If weapon two exists and is locked we want a weapon based on that, otherwise
             // generate a random weapon.
-            match (&check.item, check.locked) {
-                (Some(check_weapon), _) => {
-                    let slot = check_weapon.get_slot();
-                    let valid_slots = get_valid_slots(quartermaster, &slot);
-                    let weapons = CORE_SEARCH_UTIL.get_weapons_by_sizes(&valid_slots);
-                    let mut new_weapon = item_lte_cost(&weapons, budget.weapons_budget, rng);
+            if let (Some(check_weapon), _) = (&check.item, check.locked) {
+                let slot = check_weapon.get_slot();
+                let valid_slots = get_valid_slots(quartermaster, &slot);
+                let weapons = CORE_SEARCH_UTIL.get_weapons_by_sizes(&valid_slots);
+                let mut new_weapon = item_lte_cost(&weapons, budget.weapons_budget, rng);
 
-                    if let Some(new_check_weapon) = &new_weapon {
-                        let tx_res = budget::process_transaction(
-                            budget,
-                            Transaction::Weapon(
-                                false,
-                                new_check_weapon.get_cost(),
-                                new_check_weapon.to_full_name(),
-                            ),
-                        );
+                if let Some(new_check_weapon) = &new_weapon {
+                    let tx_res = budget::process_transaction(
+                        budget,
+                        Transaction::Weapon(
+                            false,
+                            new_check_weapon.get_cost(),
+                            new_check_weapon.to_full_name(),
+                        ),
+                    );
 
-                        if let Err(_e) = tx_res {
-                            // We cannot afford the new weapon.
-                            new_weapon = None;
-                        }
+                    if let Err(_e) = tx_res {
+                        // We cannot afford the new weapon.
+                        new_weapon = None;
                     }
-
-                    new_weapon
                 }
-                _ => {
-                    let weapons = CORE_SEARCH_UTIL
-                        .weapons
-                        .iter()
-                        .collect::<Vec<&GenericItem>>();
 
-                    let mut new_weapon = item_lte_cost(&weapons, budget.weapons_budget, rng);
+                weapon.item = new_weapon;
+            } else {
+                let weapons = CORE_SEARCH_UTIL
+                    .weapons
+                    .iter()
+                    .collect::<Vec<&GenericItem>>();
 
-                    if let Some(new_check_weapon) = &new_weapon {
-                        let tx_res = budget::process_transaction(
-                            budget,
-                            Transaction::Weapon(
-                                false,
-                                new_check_weapon.get_cost(),
-                                new_check_weapon.to_full_name(),
-                            ),
-                        );
+                let new_weapon = item_lte_cost(&weapons, budget.weapons_budget, rng);
 
-                        if let Err(_e) = tx_res {
-                            // We cannot afford the new weapon.
-                            new_weapon = None;
-                        }
+                weapon.item = if let Some(new_check_weapon) = &new_weapon {
+                    let tx_res = budget::process_transaction(
+                        budget,
+                        Transaction::Weapon(
+                            false,
+                            new_check_weapon.get_cost(),
+                            new_check_weapon.to_full_name(),
+                        ),
+                    );
+
+                    if let Err(_e) = tx_res {
+                        // We cannot afford the new weapon.
+                        None
+                    } else {
+                        new_weapon
                     }
-
-                    new_weapon
-                }
+                } else {
+                    None
+                };
             }
         }
         // The weapon doesn't exist and is locked, we don't want to generate an item in that
         // slot, we can safely set the new_weapon to None.
-        (None, true) => None,
-    };
-
-    weapon.item = new_weapon;
+        (None, true) => weapon.item = None,
+    }
 }
 
 pub fn reset_tools(loadout: &mut Loadout, budget: &mut Budget) {
@@ -292,7 +300,7 @@ pub fn reset_tools(loadout: &mut Loadout, budget: &mut Budget) {
             if let Err(_e) = tx_res {
                 loadout.errors.push(LoadoutError::Tool {
                     error: ERR_INSF_FND_LOCK.to_string(),
-                    slot: slot.try_into().unwrap_or(0),
+                    slot: slot.try_into().expect(ERR_SLOT_GT_UNSIGNED),
                 });
             }
         }
@@ -312,7 +320,7 @@ pub fn reset_consumables(loadout: &mut Loadout, budget: &mut Budget) {
             if let Err(_e) = tx_res {
                 loadout.errors.push(LoadoutError::Consumable {
                     error: ERR_INSF_FND_LOCK.to_string(),
-                    slot: slot.try_into().unwrap_or(0),
+                    slot: slot.try_into().expect(ERR_SLOT_GT_UNSIGNED),
                 });
             }
         }
@@ -320,341 +328,67 @@ pub fn reset_consumables(loadout: &mut Loadout, budget: &mut Budget) {
 }
 
 pub fn always_quartermaster(loadout: &mut Loadout, budget: &mut Budget, rng: &mut ThreadRng) {
-    match (&mut loadout.weapon_one, &mut loadout.weapon_two) {
-        // Both weapons are unlocked and exist.
-        (
-            GenericItemLockable {
-                locked: false,
-                item: Some(weapon_one),
-            },
-            GenericItemLockable {
-                locked: false,
-                item: Some(weapon_two),
-            },
-        ) => {
-            // Check if they're already valid quartermaster.
-            if is_dual_wield(weapon_one, weapon_two) {
-                return;
-            }
+    // Always replace the loadout with a valid quartermaster loadout.
 
-            match (weapon_one.get_slot(), weapon_two.get_slot()) {
-                // Weapon one is small, weapon two is large, replace weapon two with a medium
-                // slot weapon.
-                (Slot::Small, Slot::Large) => {
-                    let _tx = budget::process_transaction(
-                        budget,
-                        Transaction::Weapon(true, weapon_one.get_cost(), weapon_one.to_full_name()),
-                    )
-                    .ok();
-
-                    let weapons = CORE_SEARCH_UTIL.get_weapons_by_sizes(&[Slot::Medium]);
-                    let mut new_weapon = item_lte_cost(&weapons, budget.weapons_budget, rng);
-
-                    if let Some(new_check_weapon) = &new_weapon {
-                        let tx_res = budget::process_transaction(
-                            budget,
-                            Transaction::Weapon(
-                                false,
-                                new_check_weapon.get_cost(),
-                                new_check_weapon.to_full_name(),
-                            ),
-                        );
-
-                        if let Err(_e) = tx_res {
-                            new_weapon = None;
-                        }
-                    }
-
-                    loadout.weapon_one.item = new_weapon;
-                }
-                // Weapon one is large, weapon two is small, replace weapon two with a medium
-                // slot weapon.
-                (Slot::Large, Slot::Small) => {
-                    let _tx = budget::process_transaction(
-                        budget,
-                        Transaction::Weapon(true, weapon_two.get_cost(), weapon_two.to_full_name()),
-                    )
-                    .ok();
-
-                    let weapons = CORE_SEARCH_UTIL.get_weapons_by_sizes(&[Slot::Medium]);
-                    let mut new_weapon = item_lte_cost(&weapons, budget.weapons_budget, rng);
-
-                    if let Some(new_check_weapon) = &new_weapon {
-                        let tx_res = budget::process_transaction(
-                            budget,
-                            Transaction::Weapon(
-                                false,
-                                new_check_weapon.get_cost(),
-                                new_check_weapon.to_full_name(),
-                            ),
-                        );
-
-                        if let Err(_e) = tx_res {
-                            new_weapon = None;
-                        }
-                    }
-
-                    loadout.weapon_two.item = new_weapon;
-                }
-                // Both weapons are medium slot, replace weapon one with a large slot weapon,
-                // just preference of ordering.
-                (Slot::Medium, Slot::Medium) => {
-                    let _tx = budget::process_transaction(
-                        budget,
-                        Transaction::Weapon(true, weapon_one.get_cost(), weapon_one.to_full_name()),
-                    )
-                    .ok();
-
-                    let weapons = CORE_SEARCH_UTIL.get_weapons_by_sizes(&[Slot::Large]);
-                    let mut new_weapon = item_lte_cost(&weapons, budget.weapons_budget, rng);
-
-                    if let Some(new_check_weapon) = &new_weapon {
-                        let tx_res = budget::process_transaction(
-                            budget,
-                            Transaction::Weapon(
-                                false,
-                                new_check_weapon.get_cost(),
-                                new_check_weapon.to_full_name(),
-                            ),
-                        );
-
-                        if let Err(_e) = tx_res {
-                            new_weapon = None;
-                        }
-                    }
-
-                    loadout.weapon_one.item = new_weapon;
-                }
-                (Slot::Medium, Slot::Small) => {
-                    let _tx = budget::process_transaction(
-                        budget,
-                        Transaction::Weapon(true, weapon_two.get_cost(), weapon_two.to_full_name()),
-                    )
-                    .ok();
-
-                    let weapons = CORE_SEARCH_UTIL.get_weapons_by_sizes(&[Slot::Large]);
-                    let mut new_weapon = item_lte_cost(&weapons, budget.weapons_budget, rng);
-
-                    if let Some(new_check_weapon) = &new_weapon {
-                        let tx_res = budget::process_transaction(
-                            budget,
-                            Transaction::Weapon(
-                                false,
-                                new_check_weapon.get_cost(),
-                                new_check_weapon.to_full_name(),
-                            ),
-                        );
-
-                        if let Err(_e) = tx_res {
-                            new_weapon = None;
-                        }
-                    }
-
-                    loadout.weapon_two.item = new_weapon;
-                }
-                (Slot::Small, Slot::Medium) => {
-                    let _tx = budget::process_transaction(
-                        budget,
-                        Transaction::Weapon(true, weapon_one.get_cost(), weapon_one.to_full_name()),
-                    )
-                    .ok();
-
-                    let weapons = CORE_SEARCH_UTIL.get_weapons_by_sizes(&[Slot::Large]);
-                    let mut new_weapon = item_lte_cost(&weapons, budget.weapons_budget, rng);
-
-                    if let Some(new_check_weapon) = &new_weapon {
-                        let tx_res = budget::process_transaction(
-                            budget,
-                            Transaction::Weapon(
-                                false,
-                                new_check_weapon.get_cost(),
-                                new_check_weapon.to_full_name(),
-                            ),
-                        );
-
-                        if let Err(_e) = tx_res {
-                            new_weapon = None;
-                        }
-                    }
-
-                    loadout.weapon_one.item = new_weapon;
-                }
-                // No other options are valid.
-                _ => {}
-            }
-        }
-        // Weapon one is locked or unlocked but weapon two doesn't exist and is unlocked
-        // so we'll update it based on that.
-        (
-            GenericItemLockable {
-                locked: _,
-                item: Some(weapon_one),
-            },
-            GenericItemLockable {
-                locked: false,
-                item: None,
-            },
-        ) => {
-            let slots_to_search = match weapon_one.get_slot() {
-                Slot::Large => vec![Slot::Medium],
-                Slot::Medium => vec![Slot::Large],
-                _ => vec![],
-            };
-
-            if !slots_to_search.is_empty() {
-                let weapons = CORE_SEARCH_UTIL.get_weapons_by_sizes(&slots_to_search);
-                let mut new_weapon = item_lte_cost(&weapons, budget.weapons_budget, rng);
-
-                if let Some(new_check_weapon) = &new_weapon {
-                    let tx_res = budget::process_transaction(
-                        budget,
-                        Transaction::Weapon(
-                            false,
-                            new_check_weapon.get_cost(),
-                            new_check_weapon.to_full_name(),
-                        ),
-                    );
-
-                    if let Err(_e) = tx_res {
-                        new_weapon = None;
-                    }
-                }
-
-                loadout.weapon_two.item = new_weapon;
-            }
-        }
-        // Weapon two is locked or unlocked but weapon one doesn't exist and is unlocked
-        // so we'll update it based on that.
-        (
-            GenericItemLockable {
-                locked: false,
-                item: None,
-            },
-            GenericItemLockable {
-                locked: _,
-                item: Some(weapon_two),
-            },
-        ) => {
-            let slots_to_search = match weapon_two.get_slot() {
-                Slot::Large => vec![Slot::Medium],
-                Slot::Medium => vec![Slot::Large],
-                _ => vec![],
-            };
-
-            if !slots_to_search.is_empty() {
-                let weapons = CORE_SEARCH_UTIL.get_weapons_by_sizes(&slots_to_search);
-                let mut new_weapon = item_lte_cost(&weapons, budget.weapons_budget, rng);
-
-                if let Some(new_check_weapon) = &new_weapon {
-                    let tx_res = budget::process_transaction(
-                        budget,
-                        Transaction::Weapon(
-                            false,
-                            new_check_weapon.get_cost(),
-                            new_check_weapon.to_full_name(),
-                        ),
-                    );
-
-                    if let Err(_e) = tx_res {
-                        new_weapon = None;
-                    }
-                }
-
-                loadout.weapon_one.item = new_weapon;
-            }
-        }
-        // Weapon one is locked and has a weapon, weapon two is not locked and doesn't have a
-        // weapon, we will change weapon_two if needed.
-        (
-            GenericItemLockable {
-                locked: true,
-                item: Some(weapon_one),
-            },
-            GenericItemLockable {
-                locked: false,
-                item: Some(weapon_two),
-            },
-        ) => {
-            if is_dual_wield(weapon_one, weapon_two) {
-                return;
-            }
-
-            let slots_to_search = match (weapon_one.get_slot(), weapon_two.get_slot()) {
-                (Slot::Medium, Slot::Medium) => vec![Slot::Large],
-                (Slot::Medium, Slot::Small) => vec![Slot::Large],
-                (Slot::Large, Slot::Small) => vec![Slot::Medium],
-                _ => vec![],
-            };
-
-            if !slots_to_search.is_empty() {
-                let weapons = CORE_SEARCH_UTIL.get_weapons_by_sizes(&slots_to_search);
-                let mut new_weapon = item_lte_cost(&weapons, budget.weapons_budget, rng);
-
-                if let Some(new_check_weapon) = &new_weapon {
-                    let tx_res = budget::process_transaction(
-                        budget,
-                        Transaction::Weapon(
-                            false,
-                            new_check_weapon.get_cost(),
-                            new_check_weapon.to_full_name(),
-                        ),
-                    );
-
-                    if let Err(_e) = tx_res {
-                        new_weapon = None;
-                    }
-                }
-
-                loadout.weapon_two.item = new_weapon;
-            }
-        }
-        // Weapon one is locked and has a weapon, weapon two is not locked and doesn't have a
-        // weapon, we will change weapon_two if needed.
-        (
-            GenericItemLockable {
-                locked: false,
-                item: Some(weapon_one),
-            },
-            GenericItemLockable {
-                locked: true,
-                item: Some(weapon_two),
-            },
-        ) => {
-            if is_dual_wield(weapon_one, weapon_two) {
-                return;
-            }
-
-            let slots_to_search = match (weapon_two.get_slot(), weapon_one.get_slot()) {
-                (Slot::Medium, Slot::Medium) => vec![Slot::Large],
-                (Slot::Medium, Slot::Small) => vec![Slot::Large],
-                (Slot::Large, Slot::Small) => vec![Slot::Medium],
-                _ => vec![],
-            };
-
-            if !slots_to_search.is_empty() {
-                let weapons = CORE_SEARCH_UTIL.get_weapons_by_sizes(&slots_to_search);
-                let mut new_weapon = item_lte_cost(&weapons, budget.weapons_budget, rng);
-
-                if let Some(new_check_weapon) = &new_weapon {
-                    let tx_res = budget::process_transaction(
-                        budget,
-                        Transaction::Weapon(
-                            false,
-                            new_check_weapon.get_cost(),
-                            new_check_weapon.to_full_name(),
-                        ),
-                    );
-
-                    if let Err(_e) = tx_res {
-                        new_weapon = None;
-                    }
-                }
-
-                loadout.weapon_one.item = new_weapon;
-            }
-        }
-        _ => {}
+    if let Some(weapon_one) = &loadout.weapon_one.item {
+        let _tx = budget::process_transaction(
+            budget,
+            Transaction::Weapon(true, weapon_one.get_cost(), weapon_one.to_full_name()),
+        )
+        .ok();
     }
+
+    let weapons = CORE_SEARCH_UTIL.get_weapons_by_sizes(&[Slot::Large]);
+    let new_weapon = item_lte_cost(&weapons, budget.weapons_budget, rng);
+
+    loadout.weapon_one.item = if let Some(new_check_weapon) = &new_weapon {
+        let tx_res = budget::process_transaction(
+            budget,
+            Transaction::Weapon(
+                false,
+                new_check_weapon.get_cost(),
+                new_check_weapon.to_full_name(),
+            ),
+        );
+
+        if let Err(_e) = tx_res {
+            None
+        } else {
+            new_weapon
+        }
+    } else {
+        None
+    };
+
+    if let Some(weapon_two) = &loadout.weapon_two.item {
+        let _tx = budget::process_transaction(
+            budget,
+            Transaction::Weapon(true, weapon_two.get_cost(), weapon_two.to_full_name()),
+        )
+        .ok();
+    }
+
+    let weapons = CORE_SEARCH_UTIL.get_weapons_by_sizes(&[Slot::Medium]);
+    let new_weapon = item_lte_cost(&weapons, budget.weapons_budget, rng);
+
+    loadout.weapon_two.item = if let Some(new_check_weapon) = &new_weapon {
+        let tx_res = budget::process_transaction(
+            budget,
+            Transaction::Weapon(
+                false,
+                new_check_weapon.get_cost(),
+                new_check_weapon.to_full_name(),
+            ),
+        );
+
+        if let Err(_e) = tx_res {
+            None
+        } else {
+            new_weapon
+        }
+    } else {
+        None
+    };
 }
 
 pub fn always_dual_wield(
@@ -663,10 +397,11 @@ pub fn always_dual_wield(
     weapon: &mut GenericItemLockable,
 ) {
     // Temporary workaround to making cost work.
-    let mut weapons = CORE_SEARCH_UTIL.get_dual_wield_weapons();
-    let mut weapons = weapons
-        .iter_mut()
-        .map(|weapon| (*weapon).clone())
+    let mut weapons = CORE_SEARCH_UTIL
+        .get_dual_wield_weapons()
+        .iter()
+        .copied()
+        .cloned()
         .collect::<Vec<GenericItem>>();
     let search_weapons = weapons
         .iter_mut()
@@ -718,17 +453,7 @@ pub fn dedupe_weapons(
     match (&loadout.weapon_one, &loadout.weapon_two) {
         (
             GenericItemLockable {
-                locked: false,
-                item: Some(weapon_one),
-            },
-            GenericItemLockable {
-                locked: false,
-                item: Some(weapon_two),
-            },
-        )
-        | (
-            GenericItemLockable {
-                locked: true,
+                locked: false | true,
                 item: Some(weapon_one),
             },
             GenericItemLockable {
@@ -741,11 +466,7 @@ pub fn dedupe_weapons(
             }
 
             let mut attempts = 0;
-            let _tx = budget::process_transaction(
-                budget,
-                Transaction::Weapon(true, weapon_two.get_cost(), weapon_two.to_full_name()),
-            )
-            .ok();
+            let _tx = transaction_from_weapon(budget, weapon_two, true).ok();
             let mut new_weapon = weapon_two.clone();
 
             while weapon_one == &new_weapon && attempts != MAX_DUPE_CHECK_AMOUNT {
@@ -761,23 +482,18 @@ pub fn dedupe_weapons(
                 attempts += 1;
             }
 
-            let mut new_weapon = Some(new_weapon);
-            if let Some(new_check_weapon) = &new_weapon {
-                let tx_res = budget::process_transaction(
-                    budget,
-                    Transaction::Weapon(
-                        false,
-                        new_check_weapon.get_cost(),
-                        new_check_weapon.to_full_name(),
-                    ),
-                );
+            let new_weapon = Some(new_weapon);
+            loadout.weapon_two.item = if let Some(new_check_weapon) = &new_weapon {
+                let tx_res = transaction_from_weapon(budget, new_check_weapon, false);
 
                 if let Err(_e) = tx_res {
-                    new_weapon = None;
+                    None
+                } else {
+                    new_weapon
                 }
-            }
-
-            loadout.weapon_two.item = new_weapon;
+            } else {
+                None
+            };
         }
         (
             GenericItemLockable {
@@ -794,11 +510,7 @@ pub fn dedupe_weapons(
             }
 
             let mut attempts = 0;
-            let _tx = budget::process_transaction(
-                budget,
-                Transaction::Weapon(true, weapon_one.get_cost(), weapon_one.to_full_name()),
-            )
-            .ok();
+            let _tx = transaction_from_weapon(budget, weapon_one, true).ok();
             let mut new_weapon = weapon_one.clone();
 
             while weapon_two == &new_weapon && attempts != MAX_DUPE_CHECK_AMOUNT {
@@ -814,23 +526,18 @@ pub fn dedupe_weapons(
                 attempts += 1;
             }
 
-            let mut new_weapon = Some(new_weapon);
-            if let Some(new_check_weapon) = &new_weapon {
-                let tx_res = budget::process_transaction(
-                    budget,
-                    Transaction::Weapon(
-                        false,
-                        new_check_weapon.get_cost(),
-                        new_check_weapon.to_full_name(),
-                    ),
-                );
+            let new_weapon = Some(new_weapon);
+            loadout.weapon_one.item = if let Some(new_check_weapon) = &new_weapon {
+                let tx_res = transaction_from_weapon(budget, new_check_weapon, false);
 
                 if let Err(_e) = tx_res {
-                    new_weapon = None;
+                    None
+                } else {
+                    new_weapon
                 }
-            }
-
-            loadout.weapon_one.item = new_weapon;
+            } else {
+                None
+            };
         }
         // We can't replace items if we can't check duplicates.
         _ => {}
@@ -882,7 +589,7 @@ pub fn always_duplicate_weapons(loadout: &mut Loadout, budget: &mut Budget) {
 
                 return;
             }
-            _ => {}
+            Slot::Large => {}
         }
     }
 
@@ -927,7 +634,7 @@ pub fn always_duplicate_weapons(loadout: &mut Loadout, budget: &mut Budget) {
                     .ok();
                 }
             }
-            _ => {}
+            Slot::Large => {}
         }
     }
 }
@@ -946,19 +653,9 @@ pub fn custom_ammo(
         }
 
         if let Some(weapon) = &mut weapon.item {
-            for ammo_type in weapon.ammo_equipped.iter() {
+            for ammo_type in &weapon.ammo_equipped {
                 if ammo_type.1.is_some() {
-                    let tx_res = budget::process_transaction(
-                        budget,
-                        Transaction::Bullet(
-                            false,
-                            ammo_type.2,
-                            match &ammo_type.1 {
-                                Some(variant) => variant.to_string(),
-                                None => ammo_type.0.to_string(),
-                            },
-                        ),
-                    );
+                    let tx_res = transaction_from_custom_ammo(budget, ammo_type);
 
                     if tx_res.is_err() {
                         // Handle not purchasable ammo.
@@ -971,50 +668,7 @@ pub fn custom_ammo(
     }
 
     if let Some(weapon) = &mut weapon.item {
-        let mut bullet_size_cap = None;
-
-        // Get a vector of bullet size, bullet variant, and bullet cost.
-        let bullet_types = weapon
-            .usage_types
-            .iter()
-            .filter_map(|usage_type| match usage_type {
-                UsageType::Shoot {
-                    bullet_types,
-                    bullet_size,
-                    ..
-                } => {
-                    bullet_size_cap = Some(bullet_size.clone());
-                    let bullet_types = bullet_types
-                        .iter()
-                        .filter_map(|bullet| match &bullet.name {
-                            Some(variant) => Some((
-                                bullet_size.clone(),
-                                Some(variant.clone()),
-                                if let Some(bullet_cost) = bullet.cost {
-                                    if weapon.additional_ammo_slots.unwrap_or(false) {
-                                        // As of update 1.10 this is how bullet_cost is calculated.
-                                        bullet_cost / 2
-                                    } else {
-                                        bullet_cost
-                                    }
-                                } else {
-                                    0
-                                },
-                            )),
-                            None => None,
-                        })
-                        .collect::<Vec<(BulletSize, Option<BulletVariant>, u16)>>();
-
-                    if bullet_types.is_empty() {
-                        None
-                    } else {
-                        Some(bullet_types)
-                    }
-                }
-                _ => None,
-            })
-            .flatten()
-            .collect::<Vec<(BulletSize, Option<BulletVariant>, u16)>>();
+        let bullet_types = weapon.get_bullet_variants();
 
         weapon.ammo_equipped = vec![];
 
@@ -1024,34 +678,16 @@ pub fn custom_ammo(
 
         if always {
             let ammo_type = bullet_types[rng.gen_range(0..bullet_types.len())].clone();
-            let tx_res = budget::process_transaction(
-                budget,
-                Transaction::Bullet(
-                    false,
-                    ammo_type.2,
-                    match &ammo_type.1 {
-                        Some(variant) => variant.to_string(),
-                        None => ammo_type.0.to_string(),
-                    },
-                ),
-            );
+            let tx_res = transaction_from_custom_ammo(budget, &ammo_type);
+
             if tx_res.is_ok() {
                 weapon.ammo_equipped.push(ammo_type);
             }
 
             if weapon.additional_ammo_slots.unwrap_or(false) {
                 let ammo_type = bullet_types[rng.gen_range(0..bullet_types.len())].clone();
-                let tx_res = budget::process_transaction(
-                    budget,
-                    Transaction::Bullet(
-                        false,
-                        ammo_type.2,
-                        match &ammo_type.1 {
-                            Some(variant) => variant.to_string(),
-                            None => ammo_type.0.to_string(),
-                        },
-                    ),
-                );
+                let tx_res = transaction_from_custom_ammo(budget, &ammo_type);
+
                 if tx_res.is_ok() {
                     weapon.ammo_equipped.push(ammo_type);
                 }
@@ -1059,48 +695,30 @@ pub fn custom_ammo(
         } else {
             if rng.gen_bool(0.25) {
                 let ammo_type = bullet_types[rng.gen_range(0..bullet_types.len())].clone();
-                let tx_res = budget::process_transaction(
-                    budget,
-                    Transaction::Bullet(
-                        false,
-                        ammo_type.2,
-                        match &ammo_type.1 {
-                            Some(variant) => variant.to_string(),
-                            None => ammo_type.0.to_string(),
-                        },
-                    ),
-                );
+                let tx_res = transaction_from_custom_ammo(budget, &ammo_type);
+
                 if tx_res.is_ok() {
                     weapon.ammo_equipped.push(ammo_type);
                 }
-            } else if let Some(bullet_size) = &bullet_size_cap {
+            } else if let Some(bullet_size) = &weapon.get_bullet_size() {
                 weapon.ammo_equipped.push((bullet_size.clone(), None, 0));
             }
 
             if rng.gen_bool(0.25) && weapon.additional_ammo_slots.unwrap_or(false) {
                 let ammo_type = bullet_types[rng.gen_range(0..bullet_types.len())].clone();
-                let tx_res = budget::process_transaction(
-                    budget,
-                    Transaction::Bullet(
-                        false,
-                        ammo_type.2,
-                        match &ammo_type.1 {
-                            Some(variant) => variant.to_string(),
-                            None => ammo_type.0.to_string(),
-                        },
-                    ),
-                );
+                let tx_res = transaction_from_custom_ammo(budget, &ammo_type);
+
                 if tx_res.is_ok() {
                     weapon.ammo_equipped.push(ammo_type);
                 }
             } else if weapon.additional_ammo_slots.unwrap_or(false) {
-                if let Some(bullet_size) = &bullet_size_cap {
+                if let Some(bullet_size) = &weapon.get_bullet_size() {
                     weapon.ammo_equipped.push((bullet_size.clone(), None, 0));
                 }
             }
         }
 
-        if let Some(bullet_size) = &bullet_size_cap {
+        if let Some(bullet_size) = &weapon.get_bullet_size() {
             if weapon.ammo_equipped.is_empty() && weapon.additional_ammo_slots.unwrap_or(false) {
                 weapon.ammo_equipped = vec![
                     (bullet_size.clone(), None, 0),
@@ -1149,7 +767,7 @@ pub fn random_tools(
         let random_tool = item_lte_cost(&random_tools, budget.tools_budget, rng);
 
         if loadout.tools.iter().all(|t| t.item != random_tool) {
-            loadout.tools[slot].item = if let Some(check_tool) = &random_tool {
+            loadout.tools[slot].item = random_tool.as_ref().and_then(|check_tool| {
                 let tx_res = budget::process_transaction(
                     budget,
                     Transaction::Tool(false, check_tool.cost, check_tool.to_full_name()),
@@ -1160,9 +778,7 @@ pub fn random_tools(
                 } else {
                     None
                 }
-            } else {
-                None
-            };
+            });
         }
     }
 
@@ -1256,7 +872,7 @@ pub fn random_consumable(loadout: &mut Loadout, budget: &mut Budget, slot: u8) {
 }
 
 fn random_consumables(loadout: &mut Loadout, budget: &mut Budget, rng: &mut ThreadRng) {
-    for consumable in loadout.consumables.iter_mut() {
+    for consumable in &mut loadout.consumables {
         if consumable.locked {
             continue;
         }
@@ -1267,7 +883,7 @@ fn random_consumables(loadout: &mut Loadout, budget: &mut Budget, rng: &mut Thre
             .collect::<Vec<&GenericItem>>();
         let random_consumable = item_lte_cost(&random_consumables, budget.consumables_budget, rng);
 
-        consumable.item = if let Some(check_consumable) = &random_consumable {
+        consumable.item = random_consumable.as_ref().and_then(|check_consumable| {
             let tx_res = budget::process_transaction(
                 budget,
                 Transaction::Consumable(
@@ -1282,9 +898,7 @@ fn random_consumables(loadout: &mut Loadout, budget: &mut Budget, rng: &mut Thre
             } else {
                 None
             }
-        } else {
-            None
-        };
+        });
     }
 
     loadout.consumables.sort_by(|a, b| {
@@ -1313,39 +927,53 @@ pub fn random_weapon_one(loadout: &mut Loadout, budget: &mut Budget, config: &Co
         loadout,
         budget,
         &mut rng,
-        config.quartermaster,
+        config.option_exists(ToggleOption::Quartermaster),
         &mut weapon_one,
         &weapon_two,
     );
     loadout.weapon_one = weapon_one.clone();
 
-    if config.quartermaster && config.always_quartermaster {
+    if config.option_exists(ToggleOption::Quartermaster)
+        && config.option_exists(ToggleOption::AlwaysQuartermaster)
+    {
         // Lock weapon two since we ONLY want to ensure weapon one is changed.
         loadout.weapon_two.locked = true;
         always_quartermaster(loadout, budget, &mut rng);
         loadout.weapon_two.locked = initial_weapon_two_lock;
     }
 
-    if config.always_dual_wield {
+    if config.option_exists(ToggleOption::AlwaysDualWield) {
         let mut weapon_one = loadout.weapon_one.clone();
         always_dual_wield(budget, &mut rng, &mut weapon_one);
         loadout.weapon_one = weapon_one.clone();
     }
 
-    if !config.duplicate_weapons {
+    if !config.option_exists(ToggleOption::DuplicateWeapons) {
         // Again lock weapon two since we ONLY want to ensure weapon one is changed.
         loadout.weapon_two.locked = true;
-        dedupe_weapons(loadout, budget, &mut rng, config.quartermaster);
+        dedupe_weapons(
+            loadout,
+            budget,
+            &mut rng,
+            config.option_exists(ToggleOption::Quartermaster),
+        );
         loadout.weapon_two.locked = initial_weapon_two_lock;
     }
 
-    if config.custom_ammo {
+    if config.option_exists(ToggleOption::CustomAmmo) {
         let mut weapon_one = loadout.weapon_one.clone();
-        custom_ammo(budget, &mut rng, &mut weapon_one, config.always_custom_ammo);
+        custom_ammo(
+            budget,
+            &mut rng,
+            &mut weapon_one,
+            config.option_exists(ToggleOption::AlwaysCustomAmmo),
+        );
         loadout.weapon_one = weapon_one.clone();
     }
 
-    if config.duplicate_weapons && config.always_duplicate_weapons {
+    if config.option_exists(ToggleOption::DuplicateWeapons)
+        && config.option_exists(ToggleOption::AlwaysDuplicateWeapons)
+    {
         // ONCE AGAIN, lock weapon two, we don't want to change it.
         loadout.weapon_two.locked = true;
         always_duplicate_weapons(loadout, budget);
@@ -1370,39 +998,53 @@ pub fn random_weapon_two(loadout: &mut Loadout, budget: &mut Budget, config: &Co
         loadout,
         budget,
         &mut rng,
-        config.quartermaster,
+        config.option_exists(ToggleOption::Quartermaster),
         &mut weapon_two,
         &weapon_one,
     );
     loadout.weapon_two = weapon_two.clone();
 
-    if config.quartermaster && config.always_quartermaster {
+    if config.option_exists(ToggleOption::Quartermaster)
+        && config.option_exists(ToggleOption::AlwaysQuartermaster)
+    {
         // Lock weapon one since we ONLY want to ensure weapon two is changed.
         loadout.weapon_one.locked = true;
         always_quartermaster(loadout, budget, &mut rng);
         loadout.weapon_one.locked = initial_weapon_one_lock;
     }
 
-    if config.always_dual_wield {
+    if config.option_exists(ToggleOption::AlwaysDualWield) {
         let mut weapon_two = loadout.weapon_two.clone();
         always_dual_wield(budget, &mut rng, &mut weapon_two);
         loadout.weapon_two = weapon_two.clone();
     }
 
-    if !config.duplicate_weapons {
+    if !config.option_exists(ToggleOption::DuplicateWeapons) {
         // Again lock weapon one since we ONLY want to ensure weapon two is changed.
         loadout.weapon_one.locked = true;
-        dedupe_weapons(loadout, budget, &mut rng, config.quartermaster);
+        dedupe_weapons(
+            loadout,
+            budget,
+            &mut rng,
+            config.option_exists(ToggleOption::Quartermaster),
+        );
         loadout.weapon_one.locked = initial_weapon_one_lock;
     }
 
-    if config.custom_ammo {
+    if config.option_exists(ToggleOption::CustomAmmo) {
         let mut weapon_two = loadout.weapon_two.clone();
-        custom_ammo(budget, &mut rng, &mut weapon_two, config.always_custom_ammo);
+        custom_ammo(
+            budget,
+            &mut rng,
+            &mut weapon_two,
+            config.option_exists(ToggleOption::AlwaysCustomAmmo),
+        );
         loadout.weapon_two = weapon_two.clone();
     }
 
-    if config.duplicate_weapons && config.always_duplicate_weapons {
+    if config.option_exists(ToggleOption::DuplicateWeapons)
+        && config.option_exists(ToggleOption::AlwaysDuplicateWeapons)
+    {
         // ONCE AGAIN, lock weapon one, we don't want to change it.
         loadout.weapon_one.locked = true;
         always_duplicate_weapons(loadout, budget);
@@ -1412,6 +1054,43 @@ pub fn random_weapon_two(loadout: &mut Loadout, budget: &mut Budget, config: &Co
     refund_item(&mut previous_budget, &previous_weapon);
     purchase_item(&mut previous_budget, &loadout.weapon_two);
     *budget = previous_budget;
+}
+
+fn sort_weapons(loadout: &mut Loadout) {
+    if !loadout.weapon_one.locked && !loadout.weapon_two.locked {
+        match (&mut loadout.weapon_one.item, &mut loadout.weapon_two.item) {
+            (Some(weapon_one), Some(weapon_two)) => {
+                match (weapon_one.get_slot(), weapon_two.get_slot()) {
+                    (Slot::Small | Slot::Medium, Slot::Large) => {
+                        let weapon_one_clone = weapon_one.clone();
+                        *weapon_one = weapon_two.clone();
+                        *weapon_two = weapon_one_clone;
+                    }
+                    (Slot::Medium, Slot::Medium) | (Slot::Small, Slot::Small) => {
+                        match (weapon_one.get_bullet_size(), weapon_two.get_bullet_size()) {
+                            (
+                                Some(BulletSize::Compact)
+                                | Some(BulletSize::Medium)
+                                | Some(BulletSize::Special),
+                                Some(_),
+                            ) => {
+                                let weapon_one_clone = weapon_one.clone();
+                                *weapon_one = weapon_two.clone();
+                                *weapon_two = weapon_one_clone;
+                            }
+                            _ => {}
+                        }
+                    }
+                    _ => {}
+                }
+            }
+            (weapon_one @ None, weapon_two @ Some(_)) => {
+                *weapon_one = weapon_two.clone();
+                *weapon_two = None;
+            }
+            _ => {}
+        }
+    }
 }
 
 pub fn random(loadout: &mut Loadout, budget: &mut Budget, config: &Config) {
@@ -1433,7 +1112,7 @@ pub fn random(loadout: &mut Loadout, budget: &mut Budget, config: &Config) {
         loadout,
         budget,
         &mut rng,
-        config.quartermaster,
+        config.option_exists(ToggleOption::Quartermaster),
         &mut weapon_one,
         &weapon_two,
     );
@@ -1443,7 +1122,7 @@ pub fn random(loadout: &mut Loadout, budget: &mut Budget, config: &Config) {
         loadout,
         budget,
         &mut rng,
-        config.quartermaster,
+        config.option_exists(ToggleOption::Quartermaster),
         &mut weapon_two,
         &weapon_one,
     );
@@ -1451,13 +1130,15 @@ pub fn random(loadout: &mut Loadout, budget: &mut Budget, config: &Config) {
     loadout.weapon_two = weapon_two.clone();
 
     // We do the always quartermaster check here since other options WILL override it anyway.
-    if config.quartermaster && config.always_quartermaster {
+    if config.option_exists(ToggleOption::Quartermaster)
+        && config.option_exists(ToggleOption::AlwaysQuartermaster)
+    {
         always_quartermaster(loadout, budget, &mut rng);
     }
 
     // If we requested always dual wield and the weapon isn't locked, always look for a random
     // dual wield weapon.
-    if config.always_dual_wield {
+    if config.option_exists(ToggleOption::AlwaysDualWield) {
         let mut weapon_one = loadout.weapon_one.clone();
         let mut weapon_two = loadout.weapon_two.clone();
         always_dual_wield(budget, &mut rng, &mut weapon_one);
@@ -1469,20 +1150,28 @@ pub fn random(loadout: &mut Loadout, budget: &mut Budget, config: &Config) {
     // If we don't want duplicate weapons, replace it. and weapon two isn't locked, replace
     // weapon two. We also do the custom ammo check in here to prevent issues with weapon
     // mis-matching custom ammo.
-    if !config.duplicate_weapons {
-        dedupe_weapons(loadout, budget, &mut rng, config.quartermaster);
+    if !config.option_exists(ToggleOption::DuplicateWeapons) {
+        dedupe_weapons(
+            loadout,
+            budget,
+            &mut rng,
+            config.option_exists(ToggleOption::Quartermaster),
+        );
     }
 
-    if config.custom_ammo {
+    if config.option_exists(ToggleOption::CustomAmmo) {
         let mut weapon_one = loadout.weapon_one.clone();
         let mut weapon_two = loadout.weapon_two.clone();
-        custom_ammo(budget, &mut rng, &mut weapon_one, config.always_custom_ammo);
-        custom_ammo(budget, &mut rng, &mut weapon_two, config.always_custom_ammo);
+        let always_custom_ammo = config.option_exists(ToggleOption::AlwaysCustomAmmo);
+        custom_ammo(budget, &mut rng, &mut weapon_one, always_custom_ammo);
+        custom_ammo(budget, &mut rng, &mut weapon_two, always_custom_ammo);
         loadout.weapon_one = weapon_one.clone();
         loadout.weapon_two = weapon_two.clone();
     }
 
-    if config.duplicate_weapons && config.always_duplicate_weapons {
+    if config.option_exists(ToggleOption::DuplicateWeapons)
+        && config.option_exists(ToggleOption::AlwaysDuplicateWeapons)
+    {
         always_duplicate_weapons(loadout, budget);
     }
 
@@ -1493,6 +1182,7 @@ pub fn random(loadout: &mut Loadout, budget: &mut Budget, config: &Config) {
     budget::transfer_tools_to_consumables(budget);
 
     random_consumables(loadout, budget, &mut rng);
+    sort_weapons(loadout);
 }
 
 pub fn check_loadout_validity(loadout: &mut Loadout, quartermaster: bool) -> Vec<LoadoutInvalid> {
@@ -1518,10 +1208,10 @@ pub fn check_loadout_validity(loadout: &mut Loadout, quartermaster: bool) -> Vec
     let mut used_tools = vec![];
     for (tool_id, tool) in loadout.tools.iter().enumerate() {
         if let Some(tool) = &tool.item {
-            if !used_tools.contains(tool) {
-                used_tools.push(tool.clone());
-            } else {
+            if used_tools.contains(tool) {
                 invalid_checks.push(LoadoutInvalid::ToolSlot(tool_id.try_into().unwrap_or(0)));
+            } else {
+                used_tools.push(tool.clone());
             }
         }
     }

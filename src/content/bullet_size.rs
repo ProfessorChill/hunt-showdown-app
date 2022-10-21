@@ -35,20 +35,18 @@ impl fmt::Display for BulletSize {
 
 impl BulletSize {
     pub fn to_svg_path(&self, weapon: Option<&GenericItem>) -> String {
-        match weapon {
-            Some(weapon) => {
-                match &*weapon.name {
-                    // Special exceptions for some special weapons.
-                    // Bomb Lance actually uses the same image as CrossbowBolt
-                    "Crossbow" | "Bomb Lance" => "/images/bullets/CrossbowBolt.svg".to_string(),
-                    "Hand Crossbow" => "/images/bullets/Bolt.svg".to_string(),
-                    "Hunting Bow" => "/images/bullets/Arrow.svg".to_string(),
-                    "Dolch 96" => "/images/bullets/Dolch96.svg".to_string(),
-                    "Nitro Express Rifle" => "/images/bullets/Nitro.svg".to_string(),
-                    _ => format!("/images/bullets/{}.svg", self).replace(' ', ""),
-                }
-            }
-            None => format!("/images/bullets/{}.svg", self).replace(' ', ""),
-        }
+        weapon.map_or_else(
+            || format!("/images/bullets/{self}.svg").replace(' ', ""),
+            |weapon| match &*weapon.name {
+                // Special exceptions for some special weapons.
+                // Bomb Lance actually uses the same image as CrossbowBolt
+                "Crossbow" | "Bomb Lance" => "/images/bullets/CrossbowBolt.svg".to_string(),
+                "Hand Crossbow" => "/images/bullets/Bolt.svg".to_string(),
+                "Hunting Bow" => "/images/bullets/Arrow.svg".to_string(),
+                "Dolch 96" => "/images/bullets/Dolch96.svg".to_string(),
+                "Nitro Express Rifle" => "/images/bullets/Nitro.svg".to_string(),
+                _ => format!("/images/bullets/{self}.svg").replace(' ', ""),
+            },
+        )
     }
 }

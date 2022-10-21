@@ -63,40 +63,37 @@ impl fmt::Display for BulletVariant {
 
 impl BulletVariant {
     pub fn to_svg_path(&self, weapon: Option<&GenericItem>, size: &BulletSize) -> String {
-        match weapon {
-            Some(weapon) => {
-                match &*weapon.name {
-                    // Special exceptions for some special weapons.
-                    "Crossbow" => format!(
-                        "/images/bullets/Crossbow{}.svg",
-                        self.to_string().replace(' ', "").replace("Bolt", "")
-                    ),
-                    "Hand Crossbow" => format!(
-                        "/images/bullets/Bolt{}.svg",
-                        self.to_string().replace(' ', "").replace("Bolt", ""),
-                    ),
-                    "Hunting Bow" => format!(
-                        "/images/bullets/Arrow{}.svg",
-                        self.to_string().replace(' ', "").replace("Arrow", "")
-                    ),
-                    "Nitro Express Rifle" => format!(
-                        "/images/bullets/Nitro{}.svg",
-                        self.to_string().replace(' ', "")
-                    ),
-                    _ => format!(
-                        "/images/bullets/{}{}.svg",
-                        size,
-                        self.to_string().replace(' ', "")
-                    ),
-                }
-            }
-            None => {
+        weapon.map_or_else(
+            || {
                 format!(
+                    "/images/bullets/{size}{}.svg",
+                    self.to_string().replace(' ', "")
+                )
+            },
+            |weapon| match &*weapon.name {
+                // Special exceptions for some special weapons.
+                "Crossbow" => format!(
+                    "/images/bullets/Crossbow{}.svg",
+                    self.to_string().replace(' ', "").replace("Bolt", "")
+                ),
+                "Hand Crossbow" => format!(
+                    "/images/bullets/Bolt{}.svg",
+                    self.to_string().replace(' ', "").replace("Bolt", ""),
+                ),
+                "Hunting Bow" => format!(
+                    "/images/bullets/Arrow{}.svg",
+                    self.to_string().replace(' ', "").replace("Arrow", "")
+                ),
+                "Nitro Express Rifle" => format!(
+                    "/images/bullets/Nitro{}.svg",
+                    self.to_string().replace(' ', "")
+                ),
+                _ => format!(
                     "/images/bullets/{}{}.svg",
                     size,
                     self.to_string().replace(' ', "")
-                )
-            }
-        }
+                ),
+            },
+        )
     }
 }

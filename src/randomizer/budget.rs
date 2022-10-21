@@ -1,6 +1,6 @@
 // checked_add_signed is experimental, so until it's pushed to the stable branch we can just use
 // bool as refund (true) or purchase (false) and u16 as the amount.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum Transaction {
     Bullet(bool, u16, String),
     Tool(bool, u16, String),
@@ -13,7 +13,7 @@ pub enum TransactionResult {
     ErrorBudgeting,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Budget {
     pub debug_transactions: Vec<Transaction>,
     pub total_cost: u16,
@@ -89,7 +89,7 @@ pub fn process_transaction(
                     Some(val) => {
                         budget.weapons_budget = val;
                         budget.total_cost = budget.total_cost.saturating_add(amount);
-                        budget.debug_transactions.push(transaction_type.clone());
+                        budget.debug_transactions.push(transaction_type);
 
                         Ok(())
                     }
@@ -109,7 +109,7 @@ pub fn process_transaction(
                     Some(val) => {
                         budget.consumables_budget = val;
                         budget.total_cost = budget.total_cost.saturating_add(amount);
-                        budget.debug_transactions.push(transaction_type.clone());
+                        budget.debug_transactions.push(transaction_type);
 
                         Ok(())
                     }
@@ -128,7 +128,7 @@ pub fn process_transaction(
                     Some(val) => {
                         budget.tools_budget = val;
                         budget.total_cost = budget.total_cost.saturating_add(amount);
-                        budget.debug_transactions.push(transaction_type.clone());
+                        budget.debug_transactions.push(transaction_type);
 
                         Ok(())
                     }

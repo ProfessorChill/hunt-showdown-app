@@ -6,12 +6,12 @@ use crate::content::{
 use crate::randomizer::loadout::INVALID_DUALWIELD_NAMES;
 
 // For serde default on dual wield field.
-fn default_false() -> bool {
+const fn default_false() -> bool {
     false
 }
 
 // For serde default on ammo_equipped.
-fn default_ammo() -> Vec<CustomAmmo> {
+const fn default_ammo() -> Vec<CustomAmmo> {
     vec![]
 }
 
@@ -45,7 +45,7 @@ pub struct GenericItem {
 }
 
 impl GenericItem {
-    pub fn get_cost(&self) -> u16 {
+    pub const fn get_cost(&self) -> u16 {
         if self.dual_wield {
             self.cost * 2
         } else {
@@ -66,7 +66,7 @@ impl GenericItem {
         }
     }
 
-    pub fn get_bullet_variants(&self) -> Vec<(BulletSize, Option<BulletVariant>, u16)> {
+    pub fn get_bullet_variants(&self) -> Vec<CustomAmmo> {
         self.usage_types
             .iter()
             .filter_map(|usage_type| match usage_type {
@@ -82,16 +82,22 @@ impl GenericItem {
                                 (
                                     bullet_size.clone(),
                                     Some(variant.clone()),
-                                    bullet.cost.unwrap_or(0),
+                                    bullet.cost.map_or(0, |bullet_cost| {
+                                        if self.additional_ammo_slots.unwrap_or(false) {
+                                            bullet_cost / 2
+                                        } else {
+                                            bullet_cost
+                                        }
+                                    }),
                                 )
                             })
                         })
-                        .collect::<Vec<(BulletSize, Option<BulletVariant>, u16)>>(),
+                        .collect::<Vec<CustomAmmo>>(),
                 ),
                 _ => None,
             })
             .flatten()
-            .collect::<Vec<(BulletSize, Option<BulletVariant>, u16)>>()
+            .collect::<Vec<CustomAmmo>>()
     }
 
     pub fn get_bullet_size(&self) -> Option<BulletSize> {
@@ -121,14 +127,12 @@ impl GenericItem {
         format!(
             "{}{}{}",
             self.name,
-            match &self.variant {
-                Some(variant) => format!(" {} ", variant),
-                None => "".to_string(),
-            },
-            match &self.postfix {
-                Some(postfix) => format!(" {}", postfix),
-                None => "".to_string(),
-            },
+            self.variant
+                .as_ref()
+                .map_or_else(String::new, |variant| format!(" {variant} ")),
+            self.postfix
+                .as_ref()
+                .map_or_else(String::new, |postfix| format!(" {postfix}")),
         )
     }
 
@@ -149,10 +153,9 @@ impl GenericItem {
         format!(
             "/images/weapons/{}{}{}.webp",
             self.name.replace([' ', '.'], ""),
-            match &self.variant {
-                Some(variant) => format!("{}", variant).replace(' ', ""),
-                None => String::new(),
-            },
+            self.variant
+                .as_ref()
+                .map_or_else(String::new, |variant| variant.to_string().replace(' ', "")),
             self.postfix
                 .clone()
                 .unwrap_or_default()

@@ -25,11 +25,10 @@ impl CoreSearchUtil {
         self.weapons
             .iter()
             .filter(|weapon| {
-                if let Some(slot) = &weapon.slot {
-                    sizes.contains(slot)
-                } else {
-                    false
-                }
+                weapon
+                    .slot
+                    .as_ref()
+                    .map_or(false, |slot| sizes.contains(slot))
             })
             .collect::<Vec<&GenericItem>>()
     }

@@ -1,13 +1,12 @@
 use yew::prelude::*;
 
-use crate::content::generic_item::CustomAmmo;
-use crate::content::{BulletSize, BulletVariant, GenericItem};
+use crate::content::{generic_item::CustomAmmo, GenericItem};
 
 #[derive(PartialEq, Properties)]
 pub struct BulletDisplayProps {
     pub weapon: GenericItem,
-    pub bullet: (BulletSize, Option<BulletVariant>, u16),
-    pub on_bullet_clicked: Callback<(BulletSize, Option<BulletVariant>, u16)>,
+    pub bullet: CustomAmmo,
+    pub on_bullet_clicked: Callback<CustomAmmo>,
 }
 
 #[function_component]
@@ -27,24 +26,23 @@ pub fn BulletDisplay(props: &BulletDisplayProps) -> Html {
         }
     };
 
-    let bullet_svg_path = if let Some(bullet_variant) = &bullet.1 {
-        bullet_variant.to_svg_path(Some(weapon), &bullet.0)
-    } else {
-        bullet.0.to_svg_path(Some(weapon))
-    };
+    let bullet_svg_path = bullet.1.as_ref().map_or_else(
+        || bullet.0.to_svg_path(Some(weapon)),
+        |bullet_variant| bullet_variant.to_svg_path(Some(weapon), &bullet.0),
+    );
 
     if let Some(bullet) = &bullet.1 {
         html! {
             <div class={classes!("item-display")} onclick={on_bullet_clicked_cb}>
-                <img class={classes!("item-img")} src={bullet_svg_path} alt={format!("{}", bullet)} />
-                <span class={classes!("item-name")}>{format!("{}", bullet)}</span>
+                <img class={classes!("item-img")} src={bullet_svg_path} alt={bullet.to_string()} />
+                <span class={classes!("item-name")}>{bullet.to_string()}</span>
             </div>
         }
     } else {
         html! {
             <div class={classes!("item-display")} onclick={on_bullet_clicked_cb}>
-                <img class={classes!("item-img")} src={bullet_svg_path} alt={format!("{}", bullet.0)} />
-                <span class={classes!("item-name")}>{format!("{}", bullet.0)}</span>
+                <img class={classes!("item-img")} src={bullet_svg_path} alt={bullet.0.to_string()} />
+                <span class={classes!("item-name")}>{bullet.0.to_string()}</span>
             </div>
         }
     }
@@ -69,7 +67,7 @@ pub fn BulletSelectList(props: &BulletSelectListProps) -> Html {
         let on_bullet_selected_handle = on_bullet_selected.clone();
         let bullet_slot = *bullet_slot;
 
-        let on_bullet_clicked = move |bullet: (BulletSize, Option<BulletVariant>, u16)| {
+        let on_bullet_clicked = move |bullet: CustomAmmo| {
             on_bullet_selected_handle.emit((bullet, bullet_slot));
         };
 
@@ -82,7 +80,7 @@ pub fn BulletSelectList(props: &BulletSelectListProps) -> Html {
         let on_bullet_selected_handle = on_bullet_selected.clone();
         let bullet_slot = *bullet_slot;
 
-        move |bullet: (BulletSize, Option<BulletVariant>, u16)| {
+        move |bullet: CustomAmmo| {
             on_bullet_selected_handle.emit((bullet, bullet_slot));
         }
     };

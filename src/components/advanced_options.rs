@@ -3,7 +3,7 @@ use web_sys::{EventTarget, HtmlInputElement, HtmlSelectElement};
 use yew::prelude::*;
 
 use crate::content::ToolSlotPreference;
-use crate::randomizer::Config;
+use crate::randomizer::{config::ToggleOption, Config};
 
 #[derive(PartialEq, Properties)]
 pub struct AdvancedOptionsProps {
@@ -64,13 +64,10 @@ pub fn AdvancedOptions(props: &AdvancedOptionsProps) -> Html {
             if let Some(input) = input {
                 let mut config = config.clone();
 
-                if !input.value().is_empty() {
-                    config.max_cost = match input.value().parse::<u16>() {
-                        Ok(cost) => Some(cost),
-                        Err(_) => None,
-                    };
-                } else {
+                if input.value().is_empty() {
                     config.max_cost = None;
+                } else {
+                    config.max_cost = input.value().parse::<u16>().ok();
                 }
 
                 config_handle.set(config);
@@ -84,10 +81,13 @@ pub fn AdvancedOptions(props: &AdvancedOptionsProps) -> Html {
 
         move |_| {
             let mut config = config.clone();
-            config.dual_wield = !config.dual_wield;
-            if !config.dual_wield {
-                config.always_dual_wield = false;
+
+            config.toggle_option(ToggleOption::DualWield);
+
+            if !config.option_exists(ToggleOption::DualWield) {
+                config.remove_option(ToggleOption::AlwaysDualWield);
             }
+
             config_handle.set(config);
         }
     };
@@ -98,10 +98,13 @@ pub fn AdvancedOptions(props: &AdvancedOptionsProps) -> Html {
 
         move |_| {
             let mut config = config.clone();
-            config.duplicate_weapons = !config.duplicate_weapons;
-            if !config.duplicate_weapons {
-                config.always_duplicate_weapons = false;
+
+            config.toggle_option(ToggleOption::DuplicateWeapons);
+
+            if !config.option_exists(ToggleOption::DuplicateWeapons) {
+                config.remove_option(ToggleOption::AlwaysDuplicateWeapons);
             }
+
             config_handle.set(config);
         }
     };
@@ -112,10 +115,13 @@ pub fn AdvancedOptions(props: &AdvancedOptionsProps) -> Html {
 
         move |_| {
             let mut config = config.clone();
-            config.custom_ammo = !config.custom_ammo;
-            if !config.custom_ammo {
-                config.always_custom_ammo = false;
+
+            config.toggle_option(ToggleOption::CustomAmmo);
+
+            if !config.option_exists(ToggleOption::CustomAmmo) {
+                config.remove_option(ToggleOption::AlwaysCustomAmmo);
             }
+
             config_handle.set(config);
         }
     };
@@ -126,10 +132,13 @@ pub fn AdvancedOptions(props: &AdvancedOptionsProps) -> Html {
 
         move |_| {
             let mut config = config.clone();
-            config.quartermaster = !config.quartermaster;
-            if !config.quartermaster {
-                config.always_quartermaster = false;
+
+            config.toggle_option(ToggleOption::Quartermaster);
+
+            if !config.option_exists(ToggleOption::Quartermaster) {
+                config.remove_option(ToggleOption::AlwaysQuartermaster);
             }
+
             config_handle.set(config);
         }
     };
@@ -140,18 +149,18 @@ pub fn AdvancedOptions(props: &AdvancedOptionsProps) -> Html {
 
         move |_| {
             let mut config = config.clone();
-            config.always_dual_wield = !config.always_dual_wield;
-            config.always_quartermaster = false;
+            config.toggle_option(ToggleOption::AlwaysDualWield);
+            config.remove_option(ToggleOption::AlwaysQuartermaster);
             config_handle.set(config);
         }
     };
 
-    let always_dual_wield_html = if config.dual_wield {
+    let always_dual_wield_html = if config.option_exists(ToggleOption::DualWield) {
         Some(html! {
             <label class={classes!("checkbox")}>
                 <input
                     type="checkbox"
-                    checked={config.always_dual_wield}
+                    checked={config.option_exists(ToggleOption::AlwaysDualWield)}
                     onchange={on_always_dual_wield_toggle}
                 />
                 {"Always Dual Wield"}
@@ -167,18 +176,18 @@ pub fn AdvancedOptions(props: &AdvancedOptionsProps) -> Html {
 
         move |_| {
             let mut config = config.clone();
-            config.always_duplicate_weapons = !config.always_duplicate_weapons;
-            config.always_quartermaster = false;
+            config.toggle_option(ToggleOption::AlwaysDuplicateWeapons);
+            config.remove_option(ToggleOption::AlwaysQuartermaster);
             config_handle.set(config);
         }
     };
 
-    let always_duplicate_weapons_html = if config.duplicate_weapons {
+    let always_duplicate_weapons_html = if config.option_exists(ToggleOption::DuplicateWeapons) {
         Some(html! {
             <label class={classes!("checkbox")}>
                 <input
                     type="checkbox"
-                    checked={config.always_duplicate_weapons}
+                    checked={config.option_exists(ToggleOption::AlwaysDuplicateWeapons)}
                     onchange={on_always_duplicate_weapons_toggle}
                 />
                 {"Always Duplicate Weapons"}
@@ -194,17 +203,17 @@ pub fn AdvancedOptions(props: &AdvancedOptionsProps) -> Html {
 
         move |_| {
             let mut config = config.clone();
-            config.always_custom_ammo = !config.always_custom_ammo;
+            config.toggle_option(ToggleOption::AlwaysCustomAmmo);
             config_handle.set(config);
         }
     };
 
-    let always_custom_ammo_html = if config.custom_ammo {
+    let always_custom_ammo_html = if config.option_exists(ToggleOption::CustomAmmo) {
         Some(html! {
             <label class={classes!("checkbox")}>
                 <input
                     type="checkbox"
-                    checked={config.always_custom_ammo}
+                    checked={config.option_exists(ToggleOption::AlwaysCustomAmmo)}
                     onchange={on_always_custom_ammo_toggle}
                 />
                 {"Always Custom Ammo"}
@@ -220,19 +229,19 @@ pub fn AdvancedOptions(props: &AdvancedOptionsProps) -> Html {
 
         move |_| {
             let mut config = config.clone();
-            config.always_quartermaster = !config.always_quartermaster;
-            config.always_dual_wield = false;
-            config.always_duplicate_weapons = false;
+            config.toggle_option(ToggleOption::AlwaysQuartermaster);
+            config.remove_option(ToggleOption::AlwaysDualWield);
+            config.remove_option(ToggleOption::AlwaysDuplicateWeapons);
             config_handle.set(config);
         }
     };
 
-    let always_quartermaster_html = if config.quartermaster {
+    let always_quartermaster_html = if config.option_exists(ToggleOption::Quartermaster) {
         Some(html! {
             <label class={classes!("checkbox")}>
                 <input
                     type="checkbox"
-                    checked={config.always_quartermaster}
+                    checked={config.option_exists(ToggleOption::AlwaysQuartermaster)}
                     onchange={on_always_quartermaster_toggle}
                 />
                 {"Always Quartermaster"}
@@ -260,7 +269,12 @@ pub fn AdvancedOptions(props: &AdvancedOptionsProps) -> Html {
 
                     if let Some(select) = select {
                         let mut config = config.clone();
-                        config.tool_preferences[slot] = select.value().into();
+                        let value = select.value();
+
+                        config.tool_preferences[slot] =
+                            value.clone().try_into().unwrap_or_else(|_| {
+                                panic!("Cannot conversion {value} to tool_preferences slot.")
+                            });
                         config_handle.set(config);
                     }
                 }
@@ -337,10 +351,7 @@ pub fn AdvancedOptions(props: &AdvancedOptionsProps) -> Html {
                                     class={classes!("input")}
                                     type="number"
                                     placeholder={"Max Cost"}
-                                    value={match config.max_cost {
-                                        Some(cost) => cost.to_string(),
-                                        None => "".to_string(),
-                                    }}
+                                    value={config.max_cost.map_or_else(String::new, |cost| cost.to_string())}
                                     oninput={on_max_cost_input}
                                 />
                             </div>
@@ -355,7 +366,7 @@ pub fn AdvancedOptions(props: &AdvancedOptionsProps) -> Html {
                         <label class={classes!("checkbox")}>
                             <input
                                 type="checkbox"
-                                checked={config.dual_wield}
+                                checked={config.option_exists(ToggleOption::DualWield)}
                                 onchange={on_dualwield_toggle}
                             />
                             {"Dual Wield"}
@@ -366,7 +377,7 @@ pub fn AdvancedOptions(props: &AdvancedOptionsProps) -> Html {
                         <label class={classes!("checkbox")}>
                             <input
                                 type="checkbox"
-                                checked={config.duplicate_weapons}
+                                checked={config.option_exists(ToggleOption::DuplicateWeapons)}
                                 onchange={on_duplicate_weapons_toggle}
                             />
                             {"Duplicate Weapons"}
@@ -377,7 +388,7 @@ pub fn AdvancedOptions(props: &AdvancedOptionsProps) -> Html {
                         <label class={classes!("checkbox")}>
                             <input
                                 type="checkbox"
-                                checked={config.custom_ammo}
+                                checked={config.option_exists(ToggleOption::CustomAmmo)}
                                 onchange={on_custom_ammo_toggle}
                             />
                             {"Custom Ammo"}
@@ -388,7 +399,7 @@ pub fn AdvancedOptions(props: &AdvancedOptionsProps) -> Html {
                         <label class={classes!("checkbox")}>
                             <input
                                 type="checkbox"
-                                checked={config.quartermaster}
+                                checked={config.option_exists(ToggleOption::Quartermaster)}
                                 onchange={on_quartermaster_toggle}
                             />
                             {"Quartermaster"}

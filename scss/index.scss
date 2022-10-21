@@ -39,62 +39,15 @@ $floating-window-opacity: 50%;
 	padding: 1em;
 }
 
-.weapon-slot {
-	background-color: $loadout-background;
-	border-radius: 5px;
-	box-shadow: 0 0 5px $black;
-	color: $white;
-	margin: 1em auto;
-	max-width: 600px;
-	min-height: calc(2em + 125px);
-	padding: 1em;
-	position: relative;
-
-	.ammo-img {
-		height: 25px;
-		margin: 0 0.5em;
-	}
-
-	.weapon-ammo-types {
-		position: absolute;
-		right: 1em;
-		top: 1em;
-	}
-
-	.weapon-img {
-		display: block;
-		height: 125px;
-		width: 600px;
-		margin: 0 auto;
-
-		&.item-selected {
-			width: auto;
-		}
-	}
-
-	.weapon-name {
-		bottom: 1em;
-		left: 1em;
-		position: absolute;
-	}
-
-	h1 {
-		position: absolute;
-		top: 1em;
-		left: 200px;
-	}
-}
-
+.weapon-slot,
 .tool-slot,
 .consumable-slot {
 	background-color: $loadout-background;
 	border-radius: 5px;
 	box-shadow: 0 0 5px $black;
 	color: $white;
-	min-height: 190px;
 	padding: 1em;
 	position: relative;
-	width: 190px;
 
 	.tool-img,
 	.consumable-img {
@@ -115,11 +68,49 @@ $floating-window-opacity: 50%;
 		text-align: center;
 	}
 
-	.item-actions {
-		left: 0;
-		position: initial;
-		top: 0;
+	.ammo-img {
+		height: 25px;
+		margin: 0 0.5em;
 	}
+
+	.weapon-img {
+		display: block;
+		height: 125px;
+		width: 600px;
+		margin: 0 auto;
+
+		&.item-selected {
+			width: auto;
+		}
+	}
+
+	.weapon-name {
+		bottom: 1em;
+		left: 1em;
+		position: absolute;
+	}
+}
+
+.weapon-slot {
+	margin: 1em auto;
+	max-width: 600px;
+	min-height: calc(2em + 125px);
+
+	h1 {
+		position: absolute;
+		top: 1em;
+		left: 200px;
+	}
+}
+
+.tool-slot,
+.consumable-slot {
+	background-color: $loadout-background;
+	border-radius: 5px;
+	box-shadow: 0 0 5px $black;
+	color: $white;
+	min-height: 190px;
+	width: 190px;
 }
 
 .transactions-container,
@@ -194,14 +185,8 @@ $floating-window-opacity: 50%;
 	}
 }
 
-.item-actions {
-	left: 1em;
-	position: absolute;
-	top: 1em;
-
-	img {
-		height: 25px;
-	}
+.item-actions img {
+	height: 25px;
 }
 
 .item-display {
